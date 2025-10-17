@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manjunath | Full-Stack Developer | DSA Enthusiast</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs/lib/anime.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --charcoal: #222831;
+        --slate: #393e46;
+        --teal: #00adb5;
+        --white: #eeeeee;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--charcoal);
+        color: var(--white);
+        scroll-behavior: smooth;
+      }
+      .section-title {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 3rem;
+      }
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--teal);
+      }
+      .nav-link {
+        position: relative;
+      }
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--teal);
+        transition: width 0.3s ease;
+      }
+      .nav-link:hover::after {
+        width: 100%;
+      }
+      .active-nav::after {
+        width: 100%;
+      }
+      .skill-meter {
+        transition: width 2s ease;
+      }
+      .project-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .project-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+      }
+      .floating {
+        animation: float 6s ease-in-out infinite;
+      }
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+      .pulse-ring {
+        position: absolute;
+        border: 2px solid var(--teal);
+        border-radius: 50%;
+        height: 100%;
+        width: 100%;
+        animation: pulse 3s linear infinite;
+        opacity: 0;
+      }
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.8;
+        }
+        100% {
+          transform: scale(1.5);
+          opacity: 0;
+        }
+      }
+      .orbit {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        animation: rotate 20s linear infinite;
+      }
+      @keyframes rotate {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .orbit-icon {
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .btn-resume {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+      .btn-resume span {
+        display: inline-block;
+        transition: transform 0.3s ease;
+      }
+      .btn-resume:hover span {
+        transform: translateX(5px);
+      }
+      .timeline-item {
+        position: relative;
+        padding-left: 2rem;
+        margin-bottom: 3rem;
+      }
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 8px;
+        width: 12px;
+        height: 12px;
+        border: 2px solid var(--teal);
+        border-radius: 50%;
+        background-color: var(--charcoal);
+      }
+      .timeline-item::after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 27px;
+        width: 2px;
+        height: calc(100% + 1.5rem);
+        background-color: var(--teal);
+      }
+      .timeline-item:last-child::after {
+        display: none;
+      }
+      .cert-card {
+        transition: all 0.3s ease;
+        transform-style: preserve-3d;
+        position: relative; /* Added to contain absolute elements */
+        padding-bottom: 4.5rem; /* Give space for button */
+      }
+      .cert-card:hover {
+        transform: rotateY(10deg) rotateX(5deg);
+        box-shadow: 0 20px 25px -5px rgba(0, 173, 181, 0.2);
+      }
+      .cert-desc {
+        overflow: hidden;
+        max-height: 100px; /* limited height for preview */
+        transition: max-height 0.3s ease;
+        opacity: 1 !important;
+        height: auto !important;
+        margin-top: 0.5rem;
+      }
+      .cert-desc.collapsed {
+        max-height: 4.5rem; /* about 3 lines */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        opacity: 1 !important;
+        height: auto !important;
+      }
+      .view-details {
+        position: absolute; /* Fix overlap by positioning button absolute*/
+        bottom: 1rem;
+        left: 1.5rem;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--teal);
+        transition: color 0.3s ease;
+      }
+      .view-details:hover {
+        color: #008b8f;
+      }
+      .particles {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .particle {
+        position: absolute;
+        background-color: #00adb5;
+        border-radius: 50%;
+        opacity: 0.7;
+        animation: float 10s infinite ease-in-out alternate;
+      }
+      /* Give each particle unique timing */
+      .particles .particle:nth-child(1) {
+        animation-duration: 12s;
+      }
+      .particles .particle:nth-child(2) {
+        animation-duration: 18s;
+      }
+      .particles .particle:nth-child(3) {
+        animation-duration: 15s;
+      }
+      .particles .particle:nth-child(4) {
+        animation-duration: 20s;
+      }
+      .particles .particle:nth-child(5) {
+        animation-duration: 22s;
+      }
+      .particles .particle:nth-child(6) {
+        animation-duration: 25s;
+      }
+      .particles .particle:nth-child(7) {
+        animation-duration: 17s;
+      }
+      .particles .particle:nth-child(8) {
+        animation-duration: 28s;
+      }
+      .particles .particle:nth-child(9) {
+        animation-duration: 30s;
+      }
+      .particles .particle:nth-child(10) {
+        animation-duration: 26s;
+      }
+      .particles .particle:nth-child(11) {
+        animation-duration: 19s;
+      }
+      .particles .particle:nth-child(12) {
+        animation-duration: 23s;
+      }
+      /* Modal popup styles */
+      #imageModal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.8);
+        align-items: center;
+        justify-content: center;
+      }
+      #imageModal.show {
+        display: flex;
+      }
+      #imageModal img {
+        max-width: 90%;
+        max-height: 80vh;
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        animation: zoomIn 0.3s ease forwards;
+      }
+      @keyframes zoomIn {
+        from {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      #imageModal .closeBtn {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        font-size: 2rem;
+        color: #00adb5;
+        cursor: pointer;
+        background: transparent;
+        border: none;
+        outline: none;
+        transition: color 0.3s ease;
+      }
+      #imageModal .closeBtn:hover {
+        color: #008b8f;
+      }
+      /* Cursor pointer for clickable images */
+      .cert-card img,
+      #gallery .project-card img {
+        cursor: pointer;
+        border-radius: 0.375rem; /* rounded-lg */
+      }
+      /* Gallery description with read more style */
+      .gallery-desc {
+        overflow: hidden;
+        max-height: 4.5rem; /* show approx 3 lines */
+        position: relative;
+        transition: max-height 0.3s ease;
+        white-space: normal;
+      }
+      .gallery-desc.expanded {
+        max-height: 9999px;
+      }
+      .read-more-btn {
+        margin-top: 0.25rem;
+        font-size: 0.875rem;
+        color: var(--teal);
+        cursor: pointer;
+        font-weight: 500;
+        background: transparent;
+        border: none;
+        padding: 0;
+        transition: color 0.3s ease;
+      }
+      .read-more-btn:hover {
+        color: #008b8f;
+      }
+      /* Container adjustment to prevent overlapping cert-desc & button */
+      .cert-card .cert-desc {
+        margin-bottom: 2.5rem;
+      }
+    </style>
+  </head>
+  <body class="bg-[#222831] text-[#EEEEEE]">
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+
+    <!-- Navigation -->
+    <nav
+      class="fixed w-full z-50 bg-[#222831]/90 backdrop-blur-sm py-4 px-6 shadow-lg"
+    >
+      <div class="container mx-auto flex justify-between items-center">
+        <a href="#" class="text-2xl font-bold text-[#00ADB5]">My Portfolio</a>
+        <div class="hidden md:flex space-x-8">
+          <a href="#home" class="nav-link active-nav">Home</a>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#education" class="nav-link">Education</a>
+          <a href="#experience" class="nav-link">Experience</a>
+          <a href="#gallery" class="nav-link">Gallery</a>
+          <a href="#certifications" class="nav-link">Certifications</a>
+          <a href="#skills" class="nav-link">Skills</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#platforms" class="nav-link">Platforms</a>
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="md:hidden" id="mobileMenuButton">
+            <i data-feather="menu" class="text-[#00ADB5] cursor-pointer"></i>
+          </div>
+        </div>
+      </div>
+      <!-- Mobile Menu -->
+      <div
+        class="hidden md:hidden bg-[#393E46] mt-4 p-4 rounded-lg"
+        id="mobileMenu"
+      >
+        <div class="flex flex-col space-y-4">
+          <a href="#home" class="nav-link active-nav">Home</a>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#education" class="nav-link">Education</a>
+          <a href="#certifications" class="nav-link">Certifications</a>
+          <a href="#skills" class="nav-link">Skills</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#gallery" class="nav-link">Gallery</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center pt-20 pb-16 px-6">
+      <div class="container mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div class="relative" data-aos="fade-right">
+          <div class="relative w-80 h-80 mx-auto">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div
+                class="w-64 h-64 rounded-full overflow-hidden border-4 border-[#00ADB5] shadow-lg"
+              >
+                <img
+                  src="manjunath.jpg"
+                  alt="manjunat"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <!-- Pulsing Rings -->
+            <div class="pulse-ring" style="animation-delay: 0s"></div>
+            <div class="pulse-ring" style="animation-delay: 1s"></div>
+            <div class="pulse-ring" style="animation-delay: 2s"></div>
+          </div>
+        </div>
+        <div data-aos="fade-left" class="text-center md:text-left">
+          <h1 class="text-4xl md:text-5xl font-bold mb-4">Manjunath Gavandi</h1>
+          <h2 class="text-2xl md:text-3xl text-[#00ADB5] mb-6">
+            Full-Stack Developer & DSA Enthusiast
+          </h2>
+          <p class="text-lg mb-8 max-w-md mx-auto md:mx-0">
+            I create beautiful, functional digital experiences that blend
+            innovative design with cutting-edge technology.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+          >
+            <a
+              href="#projects"
+              class="px-6 py-3 bg-[#00ADB5] text-[#EEEEEE] rounded-lg font-medium hover:bg-[#00969D] transition-colors"
+              >View My Work</a
+            >
+            <a
+              href="/static/Manjunath_Resume.pdf"
+              download="Manjunath_Resume.pdf"
+              class="btn-resume px-6 py-3 bg-[#393E46] text-[#EEEEEE] rounded-lg font-medium hover:bg-[#00ADB5] transition-colors flex items-center justify-center"
+              onclick="event.preventDefault(); window.open('/static/Manjunath_Resume.pdf', '_blank');"
+            >
+              <span>Download Resume</span>
+              <i data-feather="arrow-down-circle" class="ml-2"></i>
+            </a>
+          </div>
+          <div class="flex justify-center md:justify-start space-x-4 mt-8">
+            <a
+              href="#"
+              class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] hover:bg-[#00ADB5] hover:text-[#EEEEEE] transition-colors"
+              ><i data-feather="github"></i
+            ></a>
+            <a
+              href="#"
+              class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] hover:bg-[#00ADB5] hover:text-[#EEEEEE] transition-colors"
+              ><i data-feather="linkedin"></i
+            ></a>
+            <a
+              href="#"
+              class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] hover:bg-[#00ADB5] hover:text-[#EEEEEE] transition-colors"
+              ><i data-feather="twitter"></i
+            ></a>
+            <a
+              href="#"
+              class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] hover:bg-[#00ADB5] hover:text-[#EEEEEE] transition-colors"
+              ><i data-feather="mail"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6 bg-[#393E46]">
+      <div class="container mx-auto">
+        <h2
+          class="text-3xl font-bold text-center mb-16 section-title mx-auto"
+          data-aos="fade-up"
+        >
+          About Me
+        </h2>
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div data-aos="fade-right">
+            <p class="text-lg mb-6">
+              I'm a passionate full-stack developer and DSA Enthusiast with
+              experience creating digital solutions that make a difference. My
+              journey began when I built my first website at 15, and since then
+              I've been hooked on the power of code to bring ideas to life.
+            </p>
+            <p class="text-lg mb-6">
+              I believe that great design isn't just about how things look, but
+              how they work and feel. My approach combines aesthetic sensibility
+              with technical expertise to create experiences that are both
+              beautiful and functional.
+            </p>
+            <p class="text-lg">
+              When I'm not coding or designing, you can find me exploring
+              photography, hiking trails, or experimenting with new recipes in
+              the kitchen. I'm constantly learning and pushing myself to grow
+              both personally and professionally.
+            </p>
+          </div>
+          <div data-aos="fade-left">
+            <div class="relative">
+              <div class="grid grid-cols-2 gap-6">
+                <div
+                  class="bg-[#222831] p-6 rounded-lg shadow-lg floating"
+                  style="animation-delay: 0s"
+                >
+                  <div class="text-4xl text-[#00ADB5] mb-4">
+                    <i data-feather="code"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-2">Development</h3>
+                  <p>
+                    Clean, efficient code that powers exceptional digital
+                    experiences.
+                  </p>
+                </div>
+                <div
+                  class="bg-[#222831] p-6 rounded-lg shadow-lg floating"
+                  style="animation-delay: 1s"
+                >
+                  <div class="text-4xl text-[#00ADB5] mb-4">
+                    <i data-feather="pen-tool"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-2">Design</h3>
+                  <p>
+                    User-centered designs that are both beautiful and intuitive.
+                  </p>
+                </div>
+                <div
+                  class="bg-[#222831] p-6 rounded-lg shadow-lg floating"
+                  style="animation-delay: 2s"
+                >
+                  <div class="text-4xl text-[#00ADB5] mb-4">
+                    <i data-feather="trending-up"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-2">Strategy</h3>
+                  <p>
+                    Data-driven approaches to solve complex problems
+                    effectively.
+                  </p>
+                </div>
+                <div
+                  class="bg-[#222831] p-6 rounded-lg shadow-lg floating"
+                  style="animation-delay: 3s"
+                >
+                  <div class="text-4xl text-[#00ADB5] mb-4">
+                    <i data-feather="users"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-2">Collaboration</h3>
+                  <p>Working closely with teams to bring visions to reality.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-20 px-6 bg-[#222831]">
+      <div class="container mx-auto">
+        <h2
+          class="text-3xl font-bold text-center mb-16 section-title mx-auto"
+          data-aos="fade-up"
+        >
+          Education
+        </h2>
+        <div class="max-w-3xl mx-auto">
+          <div class="timeline-item" data-aos="fade-right">
+            <h3 class="text-xl font-semibold text-[#00ADB5]">SSC</h3>
+            <p class="text-lg font-medium">Shanti English Medium School</p>
+            <p class="text-[#00ADB5]">2009 - 2022</p>
+            <p class="mt-2">Completed Secondary School Certificate (SSC).</p>
+          </div>
+          <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
+            <h3 class="text-xl font-semibold text-[#00ADB5]">
+              Diploma in Computer Science
+            </h3>
+            <p class="text-lg font-medium">Government Polytechnic, Solapur</p>
+            <p class="text-[#00ADB5]">2022-2025</p>
+            <p class="mt-2">
+              Diploma focusing on fundamentals and software development.
+            </p>
+          </div>
+          <div class="timeline-item" data-aos="fade-right" data-aos-delay="200">
+            <h3 class="text-xl font-semibold text-[#00ADB5]">
+              B.Tech in Computer Science & Engineering
+            </h3>
+            <p class="text-lg font-medium">
+              DY Patil College of Engineering & Technology
+            </p>
+            <p class="text-[#00ADB5]">2025-Present</p>
+            <p class="mt-2">
+              Currently pursuing B.Tech in Computer Science & Engineering.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section with Certificate Image Popup -->
+    <section id="experience" class="bg-[#222831] py-20 px-6">
+      <div class="container mx-auto max-w-5xl">
+        <h2
+          class="text-3xl font-bold text-center mb-8 section-title mx-auto text-white"
+          data-aos="fade-up"
+        >
+          Experience
+        </h2>
+        <div class="space-y-10">
+          <div
+            class="bg-[#393E46] rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col md:flex-row items-start md:items-center"
+            data-aos="fade-up"
+          >
+            <div class="flex-1">
+              <h3 class="text-xl font-semibold text-[#00adb5] mb-1">
+                Software Developer Intern
+              </h3>
+              <p class="text-gray-300 mb-1">Tech Company Inc.</p>
+              <p class="text-gray-400 text-sm mb-4">June 2024 - August 2024</p>
+              <ul class="list-disc list-inside text-gray-300 space-y-2 text-sm">
+                <li>
+                  Developed responsive UI components with React and TailwindCSS.
+                </li>
+                <li>Collaborated with cross-functional teams in agile sprints.</li>
+                <li>Built and optimized RESTful APIs using FastAPI and PostgreSQL.</li>
+              </ul>
+            </div>
+            <div
+              class="mt-6 md:mt-0 md:ml-8 w-full md:w-48 shrink-0 cursor-pointer"
+            >
+              <img
+                src="software-internship-certificate.jpg"
+                alt="Internship Certificate"
+                class="rounded-md border-2 border-[#00adb5] w-full"
+                title="Software Developer Intern Certificate"
+                onclick="openModal('modal-intern')"
+              />
+            </div>
+          </div>
+          <div
+            id="modal-intern"
+            class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden"
+          >
+            <div
+              class="bg-[#222831] rounded-lg shadow-lg max-w-3xl w-full p-6 relative"
+            >
+              <button
+                class="absolute top-4 right-4 text-[#00adb5] hover:text-[#00969d] text-2xl font-bold"
+                onclick="closeModal('modal-intern')"
+                aria-label="Close modal"
+              >
+                &times;
+              </button>
+              <img
+                src="software-internship-certificate.jpg"
+                alt="Internship Certificate Large"
+                class="rounded-md w-full"
+              />
+            </div>
+          </div>
+
+          <div
+            class="bg-[#393E46] rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col md:flex-row items-start md:items-center"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <div class="flex-1">
+              <h3 class="text-xl font-semibold text-[#00adb5] mb-1">
+                Freelance Full-Stack Developer
+              </h3>
+              <p class="text-gray-300 mb-1">Self-employed</p>
+              <p class="text-gray-400 text-sm mb-4">Jan 2023 - May 2024</p>
+              <ul class="list-disc list-inside text-gray-300 space-y-2 text-sm">
+                <li>
+                  Designed and deployed web apps integrating React, FastAPI, and
+                  PostgreSQL.
+                </li>
+                <li>Implemented CI/CD pipelines and cloud-based hosting solutions.</li>
+                <li>Maintained client codebases ensuring quality and performance.</li>
+              </ul>
+            </div>
+            <div
+              class="mt-6 md:mt-0 md:ml-8 w-full md:w-48 shrink-0 cursor-pointer"
+            >
+              <img
+                src="freelance-certificate.jpg"
+                alt="Freelance Developer Certificate"
+                class="rounded-md border-2 border-[#00adb5] w-full"
+                title="Freelance Developer Certificate"
+                onclick="openModal('modal-freelance')"
+              />
+            </div>
+          </div>
+
+          <div
+            id="modal-freelance"
+            class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden"
+          >
+            <div
+              class="bg-[#222831] rounded-lg shadow-lg max-w-3xl w-full p-6 relative"
+            >
+              <button
+                class="absolute top-4 right-4 text-[#00adb5] hover:text-[#00969d] text-2xl font-bold"
+                onclick="closeModal('modal-freelance')"
+                aria-label="Close modal"
+              >
+                &times;
+              </button>
+              <img
+                src="freelance-certificate.jpg"
+                alt="Freelance Developer Certificate Large"
+                class="rounded-md w-full"
+              />
+            </div>
+          </div>
+
+          <div
+            class="bg-[#393E46] rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col md:flex-row items-start md:items-center"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <div class="flex-1">
+              <h3 class="text-xl font-semibold text-[#00adb5] mb-1">
+                IT Support Assistant
+              </h3>
+              <p class="text-gray-300 mb-1">University IT Services</p>
+              <p class="text-gray-400 text-sm mb-4">Aug 2021 - Dec 2022</p>
+              <ul class="list-disc list-inside text-gray-300 space-y-2 text-sm">
+                <li>
+                  Provided technical support and troubleshooting to faculty and
+                  students.
+                </li>
+                <li>Assisted with network maintenance and software deployment on campus.</li>
+                <li>Documented and resolved common IT issues promptly and efficiently.</li>
+              </ul>
+            </div>
+            <div
+              class="mt-6 md:mt-0 md:ml-8 w-full md:w-48 shrink-0 cursor-pointer"
+            >
+              <img
+                src="it-support-certificate.jpg"
+                alt="IT Support Certificate"
+                class="rounded-md border-2 border-[#00adb5] w-full"
+                title="IT Support Certificate"
+                onclick="openModal('modal-it-support')"
+              />
+            </div>
+          </div>
+
+          <div
+            id="modal-it-support"
+            class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden"
+          >
+            <div
+              class="bg-[#222831] rounded-lg shadow-lg max-w-3xl w-full p-6 relative"
+            >
+              <button
+                class="absolute top-4 right-4 text-[#00adb5] hover:text-[#00969d] text-2xl font-bold"
+                onclick="closeModal('modal-it-support')"
+                aria-label="Close modal"
+              >
+                &times;
+              </button>
+              <img
+                src="it-support-certificate.jpg"
+                alt="IT Support Certificate Large"
+                class="rounded-md w-full"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 px-6 bg-[#222831]">
+      <div class="container mx-auto">
+        <h2
+          class="text-3xl font-bold text-center mb-16 section-title mx-auto"
+          data-aos="fade-up"
+        >
+          Gallery
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div
+            class="project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg"
+            data-aos="zoom-in"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?ixlib=rb-4.0.3&auto=format&fit=crop&w=1332&q=80"
+              alt="Event Participation"
+              class="w-full h-48 object-cover cursor-pointer"
+              onclick="openModal(this.src, this.alt)"
+            />
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2">Hackathon 2023</h3>
+              <p class="text-sm gallery-desc" id="gallery-desc-1">
+                Participation certificate for national level hackathon where various
+                teams competed in building innovative software solutions under
+                tight deadlines. The event challenged participants to demonstrate
+                creativity, technical skills, and teamwork. This long text serves
+                as a demonstration of handling lengthy descriptions with a well-
+                designed read more toggle button buried in the gallery section.
+              </p>
+              <button
+                class="read-more-btn"
+                data-target="gallery-desc-1"
+                aria-expanded="false"
+                aria-label="Read more about Hackathon 2023"
+              >
+                Read More →
+              </button>
+            </div>
+          </div>
+          <div
+            class="project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+              alt="Workshop"
+              class="w-full h-48 object-cover cursor-pointer"
+              onclick="openModal(this.src, this.alt)"
+            />
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2">Web Development Workshop</h3>
+              <p class="text-sm gallery-desc" id="gallery-desc-2">
+                Conducted a workshop on modern web development including React,
+                TailwindCSS and API integration. Participants gained hands-on
+                experience building dynamic user interfaces and backend servers.
+                This example also demonstrates truncated text in the gallery.
+              </p>
+              <button
+                class="read-more-btn"
+                data-target="gallery-desc-2"
+                aria-expanded="false"
+                aria-label="Read more about Web Development Workshop"
+              >
+                Read More →
+              </button>
+            </div>
+          </div>
+          <div
+            class="project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+              alt="Conference"
+              class="w-full h-48 object-cover cursor-pointer"
+              onclick="openModal(this.src, this.alt)"
+            />
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2">Tech Conference 2023</h3>
+              <p class="text-sm gallery-desc" id="gallery-desc-3">
+                Speaker at annual technology conference focusing on innovative
+                software engineering techniques, best practices, and future
+                trends. The detailed talk covered React ecosystem, backend API
+                design, and DevOps workflows that streamline development and
+                deployment.
+              </p>
+              <button
+                class="read-more-btn"
+                data-target="gallery-desc-3"
+                aria-expanded="false"
+                aria-label="Read more about Tech Conference 2023"
+              >
+                Read More →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="py-20 px-6 bg-[#393E46]">
+      <div class="container mx-auto">
+        <h2
+          class="text-3xl font-bold text-center mb-16 section-title mx-auto"
+          data-aos="fade-up"
+        >
+          Certifications
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div
+            class="cert-card bg-[#222831] p-6 rounded-lg shadow-lg"
+            data-aos="flip-left"
+          >
+            <div class="text-[#00ADB5] text-4xl mb-4">
+              <i data-feather="award"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">
+              AWS Certified Solutions Architect
+            </h3>
+            <p class="text-[#00ADB5] mb-2">Amazon Web Services</p>
+            <p class="text-sm mb-4">June 2022</p>
+            <img
+              src="https://images.unsplash.com/photo-1502764613149-7f1d229e230f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+              alt="AWS Certification"
+              class="rounded cursor-pointer"
+              onclick="openModal(this.src, this.alt)"
+            />
+            <p class="text-sm cert-desc collapsed">
+              Designing and deploying scalable, highly available systems on AWS.
+              This certification text has been extended significantly to test the
+              "read more" toggle behavior in the certification section, ensuring
+              excellent readability and user experience while displaying lengthy
+              descriptions in a limited space.
+            </p>
+            <button class="view-details" aria-expanded="false" aria-label="View details of AWS Certified Solutions Architect">
+              View Details →
+            </button>
+          </div>
+
+          <div
+            class="cert-card bg-[#222831] p-6 rounded-lg shadow-lg"
+            data-aos="flip-left"
+            data-aos-delay="100"
+          >
+            <div class="text-[#00ADB5] text-4xl mb-4">
+              <i data-feather="award"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">
+              Google UX Design Professional
+            </h3>
+            <p class="text-[#00ADB5] mb-2">Google</p>
+            <p class="text-sm mb-4">March 2022</p>
+            <img
+              src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+              alt="Google UX Design Certification"
+              class="rounded cursor-pointer"
+              onclick="openModal(this.src, this.alt)"
+            />
+            <p class="text-sm cert-desc collapsed">
+              User-centered design process: empathize, define, ideate, prototype,
+              and test. This description is long to demonstrate read more toggle
+              functionality on certification cards as well, allowing neat and
+              visually consistent display of extra text on demand.
+            </p>
+            <button class="view-details" aria-expanded="false" aria-label="View details of Google UX Design Professional">
+              View Details →
+            </button>
+          </div>
+
+          <div
+            class="cert-card bg-[#222831] p-6 rounded-lg shadow-lg"
+            data-aos="flip-left"
+            data-aos-delay="200"
+          >
+            <div class="text-[#00ADB5] text-4xl mb-4">
+              <i data-feather="award"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">React Advanced Development</h3>
+            <p class="text-[#00ADB5] mb-2">Meta</p>
+            <p class="text-sm mb-4">January 2022</p>
+            <img
+              src="https://images.unsplash.com/photo-1517433456452-f9633a875f6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+              alt="React Advanced Development Certification"
+              class="rounded cursor-pointer"
+              onclick="openModal(this.src, this.alt)"
+            />
+            <p class="text-sm cert-desc collapsed">
+              Advanced React patterns, performance optimization, and testing
+              strategies. This is a long description crafted to test the read more
+              functionality on a certification item.
+            </p>
+            <button class="view-details" aria-expanded="false" aria-label="View details of React Advanced Development">
+              View Details →
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-6 bg-[#222831]">
+      <div class="container mx-auto">
+        <h2
+          class="text-3xl font-bold text-center mb-16 section-title mx-auto"
+          data-aos="fade-up"
+        >
+          Skills
+        </h2>
+        <div class="grid md:grid-cols-2 gap-12">
+          <div data-aos="fade-right">
+            <h3 class="text-xl font-semibold text-[#00ADB5] mb-6">
+              Frontend Development
+            </h3>
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>React</span>
+                <span>95%</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div
+                  class="skill-meter h-full bg-[#00ADB5] rounded-full"
+                  style="width: 0%"
+                  data-width="95%"
+                ></div>
+              </div>
+            </div>
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>Tailwind CSS</span>
+                <span>92%</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div
+                  class="skill-meter h-full bg-[#00ADB5] rounded-full"
+                  style="width: 0%"
+                  data-width="92%"
+                ></div>
+              </div>
+            </div>
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>JavaScript</span>
+                <span>90%</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div
+                  class="skill-meter h-full bg-[#00ADB5] rounded-full"
+                  style="width: 0%"
+                  data-width="90%"
+                ></div>
+              </div>
+            </div>
+          </div>
+          <div data-aos="fade-left">
+            <h3 class="text-xl font-semibold text-[#00ADB5] mb-6">
+              Backend Development
+            </h3>
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>Python</span>
+                <span>88%</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div
+                  class="skill-meter h-full bg-[#00ADB5] rounded-full"
+                  style="width: 0%"
+                  data-width="88%"
+                ></div>
+              </div>
+            </div>
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>PostgreSQL</span>
+                <span>85%</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div
+                  class="skill-meter h-full bg-[#00ADB5] rounded-full"
+                  style="width: 0%"
+                  data-width="85%"
+                ></div>
+              </div>
+            </div>
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>FastAPI</span>
+                <span>87%</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div
+                  class="skill-meter h-full bg-[#00ADB5] rounded-full"
+                  style="width: 0%"
+                  data-width="87%"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-16 grid md:grid-cols-4 gap-6 text-center">
+          <div class="bg-[#393E46] p-6 rounded-lg shadow-lg" data-aos="zoom-in">
+            <div class="text-4xl text-[#00ADB5] mb-4">
+              <i data-feather="code"></i>
+            </div>
+            <h3 class="text-lg font-semibold">Frontend</h3>
+          </div>
+          <div
+            class="bg-[#393E46] p-6 rounded-lg shadow-lg"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <div class="text-4xl text-[#00ADB5] mb-4">
+              <i data-feather="server"></i>
+            </div>
+            <h3 class="text-lg font-semibold">Backend</h3>
+          </div>
+          <div
+            class="bg-[#393E46] p-6 rounded-lg shadow-lg"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            <div class="text-4xl text-[#00ADB5] mb-4">
+              <i data-feather="database"></i>
+            </div>
+            <h3 class="text-lg font-semibold">Database</h3>
+          </div>
+          <div
+            class="bg-[#393E46] p-6 rounded-lg shadow-lg"
+            data-aos="zoom-in"
+            data-aos-delay="300"
+          >
+            <div class="text-4xl text-[#00ADB5] mb-4">
+              <i data-feather="cloud"></i>
+            </div>
+            <h3 class="text-lg font-semibold">DevOps</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-6 bg-[#393E46]">
+      <div class="container mx-auto">
+        <h2
+          class="text-3xl font-bold text-center mb-16 section-title mx-auto"
+          data-aos="fade-up"
+        >
+          Projects
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div
+            class="project-card bg-[#222831] rounded-lg overflow-hidden shadow-lg"
+            data-aos="fade-up"
+          >
+            <div class="h-48 overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1015&q=80"
+                alt="Finance Dashboard"
+                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Finance Dashboard</h3>
+              <p class="text-sm text-gray-400 mb-4">React, Tailwind, PostgreSQL</p>
+              <p class="mb-6">
+                A comprehensive financial management dashboard with real-time
+                analytics and visualization.
+              </p>
+              <div class="flex space-x-4">
+                <a
+                  href="#"
+                  class="px-4 py-2 bg-[#00ADB5] text-white rounded text-sm font-medium hover:bg-[#00969D] transition-colors"
+                  >Live Demo</a
+                >
+                <a
+                  href="#"
+                  class="px-4 py-2 border border-[#00ADB5] text-[#00ADB5] rounded text-sm font-medium hover:bg-[#00ADB5] hover:text-white transition-colors"
+                  >View Code</a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="project-card bg-[#222831] rounded-lg overflow-hidden shadow-lg"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <div class="h-48 overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80"
+                alt="E-commerce Platform"
+                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">E-commerce Platform</h3>
+              <p class="text-sm text-gray-400 mb-4">Express, MongoDB, Stripe</p>
+              <p class="mb-6">
+                Full-featured e-commerce solution with product management, cart,
+                and payment processing.
+              </p>
+              <div class="flex space-x-4">
+                <a
+                  href="#"
+                  class="px-4 py-2 bg-[#00ADB5] text-white rounded text-sm font-medium hover:bg-[#00969D] transition-colors"
+                  >Live Demo</a
+                >
+                <a
+                  href="#"
+                  class="px-4 py-2 border border-[#00ADB5] text-[#00ADB5] rounded text-sm font-medium hover:bg-[#00ADB5] hover:text-white transition-colors"
+                  >View Code</a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="project-card bg-[#222831] rounded-lg overflow-hidden shadow-lg"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <div class="h-48 overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+                alt="Task Management App"
+                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Task Management App</h3>
+              <p class="text-sm text-gray-400 mb-4">React Native, Firebase, Redux</p>
+              <p class="mb-6">
+                A cross-platform task management application with real-time
+                synchronization and collaboration.
+              </p>
+              <div class="flex space-x-4">
+                <a
+                  href="#"
+                  class="px-4 py-2 bg-[#00ADB5] text-white rounded text-sm font-medium hover:bg-[#00969D] transition-colors"
+                  >Live Demo</a
+                >
+                <a
+                  href="#"
+                  class="px-4 py-2 border border-[#00ADB5] text-[#00ADB5] rounded text-sm font-medium hover:bg-[#00ADB5] hover:text-white transition-colors"
+                  >View Code</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-12">
+          <a
+            href="#"
+            class="inline-flex items-center px-6 py-3 border border-[#00ADB5] text-[#00ADB5] rounded-lg font-medium hover:bg-[#00ADB5] hover:text-white transition-colors"
+          >
+            View All Projects
+            <i data-feather="arrow-right" class="ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal for images -->
+    <div id="imageModal" class="">
+      <button class="closeBtn" aria-label="Close Image">&times;</button>
+      <img src="" alt="" />
+    </div>
+
+    <!-- Platforms Section (alternating middle timeline) -->
+    <section id="platforms" class="bg-[#222831] py-20 px-6">
+      <div class="container mx-auto">
+        <h2
+          class="text-3xl font-bold text-center mb-4 section-title mx-auto text-white"
+          data-aos="fade-up"
+        >
+          Coding Platforms
+        </h2>
+        <p class="text-center mb-12 text-[#00ADB5] text-lg">
+          My coding challenge journey
+        </p>
+        <div class="relative max-w-3xl mx-auto">
+          <!-- Vertical line -->
+          <div
+            class="absolute left-1/2 transform -translate-x-1/2 h-full border-l-2 border-[#00ADB5]"
+          ></div>
+          <!-- Timeline items -->
+          <div class="space-y-14">
+            <!-- Example platforms, truncated for brevity -->
+            <div class="flex items-center w-full">
+              <div class="w-1/2 pr-8 flex justify-end">
+                <div
+                  class="bg-[#393E46] rounded-xl p-5 shadow-lg w-fit text-right"
+                  data-aos="fade-right"
+                >
+                  <div class="flex items-center justify-end space-x-3 mb-2">
+                    <span class="font-bold text-xl text-[#00ADB5]">LeetCode</span>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png"
+                      alt="LeetCode"
+                      class="w-10 h-10"
+                    />
+                  </div>
+                  <p class="text-white text-sm">📝 Coding and DSA practice</p>
+                  <a
+                    href="https://leetcode.com/"
+                    target="_blank"
+                    class="text-[#00ADB5] text-xs underline mt-1 inline-block"
+                    >leetcode.com</a
+                  >
+                </div>
+              </div>
+              <div class="w-0 flex flex-col items-center">
+                <div
+                  class="w-5 h-5 bg-[#00ADB5] border-4 border-[#393E46] rounded-full z-10"
+                ></div>
+              </div>
+              <div class="w-1/2"></div>
+            </div>
+            <!-- Add remaining platforms similarly -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#393E46] py-10 px-6 text-center">
+      <div class="container mx-auto">
+        <p class="text-lg text-[#00ADB5] font-medium">Manjunath</p>
+        <p class="mt-2">Full-Stack Developer & DSA Enthusiast</p>
+        <div class="flex justify-center space-x-6 mt-6">
+          <a href="#" class="text-[#EEEEEE] hover:text-[#00ADB5] transition-colors"
+            ><i data-feather="github"></i
+          ></a>
+          <a href="#" class="text-[#EEEEEE] hover:text-[#00ADB5] transition-colors"
+            ><i data-feather="linkedin"></i
+          ></a>
+          <a href="#" class="text-[#EEEEEE] hover:text-[#00ADB5] transition-colors"
+            ><i data-feather="twitter"></i
+          ></a>
+          <a href="#" class="text-[#EEEEEE] hover:text-[#00ADB5] transition-colors"
+            ><i data-feather="dribbble"></i
+          ></a>
+        </div>
+        <p class="mt-8 text-sm text-gray-400">
+          © 2023 Manjunath. All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Initialize AOS
+AOS.init({
+  duration: 1000,
+  once: true,
+  offset: 100,
+});
+
+// Initialize Feather Icons
+feather.replace();
+
+// Mobile Menu Toggle
+document.getElementById("mobileMenuButton").addEventListener("click", function () {
+  const menu = document.getElementById("mobileMenu");
+  menu.classList.toggle("hidden");
+});
+
+// Scroll Indicator
+window.onscroll = function () {
+  const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  document.getElementById("scrollIndicator").style.width = scrolled + "%";
+  // Update active nav link
+  const sections = document.querySelectorAll("section");
+  const navLinks = document.querySelectorAll(".nav-link");
+  let current = "";
+  sections.forEach((section) => {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.clientHeight;
+    if (pageYOffset >= sectionTop - 200) {
+      current = section.getAttribute("id");
+    }
+  });
+  navLinks.forEach((link) => {
+    link.classList.remove("active-nav");
+    if (link.getAttribute("href").substring(1) === current) {
+      link.classList.add("active-nav");
+    }
+  });
+};
+
+// Animate skill meters on scroll
+function animateSkillMeters() {
+  const skillMeters = document.querySelectorAll(".skill-meter");
+  skillMeters.forEach((meter) => {
+    const width = meter.getAttribute("data-width");
+    meter.style.width = width;
+  });
+}
+// Check if skill section is in view
+function checkSkillsInView() {
+  const skillsSection = document.getElementById("skills");
+  const skillsSectionTop = skillsSection.offsetTop;
+  const skillsSectionHeight = skillsSection.clientHeight;
+  if (
+    window.pageYOffset > skillsSectionTop - 500 &&
+    window.pageYOffset <body skillsSectionTop + skillsSectionHeight
+  ) {
+    animateSkillMeters();
+    window.removeEventListener("scroll", checkSkillsInView);
+  }
+}
+window.addEventListener("scroll", checkSkillsInView);
+
+// Project card hover effect
+const projectCards = document.querySelectorAll(".project-card");
+projectCards.forEach((card) => {
+  card.addEventListener("mouseenter", function () {
+    this.querySelector("img").style.transform = "scale(1.1)";
+  });
+  card.addEventListener("mouseleave", function () {
+    this.querySelector("img").style.transform = "scale(1)";
+  });
+});
+
+// Certification card View Details toggle with improved UX and no overlap
+const certCards = document.querySelectorAll(".cert-card");
+certCards.forEach((card) => {
+  const viewDetailsBtn = card.querySelector(".view-details");
+  const certDesc = card.querySelector(".cert-desc");
+  // Initialize as collapsed
+  certDesc.classList.add("collapsed");
+  viewDetailsBtn.textContent = "View Details →";
+  viewDetailsBtn.setAttribute("aria-expanded", "false");
+
+  viewDetailsBtn.addEventListener("click", function () {
+    const isCollapsed = certDesc.classList.contains("collapsed");
+    if (isCollapsed) {
+      certDesc.classList.remove("collapsed");
+      viewDetailsBtn.textContent = "Hide Details →";
+      viewDetailsBtn.setAttribute("aria-expanded", "true");
+    } else {
+      certDesc.classList.add("collapsed");
+      viewDetailsBtn.textContent = "View Details →";
+      viewDetailsBtn.setAttribute("aria-expanded", "false");
+    }
+  });
+});
+
+// Modal popup logic
+const modal = document.getElementById("imageModal");
+const modalImg = modal.querySelector("img");
+const closeBtn = modal.querySelector(".closeBtn");
+
+function openModal(src, alt) {
+  modal.classList.add("show");
+  modalImg.src = src;
+  modalImg.alt = alt;
+  // Prevent background scroll
+  document.body.style.overflow = "hidden";
+}
+
+closeBtn.onclick = () => {
+  modal.classList.remove("show");
+  modalImg.src = "";
+  modalImg.alt = "";
+  document.body.style.overflow = "auto";
+};
+
+// Close modal on clicking outside the image
+modal.onclick = (e) => {
+  if (e.target === modal) {
+    closeBtn.onclick();
+  }
+};
+
+// Form validation and alert (if form with id contactForm exists)
+const contactForm = document.getElementById("contactForm");
+if (contactForm) {
+  contactForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const messageInput = document.getElementById("message");
+    let isValid = true;
+    if (nameInput.value.trim() === "") {
+      nameInput.style.boxShadow = "0 0 0 2px #ef4444";
+      isValid = false;
+    } else {
+      nameInput.style.boxShadow = "";
+    }
+    if (emailInput.value.trim() === "" || !emailInput.value.includes("@")) {
+      emailInput.style.boxShadow = "0 0 0 2px #ef4444";
+      isValid = false;
+    } else {
+      emailInput.style.boxShadow = "";
+    }
+    if (messageInput.value.trim() === "") {
+      messageInput.style.boxShadow = "0 0 0 2px #ef4444";
+      isValid = false;
+    } else {
+      messageInput.style.boxShadow = "";
+    }
+    if (isValid) {
+      alert("Thank you for your message! I will get back to you soon.");
+      contactForm.reset();
+    }
+  });
+}
+
+// Create floating particles for contact section if present
+function createParticles() {
+  const contactSection = document.getElementById("contact");
+  if (!contactSection) return;
+  for (let i = 0; i <script 10; i++) {
+    const particle = document.createElement("div");
+    particle.classList.add("particle");
+    const size = Math.random() * 8 + 2;
+    const posX = Math.random() * 100;
+    const posY = Math.random() * 100;
+    const delay = Math.random() * 5;
+    const duration = Math.random() * 10 + 10;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.left = `${posX}%`;
+    particle.style.top = `${posY}%`;
+    particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+    contactSection.appendChild(particle);
+  }
+}
+createParticles();
+
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+  anchor.addEventListener("click", function (e) {
+    e.preventDefault();
+    const targetId = this.getAttribute("href");
+    if (targetId === "#") return;
+    const targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.offsetTop - 80,
+        behavior: "smooth",
+      });
+      const mobileMenu = document.getElementById("mobileMenu");
+      if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
+        mobileMenu.classList.add("hidden");
+      }
+    }
+  });
+});
+
+// Gallery "Read More" toggle logic
+const readMoreButtons = document.querySelectorAll(".read-more-btn");
+readMoreButtons.forEach((btn) => {
+  const targetId = btn.getAttribute("data-target");
+  const targetElem = document.getElementById(targetId);
+  if (!targetElem) return;
+
+  // Initialize as collapsed
+  targetElem.classList.add("collapsed");
+  btn.textContent = "Read More →";
+  btn.setAttribute("aria-expanded", "false");
+
+  btn.addEventListener("click", () => {
+    const isCollapsed = targetElem.classList.contains("collapsed");
+    if (isCollapsed) {
+      targetElem.classList.remove("collapsed");
+      btn.textContent = "Read Less →";
+      btn.setAttribute("aria-expanded", "true");
+    } else {
+      targetElem.classList.add("collapsed");
+      btn.textContent = "Read More →";
+      btn.setAttribute("aria-expanded", "false");
+    }
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manjunath | Full-Stack Developer | DSA Enthusiast</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- AOS for Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Feather Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <!-- Poppins Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --charcoal: #222831;
+        --slate: #393e46;
+        --teal: #00adb5;
+        --white: #eeeeee;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--charcoal);
+        color: var(--white);
+        scroll-behavior: smooth;
+      }
+      /* --- NEW: Scroll Indicator Bar --- */
+      #scrollIndicator {
+          position: fixed;
+          top: 0;
+          left: 0;
+          height: 4px;
+          background-color: var(--teal);
+          z-index: 60;
+          transition: width 0.1s ease-out;
+      }
+      .section-title {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 3rem;
+      }
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--teal);
+      }
+      /* Navigation Underline Effect */
+      .nav-link {
+        position: relative;
+      }
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--teal);
+        transition: width 0.3s ease;
+      }
+      .nav-link:hover::after,
+      .active-nav::after {
+        width: 100%;
+      }
+      /* Skill Bar Animation */
+      .skill-meter {
+        transition: width 2s ease;
+      }
+      /* Project Card Hover (Smooth) */
+      .project-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.4);
+      }
+      /* Image Zoom on Hover for Projects/Gallery */
+      .project-card .img-wrapper {
+        overflow: hidden;
+      }
+      .project-card .img-wrapper img {
+        transition: transform 0.5s ease-in-out;
+      }
+      .project-card:hover .img-wrapper img {
+        transform: scale(1.05);
+      }
+
+      /* Certification Card (Simpler Hover) */
+      .cert-card {
+        transition: box-shadow 0.3s ease;
+      }
+      .cert-card:hover {
+        box-shadow: 0 10px 15px -3px rgba(0, 173, 181, 0.2), 0 4px 6px -2px rgba(0, 173, 181, 0.1);
+      }
+
+      /* Hero Animation Styles */
+      .floating {
+        animation: float 6s ease-in-out infinite;
+      }
+      @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
+      }
+      .pulse-ring {
+        position: absolute;
+        border: 2px solid var(--teal);
+        border-radius: 50%;
+        height: 100%;
+        width: 100%;
+        animation: pulse 3s linear infinite;
+        opacity: 0;
+      }
+      @keyframes pulse {
+        0% { transform: scale(1); opacity: 0.8; }
+        100% { transform: scale(1.5); opacity: 0; }
+      }
+      
+      /* --- NEW: Social Icon Hover Animation --- */
+      .social-icon {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+      }
+      .social-icon:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 5px 15px rgba(0, 173, 181, 0.3);
+      }
+
+      /* --- NEW: Skills Category Card Bounce Animation --- */
+      .skill-category-card {
+          transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+      }
+      .skill-category-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 10px 20px rgba(0, 173, 181, 0.2);
+      }
+
+
+      /* Education Timeline Styles */
+      .timeline-item {
+        position: relative;
+        padding-left: 2rem;
+        margin-bottom: 3rem;
+      }
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 8px;
+        width: 12px;
+        height: 12px;
+        border: 2px solid var(--teal);
+        border-radius: 50%;
+        background-color: var(--charcoal);
+      }
+      .timeline-item::after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 27px;
+        width: 2px;
+        height: calc(100% + 1.5rem);
+        background-color: var(--teal);
+      }
+      .timeline-item:last-child::after {
+        display: none;
+      }
+
+      /* Modal popup styles */
+      #imageModal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.8);
+        align-items: center;
+        justify-content: center;
+      }
+      #imageModal.show {
+        display: flex;
+      }
+      #imageModal img {
+        max-width: 90%;
+        max-height: 80vh;
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        animation: zoomIn 0.3s ease forwards;
+      }
+      @keyframes zoomIn {
+        from { transform: scale(0.8); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+      }
+      #imageModal .closeBtn {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        font-size: 2rem;
+        color: #00adb5;
+        cursor: pointer;
+        background: transparent;
+        border: none;
+        outline: none;
+        transition: color 0.3s ease;
+      }
+      #imageModal .closeBtn:hover {
+        color: #008b8f;
+      }
+      /* Cursor pointer for clickable images */
+      .cert-card img,
+      #gallery .project-card img {
+        cursor: pointer;
+        border-radius: 0.375rem; /* rounded-lg */
+      }
+    </style>
+  </head>
+  <body class="bg-[#222831] text-[#EEEEEE]">
+    <!-- Scroll Indicator Bar -->
+    <div id="scrollIndicator"></div>
+
+    <!-- Navigation -->
+    <nav
+      class="fixed w-full z-50 bg-[#222831]/90 backdrop-blur-sm py-4 px-6 shadow-lg"
+    >
+      <div class="container mx-auto flex justify-between items-center">
+        <a href="#" class="text-2xl font-bold text-[#00ADB5]">My Portfolio</a>
+        <div class="hidden md:flex space-x-8">
+          <a href="#home" class="nav-link active-nav">Home</a>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#education" class="nav-link">Education</a>
+          <a href="#experience" class="nav-link">Experience</a>
+          <a href="#gallery" class="nav-link">Gallery</a>
+          <a href="#certifications" class="nav-link">Certifications</a>
+          <a href="#skills" class="nav-link">Skills</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#platforms" class="nav-link">Platforms</a>
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="md:hidden" id="mobileMenuButton">
+            <i data-feather="menu" class="text-[#00ADB5] cursor-pointer"></i>
+          </div>
+        </div>
+      </div>
+      <!-- Mobile Menu -->
+      <div
+        class="hidden md:hidden bg-[#393E46] mt-4 p-4 rounded-lg"
+        id="mobileMenu"
+      >
+        <div class="flex flex-col space-y-4">
+          <a href="#home" class="nav-link active-nav">Home</a>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#education" class="nav-link">Education</a>
+          <a href="#certifications" class="nav-link">Certifications</a>
+          <a href="#skills" class="nav-link">Skills</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#gallery" class="nav-link">Gallery</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center pt-20 pb-16 px-6">
+      <div class="container mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div class="relative" data-aos="fade-right">
+          <div class="relative w-80 h-80 mx-auto">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div
+                class="w-64 h-64 rounded-full overflow-hidden border-4 border-[#00ADB5] shadow-lg"
+              >
+                <!-- Placeholder image, replace with a real profile image -->
+                <img
+                  src="https://placehold.co/256x256/222831/00adb5?text=Profile+Pic"
+                  onerror="this.onerror=null;this.src='https://placehold.co/256x256/222831/00adb5?text=Profile+Pic';"
+                  alt="Manjunath Profile Picture"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <!-- Pulsing Rings -->
+            <div class="pulse-ring" style="animation-delay: 0s"></div>
+            <div class="pulse-ring" style="animation-delay: 1s"></div>
+            <div class="pulse-ring" style="animation-delay: 2s"></div>
+          </div>
+        </div>
+        <div data-aos="fade-left" class="text-center md:text-left">
+          <h1 class="text-4xl md:text-5xl font-bold mb-4">Manjunath Gavandi</h1>
+          <h2 class="text-2xl md:text-3xl text-[#00ADB5] mb-6">
+            Full-Stack Developer & DSA Enthusiast
+          </h2>
+          <p class="text-lg mb-8 max-w-md mx-auto md:mx-0">
+            I create beautiful, functional digital experiences that blend
+            innovative design with cutting-edge technology.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+          >
+            <a
+              href="#projects"
+              class="px-6 py-3 bg-[#00ADB5] text-[#EEEEEE] rounded-lg font-medium hover:bg-[#00969D] transition-colors shadow-lg hover:shadow-xl hover:translate-y-[-2px] transition-transform"
+              >View My Work</a
+            >
+            <!-- Resume Download Fix -->
+            <a
+              href="/static/Manjunath_Resume.pdf"
+              download="Manjunath_Resume.pdf"
+              class="btn-resume px-6 py-3 bg-[#393E46] text-[#EEEEEE] rounded-lg font-medium hover:bg-[#00ADB5] transition-colors flex items-center justify-center shadow-lg hover:shadow-xl hover:translate-y-[-2px] transition-transform"
+            >
+              <span>Download Resume</span>
+              <i data-feather="arrow-down-circle" class="ml-2"></i>
+            </a>
+          </div>
+          <div class="flex justify-center md:justify-start space-x-4 mt-8">
+            <a
+              href="https://github.com/Manjunath0724"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-icon hover:bg-[#00A7B8] hover:text-[#EEEEEE]"
+            >
+              <i data-feather="github"></i>
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/manjunath-gavandi"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-icon hover:bg-[#00ADB5] hover:text-[#EEEEEE]"
+            >
+              <i data-feather="linkedin"></i>
+            </a>
+            <a
+              href="https://x.com/ManjunathGavan3?t=MTL1krujRI3U1KKVqzHbOg&s=09"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-icon hover:bg-[#00ADB5] hover:text-[#EEEEEE]"
+            >
+              <i data-feather="twitter"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6 bg-[#393E46]">
+      <div class="container mx-auto">
+        <h2
+          class="text-3xl font-bold text-center mb-16 section-title mx-auto"
+          data-aos="fade-up"
+        >
+          About Me
+        </h2>
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div data-aos="fade-right">
+            <p class="text-lg mb-6">
+              I'm a passionate full-stack developer and **DSA Enthusiast** with
+              experience creating digital solutions that make a difference. My
+              journey began when I built my first website at 15, and since then
+              I've been hooked on the power of code to bring ideas to life.
+            </p>
+            <p class="text-lg mb-6">
+              I believe that great design isn't just about how things look, but
+              how they work and feel. My approach combines aesthetic sensibility
+              with technical expertise to create experiences that are both
+              beautiful and functional.
+            </p>
+            <p class="text-lg">
+              When I'm not coding or designing, you can find me exploring
+              photography, hiking trails, or experimenting with new recipes in
+              the kitchen. I'm constantly learning and pushing myself to grow
+              both personally and professionally.
+            </p>
+          </div>
+          <div data-aos="fade-left">
+            <div class="relative">
+              <div class="grid grid-cols-2 gap-6">
+                <div
+                  class="bg-[#222831] p-6 rounded-lg shadow-lg floating"
+                  style="animation-delay: 0s"
+                >
+                  <div class="text-4xl text-[#00ADB5] mb-4">
+                    <i data-feather="code"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-2">Development</h3>
+                  <p>
+                    Clean, efficient code that powers exceptional digital
+                    experiences.
+                  </p>
+                </div>
+                <div
+                  class="bg-[#222831] p-6 rounded-lg shadow-lg floating"
+                  style="animation-delay: 1s"
+                >
+                  <div class="text-4xl text-[#00ADB5] mb-4">
+                    <i data-feather="pen-tool"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-2">Design</h3>
+                  <p>
+                    User-centered designs that are both beautiful and intuitive.
+                  </p>
+                </div>
+                <div
+                  class="bg-[#222831] p-6 rounded-lg shadow-lg floating"
+                  style="animation-delay: 2s"
+                >
+                  <div class="text-4xl text-[#00ADB5] mb-4">
+                    <i data-feather="trending-up"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-2">Strategy</h3>
+                  <p>
+                    Data-driven approaches to solve complex problems
+                    effectively.
+                  </p>
+                </div>
+                <div
+                  class="bg-[#222831] p-6 rounded-lg shadow-lg floating"
+                  style="animation-delay: 3s"
+                >
+                  <div class="text-4xl text-[#00ADB5] mb-4">
+                    <i data-feather="users"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-2">Collaboration</h3>
+                  <p>Working closely with teams to bring visions to reality.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section (Confirmed Original Timeline Design) -->
+    <section id="education" class="py-20 px-6 bg-[#222831]">
+      <div class="container mx-auto">
+        <h2
+          class="text-3xl font-bold text-center mb-16 section-title mx-auto"
+          data-aos="fade-up"
+        >
+          Education
+        </h2>
+        <div class="max-w-3xl mx-auto">
+          <div class="timeline-item" data-aos="fade-right">
+            <h3 class="text-xl font-semibold text-[#00ADB5]">SSC</h3>
+            <p class="text-lg font-medium">Shanti English Medium School</p>
+            <p class="text-[#00ADB5]">2009 - 2022</p>
+            <p class="mt-2">Completed Secondary School Certificate (SSC).</p>
+          </div>
+          <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
+            <h3 class="text-xl font-semibold text-[#00ADB5]">
+              Diploma in Computer Science
+            </h3>
+            <p class="text-lg font-medium">Government Polytechnic, Solapur</p>
+            <p class="text-[#00ADB5]">2022-2025</p>
+            <p class="mt-2">
+              Diploma focusing on fundamentals and software development.
+            </p>
+          </div>
+          <div class="timeline-item" data-aos="fade-right" data-aos-delay="200">
+            <h3 class="text-xl font-semibold text-[#00ADB5]">
+              B.Tech in Computer Science & Engineering
+            </h3>
+            <p class="text-lg font-medium">
+              DY Patil College of Engineering & Technology
+            </p>
+            <p class="text-[#00ADB5]">2025-Present</p>
+            <p class="mt-2">
+              Currently pursuing B.Tech in Computer Science & Engineering.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section with Certificate Image Popup -->
+    <section id="experience" class="bg-[#222831] py-20 px-6">
+      <div class="container mx-auto max-w-5xl">
+        <h2
+          class="text-3xl font-bold text-center mb-8 section-title mx-auto text-white"
+          data-aos="fade-up"
+        >
+          Experience
+        </h2>
+        <div class="space-y-10">
+          <!-- Experience Card 1 -->
+          <div
+            class="bg-[#393E46] rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col md:flex-row items-start md:items-center"
+            data-aos="fade-up"
+          >
+            <div class="flex-1">
+              <h3 class="text-xl font-semibold text-[#00adb5] mb-1">
+                Foundation of AI- Virtual Internship
+              </h3>
+              <p class="text-gray-300 mb-1">
+                Microsoft(AICTE / Edunet Foundation)
+              </p>
+              <p class="text-gray-400 text-sm mb-4">April 2025 - May 2025</p>
+              <ul class="list-disc list-inside text-gray-300 space-y-2 text-sm">
+                <li>
+                  Hands-on training and bootcamps with real-time projects
+                </li>
+                <li>
+                  Microsoft AI Skills Navigator modules across AI, ML, and Azure
+                  Industry webinars led by Microsoft professionals
+                </li>
+                <li>
+                  Learning applications in Generative AI, Microsoft Copilot, NLP
+                  & Computer Vision
+                </li>
+              </ul>
+            </div>
+            <div
+              class="mt-6 md:mt-0 md:ml-8 w-full md:w-48 shrink-0 cursor-pointer"
+            >
+              <img
+                src="https://placehold.co/200x150/00ADB5/222831?text=AI+Cert+Preview"
+                onerror="this.onerror=null;this.src='https://placehold.co/200x150/00ADB5/222831?text=AI+Cert+Preview';"
+                alt="Internship Certificate"
+                class="rounded-md border-2 border-[#00adb5] w-full"
+                title="Software Developer Intern Certificate"
+                onclick="openExpModal('modal-intern')"
+              />
+            </div>
+          </div>
+
+          <!-- Modal for Experience Card 1 (Kept for demonstration) -->
+          <div
+            id="modal-intern"
+            class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden"
+          >
+            <div
+              class="bg-[#222831] rounded-lg shadow-lg max-w-3xl w-full p-6 relative"
+            >
+              <button
+                class="absolute top-4 right-4 text-[#00adb5] hover:text-[#00969d] text-2xl font-bold"
+                onclick="closeExpModal('modal-intern')"
+                aria-label="Close modal"
+              >
+                &times;
+              </button>
+              <img
+                src="https://placehold.co/800x600/00ADB5/222831?text=AI+Certificate+Large"
+                onerror="this.onerror=null;this.src='https://placehold.co/800x600/00ADB5/222831?text=AI+Certificate+Large';"
+                alt="Internship Certificate Large"
+                class="rounded-md w-full"
+              />
+            </div>
+          </div>
+
+          <!-- Experience Card 2 -->
+          <div
+            class="bg-[#393E46] rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col md:flex-row items-start md:items-center"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <div class="flex-1">
+              <h3 class="text-xl font-semibold text-[#00adb5] mb-1">
+                Internship Trainee
+              </h3>
+              <p class="text-gray-300 mb-1">Vertex Technosys</p>
+              <p class="text-gray-400 text-sm mb-4">June 2024 - Jul 2024</p>
+              <ul class="list-disc list-inside text-gray-300 space-y-2 text-sm">
+                <li>
+                  Proficient in building responsive and visually engaging web
+                  interfaces using HTML5, CSS3, JavaScript, and modern frameworks
+                  like Bootstrap.
+                </li>
+                <li>
+                  Skilled in creating dynamic user experiences with interactive
+                  components, animations, and form validations.
+                </li>
+              </ul>
+            </div>
+            <div
+              class="mt-6 md:mt-0 md:ml-8 w-full md:w-48 shrink-0 cursor-pointer"
+            >
+              <img
+                src="https://placehold.co/200x150/00ADB5/222831?text=Web+Dev+Cert+Preview"
+                onerror="this.onerror=null;this.src='https://placehold.co/200x150/00ADB5/222831?text=Web+Dev+Cert+Preview';"
+                alt="Freelance Developer Certificate"
+                class="rounded-md border-2 border-[#00adb5] w-full"
+                title="Freelance Developer Certificate"
+                onclick="openExpModal('modal-freelance')"
+              />
+            </div>
+          </div>
+
+          <!-- Modal for Experience Card 2 (Kept for demonstration) -->
+          <div
+            id="modal-freelance"
+            class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden"
+          >
+            <div
+              class="bg-[#222831] rounded-lg shadow-lg max-w-3xl w-full p-6 relative"
+            >
+              <button
+                class="absolute top-4 right-4 text-[#00adb5] hover:text-[#00969d] text-2xl font-bold"
+                onclick="closeExpModal('modal-freelance')"
+                aria-label="Close modal"
+              >
+                &times;
+              </button>
+              <img
+                src="https://placehold.co/800x600/00ADB5/222831?text=Web+Dev+Certificate+Large"
+                onerror="this.onerror=null;this.src='https://placehold.co/800x600/00ADB5/222831?text=Web+Dev+Certificate+Large';"
+                alt="Freelance Developer Certificate Large"
+                class="rounded-md w-full"
+              />
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section (Point 1: View More Implemented) -->
+    <section id="gallery" class="py-20 px-6 bg-[#222831]">
+      <div class="container mx-auto">
+        <h2
+          class="text-3xl font-bold text-center mb-16 section-title mx-auto"
+          data-aos="fade-up"
+        >
+          Gallery
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-container">
+          <!-- Gallery Item 1 (Visible) -->
+          <div
+            class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg"
+            data-aos="zoom-in"
+          >
+            <div class="img-wrapper h-48">
+              <img
+                src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?ixlib=rb-4.0.3&auto=format&fit=crop&w=1332&q=80"
+                alt="Hackathon Participation"
+                class="w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)"
+              />
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2">Hackathon 2023</h3>
+              <p class="text-sm">
+                Participation certificate for national level hackathon
+              </p>
+            </div>
+          </div>
+          <!-- Gallery Item 2 (Visible) -->
+          <div
+            class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <div class="img-wrapper h-48">
+              <img
+                src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+                alt="Web Development Workshop"
+                class="w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)"
+              />
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2">
+                Web Development Workshop
+              </h3>
+              <p class="text-sm">
+                Conducted a workshop on modern web development
+              </p>
+            </div>
+          </div>
+          <!-- Gallery Item 3 (Visible) -->
+          <div
+            class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            <div class="img-wrapper h-48">
+              <img
+                src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+                alt="Tech Conference"
+                class="w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)"
+              />
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2">Tech Conference 2023</h3>
+              <p class="text-sm">Speaker at annual technology conference</p>
+            </div>
+          </div>
+          <!-- Gallery Item 4 (Hidden by default, shown by 'View More') -->
+          <div
+            class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg hidden"
+            data-aos="zoom-in"
+            data-aos-delay="300"
+          >
+            <div class="img-wrapper h-48">
+              <img
+                src="https://images.unsplash.com/photo-1542831371-29b5c76e6884?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                alt="Coding Competition"
+                class="w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)"
+              />
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2">Coding Competition</h3>
+              <p class="text-sm">First place in a local programming contest.</p>
+            </div>
+          </div>
+          <!-- Gallery Item 5 (Hidden by default, shown by 'View More') -->
+          <div
+            class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg hidden"
+            data-aos="zoom-in"
+            data-aos-delay="400"
+          >
+            <div class="img-wrapper h-48">
+              <img
+                src="https://images.unsplash.com/photo-1516321318423-f06f85e50029?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                alt="Team Building Event"
+                class="w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)"
+              />
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2">Team Building Event</h3>
+              <p class="text-sm">Organizing team for the college tech fest.</p>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-12">
+          <button
+            id="view-more-gallery"
+            onclick="toggleGallery()"
+            class="inline-flex items-center px-6 py-3 border border-[#00ADB5] text-[#00ADB5] rounded-lg font-medium hover:bg-[#00ADB5] hover:text-white transition-colors"
+          >
+            View More Gallery Photos
+            <i data-feather="arrow-down" class="ml-2"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications Section (Point 1: View More Implemented, Point 2: Hover Removed) -->
+    <section id="certifications" class="py-20 px-6 bg-[#393E46]">
+      <div class="container mx-auto">
+        <h2
+          class="text-3xl font-bold text-center mb-16 section-title mx-auto"
+          data-aos="fade-up"
+        >
+          Certifications
+        </h2>
+        <div
+          class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          id="certifications-container"
+        >
+          <!-- Cert 1 (Visible) -->
+          <div
+            class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg"
+            data-aos="fade-up"
+          >
+            <div class="text-[#00ADB5] text-4xl mb-4">
+              <i data-feather="award"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">
+              AWS Certified Solutions Architect
+            </h3>
+            <p class="text-[#00ADB5] mb-2">Amazon Web Services</p>
+            <p class="text-sm mb-4">June 2022</p>
+            <div class="w-full h-32 overflow-hidden mb-4">
+              <img
+                src="https://images.unsplash.com/photo-1502764613149-7f1d229e230f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="AWS Certification"
+                class="rounded w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)"
+              />
+            </div>
+            <p class="text-sm text-gray-400">
+              Designing and deploying scalable, highly available systems on AWS.
+            </p>
+          </div>
+
+          <!-- Cert 2 (Visible) -->
+          <div
+            class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <div class="text-[#00ADB5] text-4xl mb-4">
+              <i data-feather="award"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">
+              Google UX Design Professional
+            </h3>
+            <p class="text-[#00ADB5] mb-2">Google</p>
+            <p class="text-sm mb-4">March 2022</p>
+            <div class="w-full h-32 overflow-hidden mb-4">
+              <img
+                src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="Google UX Design Certification"
+                class="rounded w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)"
+              />
+            </div>
+            <p class="text-sm text-gray-400">
+              User-centered design process: empathize, define, ideate, prototype,
+              and test.
+            </p>
+          </div>
+
+          <!-- Cert 3 (Visible) -->
+          <div
+            class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <div class="text-[#00ADB5] text-4xl mb-4">
+              <i data-feather="award"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">
+              React Advanced Development
+            </h3>
+            <p class="text-[#00ADB5] mb-2">Meta</p>
+            <p class="text-sm mb-4">January 2022</p>
+            <div class="w-full h-32 overflow-hidden mb-4">
+              <img
+                src="https://images.unsplash.com/photo-1517433456452-f9633a875f6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="React Advanced Development Certification"
+                class="rounded w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)"
+              />
+            </div>
+            <p class="text-sm text-gray-400">
+              Advanced React patterns, performance optimization, and testing
+              strategies.
+            </p>
+          </div>
+
+          <!-- Cert 4 (Hidden by default, shown by 'View More') -->
+          <div
+            class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg hidden"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
+            <div class="text-[#00ADB5] text-4xl mb-4">
+              <i data-feather="award"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">
+              Introduction to Python
+            </h3>
+            <p class="text-[#00ADB5] mb-2">Coursera</p>
+            <p class="text-sm mb-4">October 2021</p>
+            <div class="w-full h-32 overflow-hidden mb-4">
+              <img
+                src="https://images.unsplash.com/photo-1534972195531-d756b9bfa923?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="Introduction to Python Certification"
+                class="rounded w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)"
+              />
+            </div>
+            <p class="text-sm text-gray-400">
+              Fundamental concepts of Python programming and data structures.
+            </p>
+          </div>
+        </div>
+        <div class="text-center mt-12">
+          <button
+            id="view-more-certifications"
+            onclick="toggleCertifications()"
+            class="inline-flex items-center px-6 py-3 border border-[#00ADB5] text-[#00ADB5] rounded-lg font-medium hover:bg-[#00ADB5] hover:text-white transition-colors"
+          >
+            View More Certifications
+            <i data-feather="arrow-down" class="ml-2"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section (Updated with Basic/Intermediate Labels and bar widths) -->
+    <section id="skills" class="py-20 px-6 bg-[#222831]">
+      <div class="container mx-auto">
+        <h2
+          class="text-3xl font-bold text-center mb-16 section-title mx-auto"
+          data-aos="fade-up"
+        >
+          Skills
+        </h2>
+        <div class="grid md:grid-cols-2 gap-12">
+          <div data-aos="fade-right">
+            <h3 class="text-xl font-semibold text-[#00ADB5] mb-6">
+              Frontend Development
+            </h3>
+            <!-- Skill 1: React (Basic - 40%) -->
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>React</span>
+                <span class="text-[#00ADB5] font-semibold">Basic</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div
+                  class="skill-meter h-full bg-[#00ADB5] rounded-full"
+                  style="width: 0%"
+                  data-width="40%"
+                ></div>
+              </div>
+            </div>
+            <!-- Skill 2: Tailwind CSS (Intermediate - 75%) -->
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>Tailwind CSS</span>
+                <span class="text-[#00ADB5] font-semibold">Intermediate</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div
+                  class="skill-meter h-full bg-[#00ADB5] rounded-full"
+                  style="width: 0%"
+                  data-width="75%"
+                ></div>
+              </div>
+            </div>
+            <!-- Skill 3: JavaScript (Intermediate - 75%) -->
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>JavaScript</span>
+                <span class="text-[#00ADB5] font-semibold">Intermediate</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div
+                  class="skill-meter h-full bg-[#00ADB5] rounded-full"
+                  style="width: 0%"
+                  data-width="75%"
+                ></div>
+              </div>
+            </div>
+            <!-- Added Skill: HTML/CSS (Intermediate - 75%) -->
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>HTML5/CSS3</span>
+                <span class="text-[#00ADB5] font-semibold">Intermediate</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div
+                  class="skill-meter h-full bg-[#00ADB5] rounded-full"
+                  style="width: 0%"
+                  data-width="75%"
+                ></div>
+              </div>
+            </div>
+          </div>
+          <div data-aos="fade-left">
+            <h3 class="text-xl font-semibold text-[#00ADB5] mb-6">
+              Backend & Database
+            </h3>
+            <!-- Skill 4: Python (Intermediate - 75%) -->
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>Python</span>
+                <span class="text-[#00ADB5] font-semibold">Intermediate</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div
+                  class="skill-meter h-full bg-[#00ADB5] rounded-full"
+                  style="width: 0%"
+                  data-width="75%"
+                ></div>
+              </div>
+            </div>
+            <!-- Skill 5: PostgreSQL (Intermediate - 75%) -->
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>PostgreSQL</span>
+                <span class="text-[#00ADB5] font-semibold">Intermediate</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div
+                  class="skill-meter h-full bg-[#00ADB5] rounded-full"
+                  style="width: 0%"
+                  data-width="75%"
+                ></div>
+              </div>
+            </div>
+            <!-- Skill 6: FastAPI (Basic - 40%) -->
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>FastAPI</span>
+                <span class="text-[#00ADB5] font-semibold">Basic</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div
+                  class="skill-meter h-full bg-[#00ADB5] rounded-full"
+                  style="width: 0%"
+                  data-width="40%"
+                ></div>
+              </div>
+            </div>
+            <!-- Removed Node.js/Express skill block -->
+          </div>
+        </div>
+        <!-- Reduced grid to 3 columns, DevOps block removed -->
+        <div class="mt-16 grid md:grid-cols-3 gap-6 text-center">
+          <div class="bg-[#393E46] p-6 rounded-lg shadow-lg skill-category-card" data-aos="zoom-in">
+            <div class="text-4xl text-[#00ADB5] mb-4">
+              <i data-feather="code"></i>
+            </div>
+            <h3 class="text-lg font-semibold">Frontend</h3>
+          </div>
+          <div
+            class="bg-[#393E46] p-6 rounded-lg shadow-lg skill-category-card"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <div class="text-4xl text-[#00ADB5] mb-4">
+              <i data-feather="server"></i>
+            </div>
+            <h3 class="text-lg font-semibold">Backend</h3>
+          </div>
+          <div
+            class="bg-[#393E46] p-6 rounded-lg shadow-lg skill-category-card"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            <div class="text-4xl text-[#00ADB5] mb-4">
+              <i data-feather="database"></i>
+            </div>
+            <h3 class="text-lg font-semibold">Database</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section (Removed View Code option) -->
+    <section id="projects" class="py-20 px-6 bg-[#393E46]">
+      <div class="container mx-auto">
+        <h2
+          class="text-3xl font-bold text-center mb-16 section-title mx-auto"
+          data-aos="fade-up"
+        >
+          Projects
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div
+            class="project-card bg-[#222831] rounded-lg overflow-hidden shadow-lg"
+            data-aos="fade-up"
+          >
+            <div class="img-wrapper h-48">
+              <img
+                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1015&q=80"
+                alt="Finance Dashboard"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Finance Dashboard</h3>
+              <p class="text-sm text-gray-400 mb-4">
+                React, Tailwind, PostgreSQL
+              </p>
+              <p class="mb-6">
+                A comprehensive financial management dashboard with real-time
+                analytics and visualization.
+              </p>
+              <div class="flex space-x-4">
+                <a
+                  href="#"
+                  class="px-4 py-2 bg-[#00ADB5] text-white rounded text-sm font-medium hover:bg-[#00969D] transition-colors hover:shadow-lg"
+                  >Live Demo</a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="project-card bg-[#222831] rounded-lg overflow-hidden shadow-lg"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <div class="img-wrapper h-48">
+              <img
+                src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80"
+                alt="E-commerce Platform"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">E-commerce Platform</h3>
+              <p class="text-sm text-gray-400 mb-4">Express, MongoDB, Stripe</p>
+              <p class="mb-6">
+                Full-featured e-commerce solution with product management, cart,
+                and payment processing.
+              </p>
+              <div class="flex space-x-4">
+                <a
+                  href="#"
+                  class="px-4 py-2 bg-[#00ADB5] text-white rounded text-sm font-medium hover:bg-[#00969D] transition-colors hover:shadow-lg"
+                  >Live Demo</a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="project-card bg-[#222831] rounded-lg overflow-hidden shadow-lg"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <div class="img-wrapper h-48">
+              <img
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+                alt="Task Management App"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Task Management App</h3>
+              <p class="text-sm text-gray-400 mb-4">
+                React Native, Firebase, Redux
+              </p>
+              <p class="mb-6">
+                A cross-platform task management application with real-time
+                synchronization and collaboration.
+              </p>
+              <div class="flex space-x-4">
+                <a
+                  href="#"
+                  class="px-4 py-2 bg-[#00ADB5] text-white rounded text-sm font-medium hover:bg-[#00969D] transition-colors hover:shadow-lg"
+                  >Live Demo</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-12">
+          <a
+            href="#"
+            class="inline-flex items-center px-6 py-3 border border-[#00ADB5] text-[#00ADB5] rounded-lg font-medium hover:bg-[#00ADB5] hover:text-white transition-colors"
+          >
+            View All Projects
+            <i data-feather="arrow-right" class="ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal for general image zoom -->
+    <div id="imageModal" class="">
+      <button class="closeBtn" aria-label="Close Image">&times;</button>
+      <img src="" alt="" />
+    </div>
+
+    <!-- Platforms Section (alternating middle timeline) -->
+    <!-- Commented out as requested -->
+    <!--
+    <section id="platforms" class="bg-[#222831] py-20 px-6">
+      <div class="container mx-auto">
+        <h2
+          class="text-3xl font-bold text-center mb-4 section-title mx-auto text-white"
+          data-aos="fade-up"
+        >
+          Coding Platforms
+        </h2>
+        <p class="text-center mb-12 text-[#00ADB5] text-lg">
+          My coding challenge journey
+        </p>
+        <div class="relative max-w-3xl mx-auto">
+          <div
+            class="absolute left-1/2 transform -translate-x-1/2 h-full border-l-2 border-[#00ADB5]"
+          ></div>
+          <div class="space-y-14">
+            <div class="flex items-center w-full">
+              <div class="w-1/2 pr-8 flex justify-end">
+                <div
+                  class="bg-[#393E46] rounded-xl p-5 shadow-lg w-fit text-right"
+                  data-aos="fade-right"
+                >
+                  <div class="flex items-center justify-end space-x-3 mb-2">
+                    <span class="font-bold text-xl text-[#00ADB5]"
+                      >LeetCode</span
+                    >
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png"
+                      alt="LeetCode"
+                      class="w-10 h-10"
+                    />
+                  </div>
+                  <p class="text-white text-sm">📝 Coding and DSA practice</p>
+                  <a
+                    href="https://leetcode.com/"
+                    target="_blank"
+                    class="text-[#00ADB5] text-xs underline mt-1 inline-block"
+                    >leetcode.com</a
+                  >
+                </div>
+              </div>
+              <div class="w-0 flex flex-col items-center">
+                <div
+                  class="w-5 h-5 bg-[#00ADB5] border-4 border-[#393E46] rounded-full z-10"
+                ></div>
+              </div>
+              <div class="w-1/2"></div>
+            </div>
+            <div class="flex items-center w-full">
+              <div class="w-1/2"></div>
+              <div class="w-0 flex flex-col items-center">
+                <div
+                  class="w-5 h-5 bg-[#00ADB5] border-4 border-[#393E46] rounded-full z-10"
+                ></div>
+              </div>
+              <div class="w-1/2 pl-8 flex justify-start">
+                <div
+                  class="bg-[#393E46] rounded-xl p-5 shadow-lg w-fit text-left"
+                  data-aos="fade-left"
+                >
+                  <div class="flex items-center space-x-3 mb-2">
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/6/65/HackerRank_logo.png"
+                      alt="HackerRank"
+                      class="w-10 h-10"
+                    />
+                    <span class="font-bold text-xl text-[#00ADB5]"
+                      >HackerRank</span
+                    >
+                  </div>
+                  <p class="text-white text-sm">
+                    💻 Problem solving & competitions
+                  </p>
+                  <a
+                    href="https://www.hackerrank.com/"
+                    target="_blank"
+                    class="text-[#00ADB5] text-xs underline mt-1 inline-block"
+                    >hackerrank.com</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center w-full">
+              <div class="w-1/2 pr-8 flex justify-end">
+                <div
+                  class="bg-[#393E46] rounded-xl p-5 shadow-lg w-fit text-right"
+                  data-aos="fade-right"
+                >
+                  <div class="flex items-center justify-end space-x-3 mb-2">
+                    <span class="font-bold text-xl text-[#00ADB5]">Unstop</span>
+                    <img
+                      src="https://d8it4huxumps7.cloudfront.net/uploads/images/unstop/svg/unstop-logo.svg"
+                      alt="Unstop"
+                      class="w-10 h-10"
+                    />
+                  </div>
+                  <p class="text-white text-sm">
+                    🏆 Coding hackathons & quizzes
+                  </p>
+                  <a
+                    href="https://unstop.com/"
+                    target="_blank"
+                    class="text-[#00ADB5] text-xs underline mt-1 inline-block"
+                    >unstop.com</a
+                  >
+                </div>
+              </div>
+              <div class="w-0 flex flex-col items-center">
+                <div
+                  class="w-5 h-5 bg-[#00ADB5] border-4 border-[#393E46] rounded-full z-10"
+                ></div>
+              </div>
+              <div class="w-1/2"></div>
+            </div>
+            <div class="flex items-center w-full">
+              <div class="w-1/2"></div>
+              <div class="w-0 flex flex-col items-center">
+                <div
+                  class="w-5 h-5 bg-[#00ADB5] border-4 border-[#393E46] rounded-full z-10"
+                ></div>
+              </div>
+              <div class="w-1/2 pl-8 flex justify-start">
+                <div
+                  class="bg-[#393E46] rounded-xl p-5 shadow-lg w-fit text-left"
+                  data-aos="fade-left"
+                >
+                  <div class="flex items-center space-x-3 mb-2">
+                    <img
+                      src="https://sta.codeforces.com/s/65348/images/codeforces-logo-with-telegram.png"
+                      alt="Codeforces"
+                      class="w-10 h-10"
+                    />
+                    <span class="font-bold text-xl text-[#00ADB5]"
+                      >Codeforces</span
+                    >
+                  </div>
+                  <p class="text-white text-sm">⏱️ Timed contests & rankings</p>
+                  <a
+                    href="https://codeforces.com/"
+                    target="_blank"
+                    class="text-[#00ADB5] text-xs underline mt-1 inline-block"
+                    >codeforces.com</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center w-full">
+              <div class="w-1/2 pr-8 flex justify-end">
+                <div
+                  class="bg-[#393E46] rounded-xl p-5 shadow-lg w-fit text-right"
+                  data-aos="fade-right"
+                >
+                  <div class="flex items-center justify-end space-x-3 mb-2">
+                    <span class="font-bold text-xl text-[#00ADB5]"
+                      >CodeChef</span
+                    >
+                    <img
+                      src="https://s3.amazonaws.com/codechef_shared/sites/all/themes/abessive/logo.png"
+                      alt="CodeChef"
+                      class="w-10 h-10"
+                    />
+                  </div>
+                  <p class="text-white text-sm">
+                    🥇 Coding marathons & puzzles
+                  </p>
+                  <a
+                    href="https://www.codechef.com/"
+                    target="_blank"
+                    class="text-[#00ADB5] text-xs underline mt-1 inline-block"
+                    >codechef.com</a
+                  >
+                </div>
+              </div>
+              <div class="w-0 flex flex-col items-center">
+                <div
+                  class="w-5 h-5 bg-[#00ADB5] border-4 border-[#393E46] rounded-full z-10"
+                ></div>
+              </div>
+              <div class="w-1/2"></div>
+            </div>
+            <div class="flex items-center w-full">
+              <div class="w-1/2"></div>
+              <div class="w-0 flex flex-col items-center">
+                <div
+                  class="w-5 h-5 bg-[#00ADB5] border-4 border-[#393E46] rounded-full z-10"
+                ></div>
+              </div>
+              <div class="w-1/2 pl-8 flex justify-start">
+                <div
+                  class="bg-[#393E46] rounded-xl p-5 shadow-lg w-fit text-left"
+                  data-aos="fade-left"
+                >
+                  <div class="flex items-center space-x-3 mb-2">
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg"
+                      alt="GeeksforGeeks"
+                      class="w-10 h-10"
+                    />
+                    <span class="font-bold text-xl text-[#00ADB5]"
+                      >GeeksforGeeks</span
+                    >
+                  </div>
+                  <p class="text-white text-sm">
+                    📚 Articles, tutorials & practice
+                  </p>
+                  <a
+                    href="https://www.geeksforgeeks.org/"
+                    target="_blank"
+                    class="text-[#00ADB5] text-xs underline mt-1 inline-block"
+                    >geeksforgeeks.org</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    -->
+    <!-- End Commented Out Platforms Section -->
+
+    <!-- Footer Fix: Changed background to charcoal (222831) for contrast with projects section (393E46) -->
+    <footer class="bg-[#222831] py-10 px-6 text-center border-t border-[#00ADB5]/20">
+      <div class="container mx-auto">
+        <p class="text-lg text-[#00ADB5] font-medium">Manjunath</p>
+        <p class="mt-2">Full-Stack Developer & DSA Enthusiast</p>
+        <div class="flex justify-center space-x-6 mt-6">
+          <a
+            href="https://github.com/Manjunath0724"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-[#EEEEEE] hover:text-[#00ADB5] social-icon"
+          >
+            <i data-feather="github"></i>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/manjunath-gavandi"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-[#EEEEEE] hover:text-[#00ADB5] social-icon"
+          >
+            <i data-feather="linkedin"></i>
+          </a>
+          <a
+            href="https://x.com/ManjunathGavan3?t=MTL1krujRI3U1KKVqzHbOg&s=09"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-[#EEEEEE] hover:text-[#00ADB5] social-icon"
+          >
+            <i data-feather="twitter"></i>
+          </a>
+        </div>
+        <p class="mt-8 text-sm text-gray-400">
+          © 2023 Manjunath. All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // --- Constants for View More Logic ---
+      const initialGalleryItems = 3;
+      const initialCertItems = 3;
+
+      // --- Initialization ---
+      AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100,
+      });
+      
+      // Initialize Feather Icons at the start
+      feather.replace();
+
+      // --- Modals for Experience Section (Kept separate as they are specific to Exp cards) ---
+      function openExpModal(id) {
+        document.getElementById(id).classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+      function closeExpModal(id) {
+        document.getElementById(id).classList.add("hidden");
+        document.body.style.overflow = "auto";
+      }
+
+      // --- General Image Modal for Gallery and Certifications ---
+      const imageModal = document.getElementById("imageModal");
+      const modalImg = imageModal.querySelector("img");
+      const closeBtn = imageModal.querySelector(".closeBtn");
+
+      function openImageModal(src, alt) {
+        imageModal.classList.add("show");
+        modalImg.src = src;
+        modalImg.alt = alt;
+        document.body.style.overflow = "hidden";
+      }
+
+      closeBtn.onclick = () => {
+        imageModal.classList.remove("show");
+        modalImg.src = "";
+        modalImg.alt = "";
+        document.body.style.overflow = "auto";
+      };
+
+      imageModal.onclick = (e) => {
+        if (e.target === imageModal) {
+          closeBtn.onclick();
+        }
+      };
+
+      // --- View More Functionality for Gallery and Certifications ---
+      function setupViewMore(containerId, buttonId, initialCount) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        const items = container.querySelectorAll(`.${containerId.replace('-container', '-item')}`);
+        const button = document.getElementById(buttonId);
+        let itemsVisible = initialCount;
+
+        // Hide all items beyond the initial count
+        items.forEach((item, index) => {
+          if (index >= initialCount) {
+            item.classList.add("hidden");
+          }
+        });
+        
+        // Hide button if total items <= initial count
+        if (items.length <= initialCount) {
+            button.classList.add('hidden');
+        }
+
+
+        // The toggle function
+        return function () {
+          const isShowingAll = itemsVisible === items.length;
+
+          if (isShowingAll) {
+            // Hide items and revert to initial count
+            items.forEach((item, index) => {
+              if (index >= initialCount) {
+                item.classList.add("hidden");
+              }
+            });
+            itemsVisible = initialCount;
+            button.innerHTML = `View More ${containerId.includes('gallery') ? 'Gallery Photos' : 'Certifications'} <i data-feather="arrow-down" class="ml-2"></i>`;
+            // Scroll to the top of the section to show the newly truncated list
+            document.getElementById(containerId.replace('-container', '')).scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            // Show all items
+            items.forEach((item) => {
+              item.classList.remove("hidden");
+            });
+            itemsVisible = items.length;
+            button.innerHTML = `View Less <i data-feather="arrow-up" class="ml-2"></i>`;
+          }
+          feather.replace(); // Re-render feather icons after content change
+        };
+      }
+
+      // Assign the toggle functions to the global scope
+      const toggleGallery = setupViewMore('gallery-container', 'view-more-gallery', initialGalleryItems);
+      const toggleCertifications = setupViewMore('certifications-container', 'view-more-certifications', initialCertItems);
+
+      // --- Skills Section Animation ---
+      function animateSkillMeters() {
+        const skillMeters = document.querySelectorAll(".skill-meter");
+        skillMeters.forEach((meter) => {
+          const width = meter.getAttribute("data-width");
+          setTimeout(() => {
+            meter.style.width = width;
+          }, 100);
+        });
+      }
+      
+      // Check if skill section is in view to start the animation
+      function checkSkillsInView() {
+        const skillsSection = document.getElementById("skills");
+        if (!skillsSection) return;
+
+        const skillsSectionTop = skillsSection.offsetTop;
+        const viewportHeight = window.innerHeight;
+        
+        // Trigger animation when the section is 500px from the bottom of the viewport
+        if (window.pageYOffset > skillsSectionTop - viewportHeight + 500) {
+          animateSkillMeters();
+          window.removeEventListener("scroll", checkSkillsInView);
+        }
+      }
+      
+      window.addEventListener("scroll", checkSkillsInView);
+      window.addEventListener("load", checkSkillsInView); // Run on load too
+
+      // --- Scroll Indicator & Active Nav Link Logic ---
+      window.onscroll = function () {
+        // Scroll indicator update
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("scrollIndicator").style.width = scrolled + "%";
+        
+        // Update active nav link
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
+        let current = "";
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          if (pageYOffset >= sectionTop - 200) {
+            current = section.getAttribute("id");
+          }
+        });
+        navLinks.forEach((link) => {
+          link.classList.remove("active-nav");
+          if (link.getAttribute("href").substring(1) === current) {
+            link.classList.add("active-nav");
+          }
+        });
+      };
+
+      // Mobile Menu Toggle
+      document
+        .getElementById("mobileMenuButton")
+        .addEventListener("click", function () {
+          const menu = document.getElementById("mobileMenu");
+          menu.classList.toggle("hidden");
+        });
+
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute("href");
+          if (targetId === "#") return;
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: "smooth",
+            });
+            const mobileMenu = document.getElementById("mobileMenu");
+            if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
+              mobileMenu.classList.add("hidden");
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

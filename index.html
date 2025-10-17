@@ -55,9 +55,13 @@
         height: 3px;
         background-color: var(--teal);
       }
-      /* Navigation Underline Effect */
+      /* Navigation Underline Effect & subtle glow */
       .nav-link {
         position: relative;
+        transition: color 0.3s ease;
+      }
+      .nav-link:hover {
+        text-shadow: 0 0 5px rgba(0, 173, 181, 0.5);
       }
       .nav-link::after {
         content: "";
@@ -67,6 +71,7 @@
         width: 0;
         height: 2px;
         background-color: var(--teal);
+        box-shadow: 0 0 8px var(--teal); /* Added glow */
         transition: width 0.3s ease;
       }
       .nav-link:hover::after,
@@ -76,6 +81,7 @@
       /* Skill Bar Animation */
       .skill-meter {
         transition: width 2s ease;
+        box-shadow: 0 0 5px var(--teal); /* Subtle glow on fill */
       }
       /* Project Card Hover (Smooth) */
       .project-card {
@@ -83,7 +89,7 @@
       }
       .project-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.6); /* Darker shadow for depth */
       }
       /* Image Zoom on Hover for Projects/Gallery */
       .project-card .img-wrapper {
@@ -98,10 +104,11 @@
 
       /* Certification Card (Simpler Hover) */
       .cert-card {
-        transition: box-shadow 0.3s ease;
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
       }
       .cert-card:hover {
         box-shadow: 0 10px 15px -3px rgba(0, 173, 181, 0.2), 0 4px 6px -2px rgba(0, 173, 181, 0.1);
+        transform: translateY(-2px);
       }
 
       /* Hero Animation Styles */
@@ -127,14 +134,19 @@
         100% { transform: scale(1.5); opacity: 0; }
       }
       
-      /* --- NEW: Social Icon Hover Animation --- */
-      .social-icon {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+      /* --- FIXED: Social Icon Hover Animation (Footer and Hero) --- */
+      /* Apply animation directly to the container for shape preservation */
+      .social-link {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+          padding: 12px; /* Ensure sufficient padding for touch/click */
       }
-      .social-icon:hover {
-        transform: translateY(-3px) scale(1.05);
-        box-shadow: 0 5px 15px rgba(0, 173, 181, 0.3);
+      .social-link:hover {
+          transform: translateY(-3px) scale(1.05);
+          box-shadow: 0 5px 15px rgba(0, 173, 181, 0.3);
       }
 
       /* --- NEW: Skills Category Card Bounce Animation --- */
@@ -146,8 +158,7 @@
           box-shadow: 0 10px 20px rgba(0, 173, 181, 0.2);
       }
 
-
-      /* Education Timeline Styles */
+      /* Education Timeline Styles (Kept original structure) */
       .timeline-item {
         position: relative;
         padding-left: 2rem;
@@ -187,44 +198,70 @@
         width: 100%;
         height: 100%;
         overflow: auto;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.9); /* Darker overlay */
         align-items: center;
         justify-content: center;
+        backdrop-filter: blur(5px); /* Added blur effect */
       }
       #imageModal.show {
         display: flex;
-      }
-      #imageModal img {
-        max-width: 90%;
-        max-height: 80vh;
-        border-radius: 0.5rem;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-        animation: zoomIn 0.3s ease forwards;
-      }
-      @keyframes zoomIn {
-        from { transform: scale(0.8); opacity: 0; }
-        to { transform: scale(1); opacity: 1; }
-      }
-      #imageModal .closeBtn {
-        position: absolute;
-        top: 2rem;
-        right: 2rem;
-        font-size: 2rem;
-        color: #00adb5;
-        cursor: pointer;
-        background: transparent;
-        border: none;
-        outline: none;
-        transition: color 0.3s ease;
-      }
-      #imageModal .closeBtn:hover {
-        color: #008b8f;
       }
       /* Cursor pointer for clickable images */
       .cert-card img,
       #gallery .project-card img {
         cursor: pointer;
         border-radius: 0.375rem; /* rounded-lg */
+      }
+      /* Cursor for certificate preview */
+      .exp-cert-preview {
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+      .exp-cert-preview:hover {
+        transform: scale(1.02);
+      }
+
+      /* --- FIXED: Modal Close Button Positioning --- */
+      #imageModal .closeBtn {
+          position: fixed; /* Use fixed positioning relative to viewport */
+          top: 3rem; 
+          right: 3rem;
+          font-size: 2.5rem; /* Slightly larger */
+          color: #00adb5;
+          cursor: pointer;
+          background: transparent;
+          border: none;
+          outline: none;
+          transition: color 0.3s ease, transform 0.2s;
+          z-index: 1001; /* Ensure it is above the modal content */
+          font-weight: 300; 
+          line-height: 1;
+      }
+      #imageModal .closeBtn:hover {
+          color: #eeeeee; /* White on hover */
+          transform: rotate(90deg); /* Added subtle animation */
+      }
+      /* Ensure image inside modal is visible below the button */
+      #imageModal img {
+        max-width: 90%;
+        max-height: 80vh;
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        animation: zoomIn 0.3s ease forwards;
+        z-index: 1000;
+      }
+      @keyframes zoomIn {
+        from { transform: scale(0.8); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+      }
+
+      /* Text Cursors for Typing Effect */
+      .typing-cursor {
+        animation: blink-cursor 0.75s step-end infinite;
+      }
+      @keyframes blink-cursor {
+        from, to { opacity: 0; }
+        50% { opacity: 1; }
       }
     </style>
   </head>
@@ -247,7 +284,6 @@
           <a href="#certifications" class="nav-link">Certifications</a>
           <a href="#skills" class="nav-link">Skills</a>
           <a href="#projects" class="nav-link">Projects</a>
-          <a href="#platforms" class="nav-link">Platforms</a>
         </div>
         <div class="flex items-center space-x-4">
           <div class="md:hidden" id="mobileMenuButton">
@@ -272,7 +308,7 @@
       </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section (Typing Animation Added) -->
     <section id="home" class="min-h-screen flex items-center pt-20 pb-16 px-6">
       <div class="container mx-auto grid md:grid-cols-2 gap-12 items-center">
         <div class="relative" data-aos="fade-right">
@@ -297,9 +333,9 @@
           </div>
         </div>
         <div data-aos="fade-left" class="text-center md:text-left">
-          <h1 class="text-4xl md:text-5xl font-bold mb-4">Manjunath Gavandi</h1>
-          <h2 class="text-2xl md:text-3xl text-[#00ADB5] mb-6">
-            Full-Stack Developer & DSA Enthusiast
+          <!-- Typing elements are empty and filled by JS -->
+          <h1 class="text-4xl md:text-5xl font-bold mb-4" id="typing-name"></h1>
+          <h2 class="text-2xl md:text-3xl text-[#00ADB5] mb-6" id="typing-title">
           </h2>
           <p class="text-lg mb-8 max-w-md mx-auto md:mx-0">
             I create beautiful, functional digital experiences that blend
@@ -328,7 +364,7 @@
               href="https://github.com/Manjunath0724"
               target="_blank"
               rel="noopener noreferrer"
-              class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-icon hover:bg-[#00A7B8] hover:text-[#EEEEEE]"
+              class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-link hover:bg-[#00A7B8] hover:text-[#EEEEEE]"
             >
               <i data-feather="github"></i>
             </a>
@@ -337,7 +373,7 @@
               href="https://www.linkedin.com/in/manjunath-gavandi"
               target="_blank"
               rel="noopener noreferrer"
-              class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-icon hover:bg-[#00ADB5] hover:text-[#EEEEEE]"
+              class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-link hover:bg-[#00ADB5] hover:text-[#EEEEEE]"
             >
               <i data-feather="linkedin"></i>
             </a>
@@ -345,7 +381,7 @@
               href="https://x.com/ManjunathGavan3?t=MTL1krujRI3U1KKVqzHbOg&s=09"
               target="_blank"
               rel="noopener noreferrer"
-              class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-icon hover:bg-[#00ADB5] hover:text-[#EEEEEE]"
+              class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-link hover:bg-[#00ADB5] hover:text-[#EEEEEE]"
             >
               <i data-feather="twitter"></i>
             </a>
@@ -484,7 +520,7 @@
       </div>
     </section>
 
-    <!-- Experience Section with Certificate Image Popup -->
+    <!-- Experience Section (Fixed Modals) -->
     <section id="experience" class="bg-[#222831] py-20 px-6">
       <div class="container mx-auto max-w-5xl">
         <h2
@@ -522,39 +558,16 @@
               </ul>
             </div>
             <div
-              class="mt-6 md:mt-0 md:ml-8 w-full md:w-48 shrink-0 cursor-pointer"
+              class="mt-6 md:mt-0 md:ml-8 w-full md:w-48 shrink-0 exp-cert-preview"
             >
+              <!-- Uses the global openImageModal -->
               <img
                 src="https://placehold.co/200x150/00ADB5/222831?text=AI+Cert+Preview"
                 onerror="this.onerror=null;this.src='https://placehold.co/200x150/00ADB5/222831?text=AI+Cert+Preview';"
-                alt="Internship Certificate"
+                alt="AI Internship Certificate"
                 class="rounded-md border-2 border-[#00adb5] w-full"
-                title="Software Developer Intern Certificate"
-                onclick="openExpModal('modal-intern')"
-              />
-            </div>
-          </div>
-
-          <!-- Modal for Experience Card 1 (Kept for demonstration) -->
-          <div
-            id="modal-intern"
-            class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden"
-          >
-            <div
-              class="bg-[#222831] rounded-lg shadow-lg max-w-3xl w-full p-6 relative"
-            >
-              <button
-                class="absolute top-4 right-4 text-[#00adb5] hover:text-[#00969d] text-2xl font-bold"
-                onclick="closeExpModal('modal-intern')"
-                aria-label="Close modal"
-              >
-                &times;
-              </button>
-              <img
-                src="https://placehold.co/800x600/00ADB5/222831?text=AI+Certificate+Large"
-                onerror="this.onerror=null;this.src='https://placehold.co/800x600/00ADB5/222831?text=AI+Certificate+Large';"
-                alt="Internship Certificate Large"
-                class="rounded-md w-full"
+                title="Software Developer Intern Certificate (Click to Enlarge)"
+                onclick="openImageModal('https://placehold.co/800x600/00ADB5/222831?text=AI+Certificate+Large', this.alt)"
               />
             </div>
           </div>
@@ -584,46 +597,23 @@
               </ul>
             </div>
             <div
-              class="mt-6 md:mt-0 md:ml-8 w-full md:w-48 shrink-0 cursor-pointer"
+              class="mt-6 md:mt-0 md:ml-8 w-full md:w-48 shrink-0 exp-cert-preview"
             >
+              <!-- Uses the global openImageModal -->
               <img
                 src="https://placehold.co/200x150/00ADB5/222831?text=Web+Dev+Cert+Preview"
                 onerror="this.onerror=null;this.src='https://placehold.co/200x150/00ADB5/222831?text=Web+Dev+Cert+Preview';"
-                alt="Freelance Developer Certificate"
+                alt="Web Dev Internship Certificate"
                 class="rounded-md border-2 border-[#00adb5] w-full"
-                title="Freelance Developer Certificate"
-                onclick="openExpModal('modal-freelance')"
-              />
-            </div>
-          </div>
-
-          <!-- Modal for Experience Card 2 (Kept for demonstration) -->
-          <div
-            id="modal-freelance"
-            class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden"
-          >
-            <div
-              class="bg-[#222831] rounded-lg shadow-lg max-w-3xl w-full p-6 relative"
-            >
-              <button
-                class="absolute top-4 right-4 text-[#00adb5] hover:text-[#00969d] text-2xl font-bold"
-                onclick="closeExpModal('modal-freelance')"
-                aria-label="Close modal"
-              >
-                &times;
-              </button>
-              <img
-                src="https://placehold.co/800x600/00ADB5/222831?text=Web+Dev+Certificate+Large"
-                onerror="this.onerror=null;this.src='https://placehold.co/800x600/00ADB5/222831?text=Web+Dev+Certificate+Large';"
-                alt="Freelance Developer Certificate Large"
-                class="rounded-md w-full"
+                title="Freelance Developer Certificate (Click to Enlarge)"
+                onclick="openImageModal('https://placehold.co/800x600/00ADB5/222831?text=Web+Dev+Certificate+Large', this.alt)"
               />
             </div>
           </div>
         </div>
     </section>
 
-    <!-- Gallery Section (Point 1: View More Implemented) -->
+    <!-- Gallery Section (View More Implemented) -->
     <section id="gallery" class="py-20 px-6 bg-[#222831]">
       <div class="container mx-auto">
         <h2
@@ -747,7 +737,7 @@
       </div>
     </section>
 
-    <!-- Certifications Section (Point 1: View More Implemented, Point 2: Hover Removed) -->
+    <!-- Certifications Section (View More Implemented) -->
     <section id="certifications" class="py-20 px-6 bg-[#393E46]">
       <div class="container mx-auto">
         <h2
@@ -999,10 +989,9 @@
                 ></div>
               </div>
             </div>
-            <!-- Removed Node.js/Express skill block -->
           </div>
         </div>
-        <!-- Reduced grid to 3 columns, DevOps block removed -->
+        <!-- Skills Category Cards (Animation Added) -->
         <div class="mt-16 grid md:grid-cols-3 gap-6 text-center">
           <div class="bg-[#393E46] p-6 rounded-lg shadow-lg skill-category-card" data-aos="zoom-in">
             <div class="text-4xl text-[#00ADB5] mb-4">
@@ -1144,14 +1133,13 @@
       </div>
     </section>
 
-    <!-- Modal for general image zoom -->
+    <!-- Modal for general image zoom (Used for Gallery, Certs, and Experience) -->
     <div id="imageModal" class="">
       <button class="closeBtn" aria-label="Close Image">&times;</button>
       <img src="" alt="" />
     </div>
 
-    <!-- Platforms Section (alternating middle timeline) -->
-    <!-- Commented out as requested -->
+    <!-- START: Commented Coding Platforms Section (Requested to be re-added) -->
     <!--
     <section id="platforms" class="bg-[#222831] py-20 px-6">
       <div class="container mx-auto">
@@ -1372,9 +1360,10 @@
       </div>
     </section>
     -->
-    <!-- End Commented Out Platforms Section -->
+    <!-- END: Commented Coding Platforms Section -->
 
-    <!-- Footer Fix: Changed background to charcoal (222831) for contrast with projects section (393E46) -->
+
+    <!-- Footer FIX: Changed background to charcoal (222831) and added border for contrast with projects section (393E46) -->
     <footer class="bg-[#222831] py-10 px-6 text-center border-t border-[#00ADB5]/20">
       <div class="container mx-auto">
         <p class="text-lg text-[#00ADB5] font-medium">Manjunath</p>
@@ -1384,7 +1373,7 @@
             href="https://github.com/Manjunath0724"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-[#EEEEEE] hover:text-[#00ADB5] social-icon"
+            class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-link"
           >
             <i data-feather="github"></i>
           </a>
@@ -1392,7 +1381,7 @@
             href="https://www.linkedin.com/in/manjunath-gavandi"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-[#EEEEEE] hover:text-[#00ADB5] social-icon"
+            class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-link"
           >
             <i data-feather="linkedin"></i>
           </a>
@@ -1400,7 +1389,7 @@
             href="https://x.com/ManjunathGavan3?t=MTL1krujRI3U1KKVqzHbOg&s=09"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-[#EEEEEE] hover:text-[#00ADB5] social-icon"
+            class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-link"
           >
             <i data-feather="twitter"></i>
           </a>
@@ -1423,27 +1412,20 @@
         offset: 100,
       });
       
-      // Initialize Feather Icons at the start
       feather.replace();
 
-      // --- Modals for Experience Section (Kept separate as they are specific to Exp cards) ---
-      function openExpModal(id) {
-        document.getElementById(id).classList.remove("hidden");
-        document.body.style.overflow = "hidden";
-      }
-      function closeExpModal(id) {
-        document.getElementById(id).classList.add("hidden");
-        document.body.style.overflow = "auto";
-      }
-
-      // --- General Image Modal for Gallery and Certifications ---
+      // --- Modal Logic (Unified for Experience, Gallery, Certs) ---
+      
       const imageModal = document.getElementById("imageModal");
       const modalImg = imageModal.querySelector("img");
       const closeBtn = imageModal.querySelector(".closeBtn");
 
       function openImageModal(src, alt) {
+        // Find the correct image source to use for the full-size view
+        const finalSrc = src.includes('placehold.co') ? src.replace('200x150', '800x600').replace('+Preview', '+Large') : src;
+
         imageModal.classList.add("show");
-        modalImg.src = src;
+        modalImg.src = finalSrc;
         modalImg.alt = alt;
         document.body.style.overflow = "hidden";
       }
@@ -1456,10 +1438,12 @@
       };
 
       imageModal.onclick = (e) => {
+        // Only close if the click target is the modal backdrop, not the image itself
         if (e.target === imageModal) {
           closeBtn.onclick();
         }
       };
+
 
       // --- View More Functionality for Gallery and Certifications ---
       function setupViewMore(containerId, buttonId, initialCount) {
@@ -1487,7 +1471,6 @@
           const isShowingAll = itemsVisible === items.length;
 
           if (isShowingAll) {
-            // Hide items and revert to initial count
             items.forEach((item, index) => {
               if (index >= initialCount) {
                 item.classList.add("hidden");
@@ -1495,17 +1478,15 @@
             });
             itemsVisible = initialCount;
             button.innerHTML = `View More ${containerId.includes('gallery') ? 'Gallery Photos' : 'Certifications'} <i data-feather="arrow-down" class="ml-2"></i>`;
-            // Scroll to the top of the section to show the newly truncated list
             document.getElementById(containerId.replace('-container', '')).scrollIntoView({ behavior: 'smooth', block: 'start' });
           } else {
-            // Show all items
             items.forEach((item) => {
               item.classList.remove("hidden");
             });
             itemsVisible = items.length;
             button.innerHTML = `View Less <i data-feather="arrow-up" class="ml-2"></i>`;
           }
-          feather.replace(); // Re-render feather icons after content change
+          feather.replace();
         };
       }
 
@@ -1532,7 +1513,6 @@
         const skillsSectionTop = skillsSection.offsetTop;
         const viewportHeight = window.innerHeight;
         
-        // Trigger animation when the section is 500px from the bottom of the viewport
         if (window.pageYOffset > skillsSectionTop - viewportHeight + 500) {
           animateSkillMeters();
           window.removeEventListener("scroll", checkSkillsInView);
@@ -1540,7 +1520,7 @@
       }
       
       window.addEventListener("scroll", checkSkillsInView);
-      window.addEventListener("load", checkSkillsInView); // Run on load too
+      window.addEventListener("load", checkSkillsInView);
 
       // --- Scroll Indicator & Active Nav Link Logic ---
       window.onscroll = function () {
@@ -1596,6 +1576,47 @@
               mobileMenu.classList.add("hidden");
             }
           }
+        });
+      });
+
+      // --- 3. Typing Animation Logic (Smoother Delay) ---
+      function typeWriter(elementId, text, delay = 100, callback) {
+          const element = document.getElementById(elementId);
+          if (!element) return;
+          let i = 0;
+          element.innerHTML = '';
+          const timer = setInterval(() => {
+              if (i < text.length) {
+                  element.innerHTML += text.charAt(i);
+                  i++;
+              } else {
+                  clearInterval(timer);
+                  // Add typing cursor effect after finishing
+                  element.classList.remove('typing-cursor');
+                  if (callback) callback();
+              }
+          }, delay);
+      }
+      
+      // Start the typing animation sequence on page load
+      window.addEventListener('load', () => {
+        const nameElement = document.getElementById('typing-name');
+        const titleElement = document.getElementById('typing-title');
+        
+        // Add cursor effect manually before typing starts
+        nameElement.classList.add('typing-cursor');
+
+        // Sequence 1: Type the Name (100ms: fast but smooth)
+        typeWriter('typing-name', 'Manjunath Gavandi', 100, () => {
+            // Sequence 2: Type the Title after the name finishes
+            nameElement.classList.remove('typing-cursor');
+            titleElement.classList.add('typing-cursor');
+            setTimeout(() => {
+                // 70ms: slightly faster for the descriptor title
+                typeWriter('typing-title', 'Full-Stack Developer & DSA Enthusiast', 70, () => {
+                    titleElement.classList.remove('typing-cursor');
+                });
+            }, 700); // 700ms pause for visible break between lines
         });
       });
     </script>

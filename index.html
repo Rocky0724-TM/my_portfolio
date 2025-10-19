@@ -14,6 +14,8 @@
   <!-- Feather Icons -->
   <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
   <script src="https://unpkg.com/feather-icons"></script>
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <!-- Poppins Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet" />
@@ -32,7 +34,27 @@
       scroll-behavior: smooth;
     }
 
-    /* --- NEW: Scroll Indicator Bar --- */
+    /* Particle Background Styling */
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    #home {
+      position: relative;
+      overflow: hidden;
+    }
+
+    #home .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Scroll Indicator Bar */
     #scrollIndicator {
       position: fixed;
       top: 0;
@@ -78,7 +100,6 @@
       height: 2px;
       background-color: var(--teal);
       box-shadow: 0 0 8px var(--teal);
-      /* Added glow */
       transition: width 0.3s ease;
     }
 
@@ -91,7 +112,6 @@
     .skill-meter {
       transition: width 2s ease;
       box-shadow: 0 0 5px var(--teal);
-      /* Subtle glow on fill */
     }
 
     /* Project Card Hover (Smooth) */
@@ -100,9 +120,8 @@
     }
 
     .project-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-5px) scale(1.02);
       box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.6);
-      /* Darker shadow for depth */
     }
 
     /* Image Zoom on Hover for Projects/Gallery */
@@ -115,7 +134,7 @@
     }
 
     .project-card:hover .img-wrapper img {
-      transform: scale(1.05);
+      transform: scale(1.1);
     }
 
     /* Certification Card (Simpler Hover) */
@@ -125,7 +144,7 @@
 
     .cert-card:hover {
       box-shadow: 0 10px 15px -3px rgba(0, 173, 181, 0.2), 0 4px 6px -2px rgba(0, 173, 181, 0.1);
-      transform: translateY(-2px);
+      transform: translateY(-2px) rotate(1deg);
     }
 
     /* Hero Animation Styles */
@@ -134,17 +153,9 @@
     }
 
     @keyframes float {
-      0% {
-        transform: translateY(0px);
-      }
-
-      50% {
-        transform: translateY(-20px);
-      }
-
-      100% {
-        transform: translateY(0px);
-      }
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
     }
 
     .pulse-ring {
@@ -158,19 +169,11 @@
     }
 
     @keyframes pulse {
-      0% {
-        transform: scale(1);
-        opacity: 0.8;
-      }
-
-      100% {
-        transform: scale(1.5);
-        opacity: 0;
-      }
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.5); opacity: 0; }
     }
 
-    /* --- FIXED: Social Icon Hover Animation (Footer and Hero) --- */
-    /* Apply animation directly to the container for shape preservation */
+    /* Social Icon Hover Animation */
     .social-link {
       display: inline-flex;
       align-items: center;
@@ -178,29 +181,36 @@
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 0 0 0 rgba(0, 0, 0, 0);
       padding: 12px;
-      /* Ensure sufficient padding for touch/click */
     }
 
     .social-link:hover {
-      transform: translateY(-3px) scale(1.05);
+      transform: translateY(-3px) scale(1.1) rotate(5deg);
       box-shadow: 0 5px 15px rgba(0, 173, 181, 0.3);
     }
 
-    /* --- NEW: Skills Category Card Bounce Animation --- */
+    /* Skills Category Card Bounce Animation */
     .skill-category-card {
       transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
     }
 
     .skill-category-card:hover {
-      transform: translateY(-8px);
+      transform: translateY(-8px) scale(1.05);
       box-shadow: 0 10px 20px rgba(0, 173, 181, 0.2);
     }
 
-    /* Education Timeline Styles (Kept original structure) */
+    /* Education Timeline Styles */
     .timeline-item {
       position: relative;
       padding-left: 2rem;
       margin-bottom: 3rem;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateX(0);
     }
 
     .timeline-item::before {
@@ -213,6 +223,11 @@
       border: 2px solid var(--teal);
       border-radius: 50%;
       background-color: var(--charcoal);
+      transition: transform 0.3s ease;
+    }
+
+    .timeline-item:hover::before {
+      transform: scale(1.5);
     }
 
     .timeline-item::after {
@@ -240,26 +255,27 @@
       height: 100%;
       overflow: auto;
       background-color: rgba(0, 0, 0, 0.9);
-      /* Darker overlay */
       align-items: center;
       justify-content: center;
       backdrop-filter: blur(5px);
-      /* Added blur effect */
+      animation: fadeInModal 0.5s ease;
+    }
+
+    @keyframes fadeInModal {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     #imageModal.show {
       display: flex;
     }
 
-    /* Cursor pointer for clickable images */
     .cert-card img,
     #gallery .project-card img {
       cursor: pointer;
       border-radius: 0.375rem;
-      /* rounded-lg */
     }
 
-    /* Cursor for certificate preview */
     .exp-cert-preview {
       cursor: pointer;
       transition: transform 0.3s ease;
@@ -269,14 +285,11 @@
       transform: scale(1.02);
     }
 
-    /* --- FIXED: Modal Close Button Positioning --- */
     #imageModal .closeBtn {
       position: fixed;
-      /* Use fixed positioning relative to viewport */
       top: 3rem;
       right: 3rem;
       font-size: 2.5rem;
-      /* Slightly larger */
       color: #00adb5;
       cursor: pointer;
       background: transparent;
@@ -284,19 +297,15 @@
       outline: none;
       transition: color 0.3s ease, transform 0.2s;
       z-index: 1001;
-      /* Ensure it is above the modal content */
       font-weight: 300;
       line-height: 1;
     }
 
     #imageModal .closeBtn:hover {
       color: #eeeeee;
-      /* White on hover */
       transform: rotate(90deg);
-      /* Added subtle animation */
     }
 
-    /* Ensure image inside modal is visible below the button */
     #imageModal img {
       max-width: 90%;
       max-height: 80vh;
@@ -307,45 +316,31 @@
     }
 
     @keyframes zoomIn {
-      from {
-        transform: scale(0.8);
-        opacity: 0;
-      }
-
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
     /* Text Cursors for Typing Effect */
-    .typing-cursor {
+    .typing-cursor::after {
+      content: '|';
       animation: blink-cursor 0.75s step-end infinite;
+      margin-left: 2px;
     }
 
     @keyframes blink-cursor {
-
-      from,
-      to {
-        opacity: 0;
-      }
-
-      50% {
-        opacity: 1;
-      }
+      from, to { opacity: 0; }
+      50% { opacity: 1; }
     }
-    
-    /* ---------------------------------------------------------------------- */
-    /* --- CHANGES FOR GALLERY SECTION (READ MORE/LESS) --- */
-    /* ---------------------------------------------------------------------- */
+
+    /* Gallery Description Toggle */
     .description-content {
-      max-height: 5.5rem; /* Limits initial description height to ~4 lines */
+      max-height: 5.5rem;
       overflow: hidden;
       transition: max-height 0.5s ease-in-out;
     }
 
     .description-content.expanded {
-      max-height: 1000px; /* Allows full content visibility */
+      max-height: 1000px;
     }
 
     .read-more-btn {
@@ -360,53 +355,62 @@
     .read-more-btn:hover {
       color: var(--white);
     }
-    
-    /* ---------------------------------------------------------------------- */
-    /* --- CHANGES FOR CERTIFICATIONS SECTION (ALIGNMENT FIX) --- */
-    /* ---------------------------------------------------------------------- */
 
-    /* --- CHANGES FOR CERTIFICATIONS SECTION (ALIGNMENT FIX) --- */
+    /* Certification Alignment Fixes */
+    .cert-card .cert-title-container {
+      height: 80px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
 
-/* NEW FIX 1: Enforce Fixed Height for Certification Titles */
-/* --- CHANGES FOR CERTIFICATIONS SECTION (ALIGNMENT FIX) --- */
+    .cert-card .cert-title-container h3 {
+      margin-bottom: 0;
+    }
 
-/* NEW FIX 1: Enforce Fixed Height for Certification Titles */
-.cert-card .cert-title-container {
-  height: 80px; 
-  overflow: hidden; 
-  margin-bottom: 0.5rem; 
-}
+    .cert-card .img-container {
+      width: 100%;
+      height: 100px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #393e46;
+      border-radius: 0.25rem;
+    }
 
-.cert-card .cert-title-container h3 {
-    margin-bottom: 0; 
-}
+    .cert-card .img-container img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease-in-out;
+    }
 
-/* FIX 2: Fixed Height for Certs Image Containers */
-.cert-card .img-container {
-    width: 100%;
-    height: 100px; /* Standard height for the image preview box */
-    overflow: hidden;
-    margin-bottom: 1rem;
-    display: flex; 
-    align-items: center;
-    justify-content: center;
-    background-color: #393e46; 
-    border-radius: 0.25rem;
-}
+    .cert-card:hover .img-container img {
+      transform: scale(1.05);
+    }
 
-.cert-card .img-container img {
-    height: 100%; 
-    width: 100%; /* <-- CHANGED THIS LINE: Force width to 100% */
-    /* Removed max-width: 100% and width: auto to avoid conflicts */
-    object-fit: cover; /* This will ensure it covers the space, potentially cropping */
-    transition: transform 0.3s ease-in-out;
-}
+    /* Section Entrance Animations */
+    section {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
 
-.cert-card:hover .img-container img {
-    transform: scale(1.05); 
-}
-    
-</style>
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Button Hover Animations */
+    .btn-resume, .read-more-btn {
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .btn-resume:hover, .read-more-btn:hover {
+      transform: scale(1.05);
+    }
+  </style>
 </head>
 
 <body class="bg-[#222831] text-[#EEEEEE]">
@@ -447,30 +451,27 @@
     </div>
   </nav>
 
-  <!-- Hero Section (Typing Animation Added) -->
+  <!-- Hero Section with Particle Background -->
   <section id="home" class="min-h-screen flex items-center pt-20 pb-16 px-6">
+    <div id="particles-js"></div>
     <div class="container mx-auto grid md:grid-cols-2 gap-12 items-center">
       <div class="relative" data-aos="fade-right">
         <div class="relative w-80 h-80 mx-auto">
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-64 h-64 rounded-full overflow-hidden border-4 border-[#00ADB5] shadow-lg">
-              <!-- Placeholder image, replace with a real profile image -->
               <img src="profile/manjunath.jpg"
                 onerror="this.onerror=null;this.src='https://placehold.co/256x256/222831/00adb5?text=Profile+Pic';"
                 alt="Manjunath Profile Picture" class="w-full h-full object-cover" />
             </div>
           </div>
-          <!-- Pulsing Rings -->
           <div class="pulse-ring" style="animation-delay: 0s"></div>
           <div class="pulse-ring" style="animation-delay: 1s"></div>
           <div class="pulse-ring" style="animation-delay: 2s"></div>
         </div>
       </div>
       <div data-aos="fade-left" class="text-center md:text-left">
-        <!-- Typing elements are empty and filled by JS -->
-        <h1 class="text-4xl md:text-5xl font-bold mb-4" id="typing-name"></h1>
-        <h2 class="text-2xl md:text-3xl text-[#00ADB5] mb-6" id="typing-title">
-        </h2>
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 typing-cursor" id="typing-name"></h1>
+        <h2 class="text-2xl md:text-3xl text-[#00ADB5] mb-6 typing-cursor" id="typing-title"></h2>
         <p class="text-lg mb-8 max-w-md mx-auto md:mx-0">
           I create beautiful, functional digital experiences that blend
           innovative design with cutting-edge technology.
@@ -479,7 +480,6 @@
           <a href="#projects"
             class="px-6 py-3 bg-[#00ADB5] text-[#EEEEEE] rounded-lg font-medium hover:bg-[#00969D] transition-colors shadow-lg hover:shadow-xl hover:translate-y-[-2px] transition-transform">View
             My Work</a>
-          <!-- Resume Download Fix -->
           <a href="/static/Manjunath_Resume.pdf" download="Manjunath_Resume.pdf"
             class="btn-resume px-6 py-3 bg-[#393E46] text-[#EEEEEE] rounded-lg font-medium hover:bg-[#00ADB5] transition-colors flex items-center justify-center shadow-lg hover:shadow-xl hover:translate-y-[-2px] transition-transform">
             <span>Download Resume</span>
@@ -491,7 +491,6 @@
             class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-link hover:bg-[#00A7B8] hover:text-[#EEEEEE]">
             <i data-feather="github"></i>
           </a>
-
           <a href="https://www.linkedin.com/in/manjunath-gavandi" target="_blank" rel="noopener noreferrer"
             class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-link hover:bg-[#00ADB5] hover:text-[#EEEEEE]">
             <i data-feather="linkedin"></i>
@@ -579,7 +578,7 @@
     </div>
   </section>
 
-  <!-- Education Section (Confirmed Original Timeline Design) -->
+  <!-- Education Section -->
   <section id="education" class="py-20 px-6 bg-[#222831]">
     <div class="container mx-auto">
       <h2 class="text-3xl font-bold text-center mb-16 section-title mx-auto" data-aos="fade-up">
@@ -618,14 +617,13 @@
     </div>
   </section>
 
-  <!-- Experience Section (Fixed Modals) -->
+  <!-- Experience Section -->
   <section id="experience" class="bg-[#222831] py-20 px-6">
     <div class="container mx-auto max-w-5xl">
       <h2 class="text-3xl font-bold text-center mb-8 section-title mx-auto text-white" data-aos="fade-up">
         Experience
       </h2>
       <div class="space-y-10">
-        <!-- Experience Card 1 -->
         <div
           class="bg-[#393E46] rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col md:flex-row items-start md:items-center"
           data-aos="fade-up">
@@ -659,8 +657,6 @@
               onclick="openImageModal('Experience/edunetInternship.png', this.alt)" />
           </div>
         </div>
-
-        <!-- Experience Card 2 -->
         <div
           class="bg-[#393E46] rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col md:flex-row items-start md:items-center"
           data-aos="fade-up" data-aos-delay="100">
@@ -683,7 +679,6 @@
             </ul>
           </div>
           <div class="mt-6 md:mt-0 md:ml-8 w-full md:w-48 shrink-0 exp-cert-preview">
-            <!-- Uses the global openImageModal -->
             <img src="Experience/vextex.png"
               onerror="this.onerror=null;this.src='https://placehold.co/200x150/00ADB5/222831?text=Web+Dev+Cert+Preview';"
               alt="Web Dev Internship Certificate" class="rounded-md border-2 border-[#00adb5] w-full"
@@ -692,1065 +687,861 @@
           </div>
         </div>
       </div>
-  </section>
+    </section>
 
-  <section id="gallery" class="py-20 px-6 bg-[#222831]">
-    <div class="container mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-16 section-title mx-auto" data-aos="fade-up">
-        Gallery
-      </h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-container">
-        
-        <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in">
-          <div class="img-wrapper h-48">
-            <img src="gallery/Uxccelerate_hackathon.jpg" alt="Hackathon Participation"
-              class="w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)" />
-          </div>
-          <div class="p-4">
-            <h3 class="text-lg font-semibold mb-2">UXccelerate Hackathon 2025</h3>
-            <div class="description-content" id="gallery-desc-1">
-              <p class="text-sm">
-                Uxccelerate.ai VibeHack 2025. Issued by Uxccelerate.ai · Sep 2025. 
-                I developed the project **“Sustainable Lifestyle Tracker & Community Hub”**, a full-stack web application
-                built with React, FastAPI, and PostgreSQL.
-                🌱 The goal of this project was to empower individuals and communities to adopt more sustainable lifestyle
-                practices by providing tools for tracking, sharing, and engaging with eco-friendly activities.
-                This experience allowed me to:<br>
-                🔹 Strengthen my full-stack development skills<br>
-                🔹 Work with modern technologies like React, FastAPI & PostgreSQL<br>
-                🔹 Build a solution that combines technology with sustainability impact<br>
-                🔹 Collaborate and innovate in a hackathon environment<br>
-                Grateful for the opportunity to learn, innovate, and contribute toward impactful solutions. Looking
-                forward to applying these skills to future projects! 💡
-              </p>
-            </div>
-            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-1', this)">Read More</button>
-          </div>
-        </div>
-
-        <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in"
-          data-aos-delay="100">
-          <div class="img-wrapper h-48">
-            <img src="gallery/isro_challenge.jpg" alt="ISRO mahaquiz" class="w-full h-full object-cover cursor-pointer"
-              onclick="openImageModal(this.src, this.alt)" />
-          </div>
-          <div class="p-4">
-            <h3 class="text-lg font-semibold mb-2">
-              ISRO MAHAQUIZ
-            </h3>
-            <div class="description-content" id="gallery-desc-2">
-              <p class="text-sm">
-                🌌 Honored to receive a participation certificate from ISRO for my involvement in Chandrayaan 3! 🚀 This
-                mission symbolizes India's space exploration prowess.
-                Grateful for the opportunity and inspired to keep reaching for the stars! 🌠
-              </p>
-            </div>
-            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-2', this)">Read More</button>
-          </div>
-        </div>
-
-        <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in"
-          data-aos-delay="200">
-          <div class="img-wrapper h-48">
-            <img src="gallery/Cyber_hygiene.png" alt="Cyber Hygiene Practice"
-              class="w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)" />
-          </div>
-          <div class="p-4">
-            <h3 class="text-lg font-semibold mb-2">CYBER HYGIENE PRACTICE</h3>
-            <div class="description-content" id="gallery-desc-3">
-              <p class="text-sm">- 🔐 Certified in Cyber Hygiene by G20 India and the Ministry of Electronics 🌐🇮🇳 |
-                Committed to bolstering online safety and security through the completion of this course. Equipped with
-                essential cybersecurity practices, I'm dedicated to promoting a safer digital environment</p>
-            </div>
-            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-3', this)">Read More</button>
-          </div>
-        </div>
-        
-        <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg hidden"
-          data-aos="zoom-in" data-aos-delay="300">
-          <div class="img-wrapper h-48">
-            <img src="gallery/azure_fundamentals.png" alt="Microsoft Azure Fundamentals"
-              class="w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)" />
-          </div>
-          <div class="p-4">
-            <h3 class="text-lg font-semibold mb-2">Azure Fundamentals : A cloud Challenge</h3>
-            <div class="description-content" id="gallery-desc-4">
-              <p class="text-sm">Completion Certificate of Microsoft Azure Fundamentals : A cloud Challenge</p>
-            </div>
-            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-4', this)">Read More</button>
-          </div>
-        </div>
-
-        <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in">
-          <div class="img-wrapper h-48">
-            <img src="gallery/TechTide.png" alt="TechTide Challenge" class="w-full h-full object-cover cursor-pointer"
-              onclick="openImageModal(this.src, this.alt)" />
-          </div>
-          <div class="p-4">
-            <h3 class="text-lg font-semibold mb-2">TechTide – National AI & CS Challenge</h3>
-            <div class="description-content" id="gallery-desc-5">
-              <p class="text-sm">Participated in TechTide – A 15-minute National Technology Challenge, organized by
-                InternsElite to test participants’ knowledge and decision-making in Artificial Intelligence, Machine
-                Learning, and Core Computer Science concepts.
-                🧠 The challenge featured 15 MCQs designed around real-world tech scenarios to assess logic, computational
-                thinking, and technical depth.
-                🏁 Open to innovators and coders from across India, this high-stakes competition aimed to reward the
-                fastest and brightest minds.
-                📜 Earned a Certificate of Participation for successfully completing the challenge</p>
-            </div>
-            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-5', this)">Read More</button>
-          </div>
-        </div>
-
-        <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in">
-          <div class="img-wrapper h-48">
-            <img src="gallery/tata.png" alt="tata imagination challenge"
-              class="w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)" />
-          </div>
-          <div class="p-4">
-            <h3 class="text-lg font-semibold mb-2">
-              Tata Imagination Challenge 2023</h3>
-            <div class="description-content" id="gallery-desc-6">
-              <p class="text-sm">Participated certificate in Tata Imagination Challenge 2023, a prestigious national-level competition
-                organized by the Tata Group to foster innovation and creative problem-solving among students across India.
-              </p>
-            </div>
-            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-6', this)">Read More</button>
-          </div>
-        </div>
-        
-        <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in">
-          <div class="img-wrapper h-48">
-            <img src="gallery/cyber_warrrior.png" alt="Cyber Warrior"
-              class="w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)" />
-          </div>
-          <div class="p-4">
-            <h3 class="text-lg font-semibold mb-2">
-              Cyber Warrior</h3>
-            <div class="description-content" id="gallery-desc-7">
-              <p class="text-sm">Participated in Cyber Warrior.Cyber Warrior is an electrifying competition designed for cybersecurity enthusiasts, ethical hackers, and problem-solvers ready to test their skills in a high-stakes Capture the Flag (CTF) challenge. Participants will engage in a series of real-world cybersecurity scenarios, tackling challenges in cryptography, web security, reverse engineering, forensics, binary exploitation, and more.
-              </p>
-            </div>
-            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-7', this)">Read More</button>
-          </div>
-        </div>
-
-        <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in">
-          <div class="img-wrapper h-48">
-            <img src="gallery/BizBlitz.png" alt="BizBlitz – National Business Quiz"
-              class="w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)" />
-          </div>
-          <div class="p-4">
-            <h3 class="text-lg font-semibold mb-2">
-              BizBlitz – National Business Quiz</h3>
-            <div class="description-content" id="gallery-desc-8">
-              <p class="text-sm">Participated in BizBlitz – The Ultimate Business Quiz, a national-level competition
-                hosted by InternsElite, a leading EdTech platform.
-
-                The quiz tested core business concepts and real-world scenarios in Marketing, HR, and Strategic Business
-                Thinking through a 15-question, 15-minute challenge.
-                🧠 Designed for college students across India to foster analytical and business decision-making skills.
-                🎓 Received a Certificate of Participation, and competed among top minds from diverse academic backgrounds
-              </p>
-            </div>
-            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-8', this)">Read More</button>
-          </div>
-        </div>
-
-        <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg hidden"
-          data-aos="zoom-in" data-aos-delay="400">
-          <div class="img-wrapper h-48">
-            <img src="gallery/global_stregety.png" alt="Team Building Event"
-              class="w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)" />
-          </div>
-          <div class="p-4">
-            <h3 class="text-lg font-semibold mb-2">Global Strategy Challenge : Case Battle for Strategic Supremacy</h3>
-            <div class="description-content" id="gallery-desc-9">
-              <p class="text-sm">I am absolutely thrilled to be a part of the upcoming Ignite 180 competition hosted by
-                Kirori Mal College. This event, known for its focus on innovation and entrepreneurship, offers a unique
-                opportunity to showcase creative ideas and turn them into reality. I am sincerely thankful to the
-                organizing committee for their tireless efforts in creating this empowering platform for students. Your
-                commitment to nurturing talent, fostering a culture of innovation, and providing a space for budding
-                entrepreneurs like me is highly commendable. I am eagerly looking forward to the event, excited to engage
-                with like-minded individuals, and ready to make a meaningful contribution to the vibrant and dynamic
-                atmosphere that Kirori Mal College's Ignite 180 competition is renowned for.
-              </p>
-            </div>
-            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-9', this)">Read More</button>
-          </div>
-        </div>
-      </div>
-      <div class="text-center mt-12">
-        <button id="view-more-gallery" onclick="toggleGallery()"
-          class="inline-flex items-center px-6 py-3 border border-[#00ADB5] text-[#00ADB5] rounded-lg font-medium hover:bg-[#00ADB5] hover:text-white transition-colors">
-          View More Gallery Photos
-          <i data-feather="arrow-down" class="ml-2"></i>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Certifications Section (View More Implemented) -->
-  <section id="certifications" class="py-20 px-6 bg-[#393E46]">
-    <div class="container mx-auto">
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 px-6 bg-[#222831]">
+      <div class="container mx-auto">
         <h2 class="text-3xl font-bold text-center mb-16 section-title mx-auto" data-aos="fade-up">
-            Certifications
+          Gallery
         </h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="certifications-container">
-            
-            <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up">
-                <div class="text-[#00ADB5] text-4xl mb-4">
-                    <i data-feather="award"></i>
-                </div>
-                <div class="cert-title-container">
-                    <h3 class="text-xl font-semibold">
-                        Oracle Cloud Infrastructure 2025 Certified Data Science Professional
-                    </h3>
-                </div>
-                <p class="text-[#00ADB5] mb-2">Oracle</p>
-                <p class="text-sm mb-4">Sep 2025</p>
-                <div class="img-container">
-                    <img src="certifications/Oracle_Data_Science.jpg" alt="Oracle Data Science Certification"
-                        class="rounded w-full h-full object-cover cursor-pointer"
-                        onclick="openImageModal(this.src, this.alt)" />
-                </div>
-                <p class="text-sm text-gray-400">
-                    Oracle Cloud Infrastructure · Problem Solving · Analytical thinking · Model Deployment & Monitoring · Predictive Analytics
-                </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-container">
+          <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in">
+            <div class="img-wrapper h-48">
+              <img src="gallery/Uxccelerate_hackathon.jpg" alt="Hackathon Participation"
+                class="w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)" />
             </div>
-
-            <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up"
-                data-aos-delay="100">
-                <div class="text-[#00ADB5] text-4xl mb-4">
-                    <i data-feather="award"></i>
-                </div>
-                <div class="cert-title-container">
-                    <h3 class="text-xl font-semibold">
-                        Oracle Cloud Infrastructure 2025 Certified Generative AI Professional
-                    </h3>
-                </div>
-                <p class="text-[#00ADB5] mb-2">Oracle</p>
-                <p class="text-sm mb-4">Sep 2025</p>
-                <div class="img-container">
-                    <img src="certifications/Oracle_Generative_AI.jpg" alt="Oracle Generative AI Certification"
-                        class="rounded w-full h-full object-cover cursor-pointer"
-                        onclick="openImageModal(this.src, this.alt)" />
-                </div>
-                <p class="text-sm text-gray-400">
-                    Large Language Models (LLM) · Retrieval-Augmented Generation (RAG) · Software Development · LLVM
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2">UXccelerate Hackathon 2025</h3>
+              <div class="description-content" id="gallery-desc-1">
+                <p class="text-sm">
+                  Uxccelerate.ai VibeHack 2025. Issued by Uxccelerate.ai · Sep 2025. 
+                  I developed the project **“Sustainable Lifestyle Tracker & Community Hub”**, a full-stack web application
+                  built with React, FastAPI, and PostgreSQL.
+                  🌱 The goal of this project was to empower individuals and communities to adopt more sustainable lifestyle
+                  practices by providing tools for tracking, sharing, and engaging with eco-friendly activities.
+                  This experience allowed me to:<br>
+                  🔹 Strengthen my full-stack development skills<br>
+                  🔹 Work with modern technologies like React, FastAPI & PostgreSQL<br>
+                  🔹 Build a solution that combines technology with sustainability impact<br>
+                  🔹 Collaborate and innovate in a hackathon environment<br>
+                  Grateful for the opportunity to learn, innovate, and contribute toward impactful solutions. Looking
+                  forward to applying these skills to future projects! 💡
                 </p>
+              </div>
+              <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-1', this)">Read More</button>
             </div>
-
-            <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up"
-                data-aos-delay="200">
-                <div class="text-[#00ADB5] text-4xl mb-4">
-                    <i data-feather="award"></i>
-                </div>
-                <div class="cert-title-container">
-                    <h3 class="text-xl font-semibold">
-                        Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate
-                    </h3>
-                </div>
-                <p class="text-[#00ADB5] mb-2">Oracle</p>
-                <p class="text-sm mb-4">Sep 2025</p>
-                <div class="img-container">
-                    <img src="certifications/Oracle_AI_Foundation.jpg" alt="Oracle AI Foundations Certification"
-                        class="rounded w-full h-full object-cover cursor-pointer"
-                        onclick="openImageModal(this.src, this.alt)" />
-                </div>
-                <p class="text-sm text-gray-400">
-                    Deep Learning · Machine Learning · Prompt Engineering
+          </div>
+          <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in"
+            data-aos-delay="100">
+            <div class="img-wrapper h-48">
+              <img src="gallery/isro_challenge.jpg" alt="ISRO mahaquiz" class="w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)" />
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2">ISRO MAHAQUIZ</h3>
+              <div class="description-content" id="gallery-desc-2">
+                <p class="text-sm">
+                  🌌 Honored to receive a participation certificate from ISRO for my involvement in Chandrayaan 3! 🚀 This
+                  mission symbolizes India's space exploration prowess.
+                  Grateful for the opportunity and inspired to keep reaching for the stars! 🌠
                 </p>
+              </div>
+              <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-2', this)">Read More</button>
             </div>
-
-            <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up"
-                data-aos-delay="200">
-                <div class="text-[#00ADB5] text-4xl mb-4">
-                    <i data-feather="award"></i>
-                </div>
-                <div class="cert-title-container">
-                    <h3 class="text-xl font-semibold">
-                        Prompt Engineering
-                    </h3>
-                </div>
-                <p class="text-[#00ADB5] mb-2">Udemy</p>
-                <p class="text-sm mb-4">Oct 2023</p>
-                <div class="img-container">
-                    <img src="certifications/prompt.png" alt="Prompt Engineering Certification"
-                        class="rounded w-full h-full object-cover cursor-pointer"
-                        onclick="openImageModal(this.src, this.alt)" />
-                </div>
-                <p class="text-sm text-gray-400">
-                    · Prompt Engineering
+          </div>
+          <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in"
+            data-aos-delay="200">
+            <div class="img-wrapper h-48">
+              <img src="gallery/Cyber_hygiene.png" alt="Cyber Hygiene Practice"
+                class="w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)" />
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2">CYBER HYGIENE PRACTICE</h3>
+              <div class="description-content" id="gallery-desc-3">
+                <p class="text-sm">- 🔐 Certified in Cyber Hygiene by G20 India and the Ministry of Electronics 🌐🇮🇳 |
+                  Committed to bolstering online safety and security through the completion of this course. Equipped with
+                  essential cybersecurity practices, I'm dedicated to promoting a safer digital environment</p>
+              </div>
+              <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-3', this)">Read More</button>
+            </div>
+          </div>
+          <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg hidden"
+            data-aos="zoom-in" data-aos-delay="300">
+            <div class="img-wrapper h-48">
+              <img src="gallery/azure_fundamentals.png" alt="Microsoft Azure Fundamentals"
+                class="w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)" />
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2">Azure Fundamentals : A cloud Challenge</h3>
+              <div class="description-content" id="gallery-desc-4">
+                <p class="text-sm">Completion Certificate of Microsoft Azure Fundamentals : A cloud Challenge</p>
+              </div>
+              <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-4', this)">Read More</button>
+            </div>
+          </div>
+          <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in">
+            <div class="img-wrapper h-48">
+              <img src="gallery/TechTide.png" alt="TechTide Challenge" class="w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)" />
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2">TechTide – National AI & CS Challenge</h3>
+              <div class="description-content" id="gallery-desc-5">
+                <p class="text-sm">Participated in TechTide – A 15-minute National Technology Challenge, organized by
+                  InternsElite to test participants’ knowledge and decision-making in Artificial Intelligence, Machine
+                  Learning, and Core Computer Science concepts.
+                  🧠 The challenge featured 15 MCQs designed around real-world tech scenarios to assess logic, computational
+                  thinking, and technical depth.
+                  🏁 Open to innovators and coders from across India, this high-stakes competition aimed to reward the
+                  fastest and brightest minds.
+                  📜 Earned a Certificate of Participation for successfully completing the challenge</p>
+              </div>
+              <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-5', this)">Read More</button>
+            </div>
+          </div>
+          <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in">
+            <div class="img-wrapper h-48">
+              <img src="gallery/tata.png" alt="tata imagination challenge"
+                class="w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)" />
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2">Tata Imagination Challenge 2023</h3>
+              <div class="description-content" id="gallery-desc-6">
+                <p class="text-sm">Participated certificate in Tata Imagination Challenge 2023, a prestigious national-level competition
+                  organized by the Tata Group to foster innovation and creative problem-solving among students across India.
                 </p>
+              </div>
+              <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-6', this)">Read More</button>
             </div>
-
-            <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up"
-                data-aos-delay="200">
-                <div class="text-[#00ADB5] text-4xl mb-4">
-                    <i data-feather="award"></i>
-                </div>
-                <div class="cert-title-container">
-                    <h3 class="text-xl font-semibold">
-                        C++ Programming
-                    </h3>
-                </div>
-                <p class="text-[#00ADB5] mb-2">Oracle</p>
-                <p class="text-sm mb-4">Sep 2025</p>
-                <div class="img-container">
-                    <img src="certifications/cpp.png" alt="C++ Programming Certification"
-                        class="rounded w-full h-full object-cover cursor-pointer"
-                        onclick="openImageModal(this.src, this.alt)" />
-                </div>
-                <p class="text-sm text-gray-400">
-                    C++ Basics · Object-Oriented Programming · Data Structures & Algorithms
+          </div>
+          <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in">
+            <div class="img-wrapper h-48">
+              <img src="gallery/cyber_warrrior.png" alt="Cyber Warrior"
+                class="w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)" />
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2">Cyber Warrior</h3>
+              <div class="description-content" id="gallery-desc-7">
+                <p class="text-sm">Participated in Cyber Warrior.Cyber Warrior is an electrifying competition designed for cybersecurity enthusiasts, ethical hackers, and problem-solvers ready to test their skills in a high-stakes Capture the Flag (CTF) challenge. Participants will engage in a series of real-world cybersecurity scenarios, tackling challenges in cryptography, web security, reverse engineering, forensics, binary exploitation, and more.
                 </p>
+              </div>
+              <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-7', this)">Read More</button>
             </div>
-
-            <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up"
-                data-aos-delay="200">
-                <div class="text-[#00ADB5] text-4xl mb-4">
-                    <i data-feather="award"></i>
-                </div>
-                <div class="cert-title-container">
-                    <h3 class="text-xl font-semibold">
-                        Career Essentials in Generative AI by Microsoft and LinkedIn
-                    </h3>
-                </div>
-                <p class="text-[#00ADB5] mb-2">Microsoft</p>
-                <p class="text-sm mb-4">Sep 2023</p>
-                <div class="img-container">
-                    <img src="certifications/microsoft.jpg" alt="Microsoft Generative AI Certification"
-                        class="rounded w-full h-full object-cover cursor-pointer"
-                        onclick="openImageModal(this.src, this.alt)" />
-                </div>
-                <p class="text-sm text-gray-400">
-                    Azure Cloud Services · Generative AI Tools · AI Integration in Workflows
+          </div>
+          <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in">
+            <div class="img-wrapper h-48">
+              <img src="gallery/BizBlitz.png" alt="BizBlitz – National Business Quiz"
+                class="w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)" />
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2">BizBlitz – National Business Quiz</h3>
+              <div class="description-content" id="gallery-desc-8">
+                <p class="text-sm">Participated in BizBlitz – The Ultimate Business Quiz, a national-level competition
+                  hosted by InternsElite, a leading EdTech platform.
+                  The quiz tested core business concepts and real-world scenarios in Marketing, HR, and Strategic Business
+                  Thinking through a 15-question, 15-minute challenge.
+                  🧠 Designed for college students across India to foster analytical and business decision-making skills.
+                  🎓 Received a Certificate of Participation, and competed among top minds from diverse academic backgrounds
                 </p>
+              </div>
+              <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-8', this)">Read More</button>
             </div>
-
-            <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg hidden" data-aos="fade-up"
-                data-aos-delay="300">
-                <div class="text-[#00ADB5] text-4xl mb-4">
-                    <i data-feather="award"></i>
-                </div>
-                <div class="cert-title-container">
-                    <h3 class="text-xl font-semibold">
-                        TCS iON Career Edge - Young Professional
-                    </h3>
-                </div>
-                <p class="text-[#00ADB5] mb-2">TCS ION</p>
-                <p class="text-sm mb-4">Jun 2023</p>
-                <div class="img-container">
-                    <img src="certifications/tcsion.png" alt="TCS iON Certification"
-                        class="rounded w-full h-full object-cover cursor-pointer"
-                        onclick="openImageModal(this.src, this.alt)" />
-                </div>
-                <p class="text-sm text-gray-400">
-                    Professional Skills · Communication · Teamwork & Leadership
+          </div>
+          <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg hidden"
+            data-aos="zoom-in" data-aos-delay="400">
+            <div class="img-wrapper h-48">
+              <img src="gallery/global_stregety.png" alt="Team Building Event"
+                class="w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)" />
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold mb-2">Global Strategy Challenge : Case Battle for Strategic Supremacy</h3>
+              <div class="description-content" id="gallery-desc-9">
+                <p class="text-sm">I am absolutely thrilled to be a part of the upcoming Ignite 180 competition hosted by
+                  Kirori Mal College. This event, known for its focus on innovation and entrepreneurship, offers a unique
+                  opportunity to showcase creative ideas and turn them into reality. I am sincerely thankful to the
+                  organizing committee for their tireless efforts in creating this empowering platform for students. Your
+                  commitment to nurturing talent, fostering a culture of innovation, and providing a space for budding
+                  entrepreneurs like me is highly commendable. I am eagerly looking forward to the event, excited to engage
+                  with like-minded individuals, and ready to make a meaningful contribution to the vibrant and dynamic
+                  atmosphere that Kirori Mal College's Ignite 180 competition is renowned for.
                 </p>
+              </div>
+              <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-9', this)">Read More</button>
             </div>
+          </div>
         </div>
         <div class="text-center mt-12">
-            <button id="view-more-certifications" onclick="toggleCertifications()"
-                class="inline-flex items-center px-6 py-3 border border-[#00ADB5] text-[#00ADB5] rounded-lg font-medium hover:bg-[#00ADB5] hover:text-white transition-colors">
-                View More Certifications
-                <i data-feather="arrow-down" class="ml-2"></i>
-            </button>
-        </div>
-    </div>
-</section>
-
-  <!-- Skills Section (Updated with Basic/Intermediate Labels and bar widths) -->
-  <section id="skills" class="py-20 px-6 bg-[#222831]">
-    <div class="container mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-16 section-title mx-auto" data-aos="fade-up">
-        Skills
-      </h2>
-      <div class="grid md:grid-cols-2 gap-12">
-        <div data-aos="fade-right">
-          <h3 class="text-xl font-semibold text-[#00ADB5] mb-6">
-            Frontend Development
-          </h3>
-          <!-- Skill 1: React (Basic - 40%) -->
-          <div class="mb-6">
-            <div class="flex justify-between mb-2">
-              <span>React</span>
-              <span class="text-[#00ADB5] font-semibold">Basic</span>
-            </div>
-            <div class="h-2 bg-[#393E46] rounded-full">
-              <div class="skill-meter h-full bg-[#00ADB5] rounded-full" style="width: 0%" data-width="40%"></div>
-            </div>
-          </div>
-          <!-- Skill 2: Tailwind CSS (Intermediate - 75%) -->
-          <div class="mb-6">
-            <div class="flex justify-between mb-2">
-              <span>Tailwind CSS</span>
-              <span class="text-[#00ADB5] font-semibold">Intermediate</span>
-            </div>
-            <div class="h-2 bg-[#393E46] rounded-full">
-              <div class="skill-meter h-full bg-[#00ADB5] rounded-full" style="width: 0%" data-width="75%"></div>
-            </div>
-          </div>
-          <!-- Skill 3: JavaScript (Intermediate - 75%) -->
-          <div class="mb-6">
-            <div class="flex justify-between mb-2">
-              <span>JavaScript</span>
-              <span class="text-[#00ADB5] font-semibold">Intermediate</span>
-            </div>
-            <div class="h-2 bg-[#393E46] rounded-full">
-              <div class="skill-meter h-full bg-[#00ADB5] rounded-full" style="width: 0%" data-width="75%"></div>
-            </div>
-          </div>
-          <!-- Added Skill: HTML/CSS (Intermediate - 75%) -->
-          <div class="mb-6">
-            <div class="flex justify-between mb-2">
-              <span>HTML5/CSS3</span>
-              <span class="text-[#00ADB5] font-semibold">Intermediate</span>
-            </div>
-            <div class="h-2 bg-[#393E46] rounded-full">
-              <div class="skill-meter h-full bg-[#00ADB5] rounded-full" style="width: 0%" data-width="75%"></div>
-            </div>
-          </div>
-        </div>
-        <div data-aos="fade-left">
-          <h3 class="text-xl font-semibold text-[#00ADB5] mb-6">
-            Backend & Database
-          </h3>
-          <!-- Skill 4: Python (Intermediate - 75%) -->
-          <div class="mb-6">
-            <div class="flex justify-between mb-2">
-              <span>Python</span>
-              <span class="text-[#00ADB5] font-semibold">Intermediate</span>
-            </div>
-            <div class="h-2 bg-[#393E46] rounded-full">
-              <div class="skill-meter h-full bg-[#00ADB5] rounded-full" style="width: 0%" data-width="75%"></div>
-            </div>
-          </div>
-          <!-- Skill 5: PostgreSQL (Intermediate - 75%) -->
-          <div class="mb-6">
-            <div class="flex justify-between mb-2">
-              <span>PostgreSQL</span>
-              <span class="text-[#00ADB5] font-semibold">Intermediate</span>
-            </div>
-            <div class="h-2 bg-[#393E46] rounded-full">
-              <div class="skill-meter h-full bg-[#00ADB5] rounded-full" style="width: 0%" data-width="75%"></div>
-            </div>
-          </div>
-          <!-- Skill 6: FastAPI (Basic - 40%) -->
-          <div class="mb-6">
-            <div class="flex justify-between mb-2">
-              <span>FastAPI</span>
-              <span class="text-[#00ADB5] font-semibold">Basic</span>
-            </div>
-            <div class="h-2 bg-[#393E46] rounded-full">
-              <div class="skill-meter h-full bg-[#00ADB5] rounded-full" style="width: 0%" data-width="40%"></div>
-            </div>
-          </div>
+          <button id="view-more-gallery" onclick="toggleGallery()"
+            class="inline-flex items-center px-6 py-3 border border-[#00ADB5] text-[#00ADB5] rounded-lg font-medium hover:bg-[#00ADB5] hover:text-white transition-colors">
+            View More Gallery Photos
+            <i data-feather="arrow-down" class="ml-2"></i>
+          </button>
         </div>
       </div>
-      <!-- Skills Category Cards (Animation Added) -->
-      <div class="mt-16 grid md:grid-cols-3 gap-6 text-center">
-        <div class="bg-[#393E46] p-6 rounded-lg shadow-lg skill-category-card" data-aos="zoom-in">
-          <div class="text-4xl text-[#00ADB5] mb-4">
-            <i data-feather="code"></i>
-          </div>
-          <h3 class="text-lg font-semibold">Frontend</h3>
-        </div>
-        <div class="bg-[#393E46] p-6 rounded-lg shadow-lg skill-category-card" data-aos="zoom-in" data-aos-delay="100">
-          <div class="text-4xl text-[#00ADB5] mb-4">
-            <i data-feather="server"></i>
-          </div>
-          <h3 class="text-lg font-semibold">Backend</h3>
-        </div>
-        <div class="bg-[#393E46] p-6 rounded-lg shadow-lg skill-category-card" data-aos="zoom-in" data-aos-delay="200">
-          <div class="text-4xl text-[#00ADB5] mb-4">
-            <i data-feather="database"></i>
-          </div>
-          <h3 class="text-lg font-semibold">Database</h3>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Projects Section (Removed View Code option) -->
-  <section id="projects" class="py-20 px-6 bg-[#393E46]">
-    <div class="container mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-16 section-title mx-auto" data-aos="fade-up">
-        Projects
-      </h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="project-card bg-[#222831] rounded-lg overflow-hidden shadow-lg" data-aos="fade-up">
-          <div class="img-wrapper h-48">
-            <img
-              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1015&q=80"
-              alt="Finance Dashboard" class="w-full h-full object-cover" />
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-semibold mb-2">Finance Dashboard</h3>
-            <p class="text-sm text-gray-400 mb-4">
-              React, Tailwind, PostgreSQL
-            </p>
-            <p class="mb-6">
-              A comprehensive financial management dashboard with real-time
-              analytics and visualization.
-            </p>
-            <div class="flex space-x-4">
-              <a href="#"
-                class="px-4 py-2 bg-[#00ADB5] text-white rounded text-sm font-medium hover:bg-[#00969D] transition-colors hover:shadow-lg">Live
-                Demo</a>
-            </div>
-          </div>
-        </div>
-        <div class="project-card bg-[#222831] rounded-lg overflow-hidden shadow-lg" data-aos="fade-up"
-          data-aos-delay="100">
-          <div class="img-wrapper h-48">
-            <img
-              src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80"
-              alt="E-commerce Platform" class="w-full h-full object-cover" />
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-semibold mb-2">E-commerce Platform</h3>
-            <p class="text-sm text-gray-400 mb-4">Express, MongoDB, Stripe</p>
-            <p class="mb-6">
-              Full-featured e-commerce solution with product management, cart,
-              and payment processing.
-            </p>
-            <div class="flex space-x-4">
-              <a href="#"
-                class="px-4 py-2 bg-[#00ADB5] text-white rounded text-sm font-medium hover:bg-[#00969D] transition-colors hover:shadow-lg">Live
-                Demo</a>
-            </div>
-          </div>
-        </div>
-        <div class="project-card bg-[#222831] rounded-lg overflow-hidden shadow-lg" data-aos="fade-up"
-          data-aos-delay="200">
-          <div class="img-wrapper h-48">
-            <img
-              src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
-              alt="Task Management App" class="w-full h-full object-cover" />
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-semibold mb-2">Task Management App</h3>
-            <p class="text-sm text-gray-400 mb-4">
-              React Native, Firebase, Redux
-            </p>
-            <p class="mb-6">
-              A cross-platform task management application with real-time
-              synchronization and collaboration.
-            </p>
-            <div class="flex space-x-4">
-              <a href="#"
-                class="px-4 py-2 bg-[#00ADB5] text-white rounded text-sm font-medium hover:bg-[#00969D] transition-colors hover:shadow-lg">Live
-                Demo</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="text-center mt-12">
-        <a href="#"
-          class="inline-flex items-center px-6 py-3 border border-[#00ADB5] text-[#00ADB5] rounded-lg font-medium hover:bg-[#00ADB5] hover:text-white transition-colors">
-          View All Projects
-          <i data-feather="arrow-right" class="ml-2"></i>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Modal for general image zoom (Used for Gallery, Certs, and Experience) -->
-  <div id="imageModal" class="">
-    <button class="closeBtn" aria-label="Close Image">&times;</button>
-    <img src="" alt="" />
-  </div>
-
-  <!-- START: Commented Coding Platforms Section (Requested to be re-added) -->
-  <!--
-    <section id="platforms" class="bg-[#222831] py-20 px-6">
+    <!-- Certifications Section -->
+    <section id="certifications" class="py-20 px-6 bg-[#393E46]">
       <div class="container mx-auto">
-        <h2
-          class="text-3xl font-bold text-center mb-4 section-title mx-auto text-white"
-          data-aos="fade-up"
-        >
-          Coding Platforms
+        <h2 class="text-3xl font-bold text-center mb-16 section-title mx-auto" data-aos="fade-up">
+          Certifications
         </h2>
-        <p class="text-center mb-12 text-[#00ADB5] text-lg">
-          My coding challenge journey
-        </p>
-        <div class="relative max-w-3xl mx-auto">
-          <div
-            class="absolute left-1/2 transform -translate-x-1/2 h-full border-l-2 border-[#00ADB5]"
-          ></div>
-          <div class="space-y-14">
-            <div class="flex items-center w-full">
-              <div class="w-1/2 pr-8 flex justify-end">
-                <div
-                  class="bg-[#393E46] rounded-xl p-5 shadow-lg w-fit text-right"
-                  data-aos="fade-right"
-                >
-                  <div class="flex items-center justify-end space-x-3 mb-2">
-                    <span class="font-bold text-xl text-[#00ADB5]"
-                      >LeetCode</span
-                    >
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png"
-                      alt="LeetCode"
-                      class="w-10 h-10"
-                    />
-                  </div>
-                  <p class="text-white text-sm">📝 Coding and DSA practice</p>
-                  <a
-                    href="https://leetcode.com/"
-                    target="_blank"
-                    class="text-[#00ADB5] text-xs underline mt-1 inline-block"
-                    >leetcode.com</a
-                  >
-                </div>
-              </div>
-              <div class="w-0 flex flex-col items-center">
-                <div
-                  class="w-5 h-5 bg-[#00ADB5] border-4 border-[#393E46] rounded-full z-10"
-                ></div>
-              </div>
-              <div class="w-1/2"></div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="certifications-container">
+          <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up">
+            <div class="text-[#00ADB5] text-4xl mb-4">
+              <i data-feather="award"></i>
             </div>
-            <div class="flex items-center w-full">
-              <div class="w-1/2"></div>
-              <div class="w-0 flex flex-col items-center">
-                <div
-                  class="w-5 h-5 bg-[#00ADB5] border-4 border-[#393E46] rounded-full z-10"
-                ></div>
-              </div>
-              <div class="w-1/2 pl-8 flex justify-start">
-                <div
-                  class="bg-[#393E46] rounded-xl p-5 shadow-lg w-fit text-left"
-                  data-aos="fade-left"
-                >
-                  <div class="flex items-center space-x-3 mb-2">
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/6/65/HackerRank_logo.png"
-                      alt="HackerRank"
-                      class="w-10 h-10"
-                    />
-                    <span class="font-bold text-xl text-[#00ADB5]"
-                      >HackerRank</span
-                    >
-                  </div>
-                  <p class="text-white text-sm">
-                    💻 Problem solving & competitions
-                  </p>
-                  <a
-                    href="https://www.hackerrank.com/"
-                    target="_blank"
-                    class="text-[#00ADB5] text-xs underline mt-1 inline-block"
-                    >hackerrank.com</a
-                  >
-                </div>
-              </div>
+            <div class="cert-title-container">
+              <h3 class="text-xl font-semibold">
+                Oracle Cloud Infrastructure 2025 Certified Data Science Professional
+              </h3>
             </div>
-            <div class="flex items-center w-full">
-              <div class="w-1/2 pr-8 flex justify-end">
-                <div
-                  class="bg-[#393E46] rounded-xl p-5 shadow-lg w-fit text-right"
-                  data-aos="fade-right"
-                >
-                  <div class="flex items-center justify-end space-x-3 mb-2">
-                    <span class="font-bold text-xl text-[#00ADB5]">Unstop</span>
-                    <img
-                      src="https://d8it4huxumps7.cloudfront.net/uploads/images/unstop/svg/unstop-logo.svg"
-                      alt="Unstop"
-                      class="w-10 h-10"
-                    />
-                  </div>
-                  <p class="text-white text-sm">
-                    🏆 Coding hackathons & quizzes
-                  </p>
-                  <a
-                    href="https://unstop.com/"
-                    target="_blank"
-                    class="text-[#00ADB5] text-xs underline mt-1 inline-block"
-                    >unstop.com</a
-                  >
-                </div>
-              </div>
-              <div class="w-0 flex flex-col items-center">
-                <div
-                  class="w-5 h-5 bg-[#00ADB5] border-4 border-[#393E46] rounded-full z-10"
-                ></div>
-              </div>
-              <div class="w-1/2"></div>
+            <p class="text-[#00ADB5] mb-2">Oracle</p>
+            <p class="text-sm mb-4">Sep 2025</p>
+            <div class="img-container">
+              <img src="certifications/Oracle_Data_Science.jpg" alt="Oracle Data Science Certification"
+                class="rounded w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)" />
             </div>
-            <div class="flex items-center w-full">
-              <div class="w-1/2"></div>
-              <div class="w-0 flex flex-col items-center">
-                <div
-                  class="w-5 h-5 bg-[#00ADB5] border-4 border-[#393E46] rounded-full z-10"
-                ></div>
-              </div>
-              <div class="w-1/2 pl-8 flex justify-start">
-                <div
-                  class="bg-[#393E46] rounded-xl p-5 shadow-lg w-fit text-left"
-                  data-aos="fade-left"
-                >
-                  <div class="flex items-center space-x-3 mb-2">
-                    <img
-                      src="https://sta.codeforces.com/s/65348/images/codeforces-logo-with-telegram.png"
-                      alt="Codeforces"
-                      class="w-10 h-10"
-                    />
-                    <span class="font-bold text-xl text-[#00ADB5]"
-                      >Codeforces</span
-                    >
-                  </div>
-                  <p class="text-white text-sm">⏱️ Timed contests & rankings</p>
-                  <a
-                    href="https://codeforces.com/"
-                    target="_blank"
-                    class="text-[#00ADB5] text-xs underline mt-1 inline-block"
-                    >codeforces.com</a
-                  >
-                </div>
-              </div>
+            <p class="text-sm text-gray-400">
+              Oracle Cloud Infrastructure · Problem Solving · Analytical thinking · Model Deployment & Monitoring · Predictive Analytics
+            </p>
+          </div>
+          <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up"
+            data-aos-delay="100">
+            <div class="text-[#00ADB5] text-4xl mb-4">
+              <i data-feather="award"></i>
             </div>
-            <div class="flex items-center w-full">
-              <div class="w-1/2 pr-8 flex justify-end">
-                <div
-                  class="bg-[#393E46] rounded-xl p-5 shadow-lg w-fit text-right"
-                  data-aos="fade-right"
-                >
-                  <div class="flex items-center justify-end space-x-3 mb-2">
-                    <span class="font-bold text-xl text-[#00ADB5]"
-                      >CodeChef</span
-                    >
-                    <img
-                      src="https://s3.amazonaws.com/codechef_shared/sites/all/themes/abessive/logo.png"
-                      alt="CodeChef"
-                      class="w-10 h-10"
-                    />
-                  </div>
-                  <p class="text-white text-sm">
-                    🥇 Coding marathons & puzzles
-                  </p>
-                  <a
-                    href="https://www.codechef.com/"
-                    target="_blank"
-                    class="text-[#00ADB5] text-xs underline mt-1 inline-block"
-                    >codechef.com</a
-                  >
-                </div>
-              </div>
-              <div class="w-0 flex flex-col items-center">
-                <div
-                  class="w-5 h-5 bg-[#00ADB5] border-4 border-[#393E46] rounded-full z-10"
-                ></div>
-              </div>
-              <div class="w-1/2"></div>
+            <div class="cert-title-container">
+              <h3 class="text-xl font-semibold">
+                Oracle Cloud Infrastructure 2025 Certified Generative AI Professional
+              </h3>
             </div>
-            <div class="flex items-center w-full">
-              <div class="w-1/2"></div>
-              <div class="w-0 flex flex-col items-center">
-                <div
-                  class="w-5 h-5 bg-[#00ADB5] border-4 border-[#393E46] rounded-full z-10"
-                ></div>
+            <p class="text-[#00ADB5] mb-2">Oracle</p>
+            <p class="text-sm mb-4">Sep 2025</p>
+            <div class="img-container">
+              <img src="certifications/Oracle_Generative_AI.jpg" alt="Oracle Generative AI Certification"
+                class="rounded w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)" />
+            </div>
+            <p class="text-sm text-gray-400">
+              Large Language Models (LLM) · Retrieval-Augmented Generation (RAG) · Software Development · LLVM
+            </p>
+          </div>
+          <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up"
+            data-aos-delay="200">
+            <div class="text-[#00ADB5] text-4xl mb-4">
+              <i data-feather="award"></i>
+            </div>
+            <div class="cert-title-container">
+              <h3 class="text-xl font-semibold">
+                Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate
+              </h3>
+            </div>
+            <p class="text-[#00ADB5] mb-2">Oracle</p>
+            <p class="text-sm mb-4">Sep 2025</p>
+            <div class="img-container">
+              <img src="certifications/Oracle_AI_Foundation.jpg" alt="Oracle AI Foundations Certification"
+                class="rounded w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)" />
+            </div>
+            <p class="text-sm text-gray-400">
+              Deep Learning · Machine Learning · Prompt Engineering
+            </p>
+          </div>
+          <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up"
+            data-aos-delay="200">
+            <div class="text-[#00ADB5] text-4xl mb-4">
+              <i data-feather="award"></i>
+            </div>
+            <div class="cert-title-container">
+              <h3 class="text-xl font-semibold">
+                Prompt Engineering
+              </h3>
+            </div>
+            <p class="text-[#00ADB5] mb-2">Udemy</p>
+            <p class="text-sm mb-4">Oct 2023</p>
+            <div class="img-container">
+              <img src="certifications/prompt.png" alt="Prompt Engineering Certification"
+                class="rounded w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)" />
+            </div>
+            <p class="text-sm text-gray-400">
+              · Prompt Engineering
+            </p>
+          </div>
+          <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up"
+            data-aos-delay="200">
+            <div class="text-[#00ADB5] text-4xl mb-4">
+              <i data-feather="award"></i>
+            </div>
+            <div class="cert-title-container">
+              <h3 class="text-xl font-semibold">
+                C++ Programming
+              </h3>
+            </div>
+            <p class="text-[#00ADB5] mb-2">Oracle</p>
+            <p class="text-sm mb-4">Sep 2025</p>
+            <div class="img-container">
+              <img src="certifications/cpp.png" alt="C++ Programming Certification"
+                class="rounded w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)" />
+            </div>
+            <p class="text-sm text-gray-400">
+              C++ Basics · Object-Oriented Programming · Data Structures & Algorithms
+            </p>
+          </div>
+          <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up"
+            data-aos-delay="200">
+            <div class="text-[#00ADB5] text-4xl mb-4">
+              <i data-feather="award"></i>
+            </div>
+            <div class="cert-title-container">
+              <h3 class="text-xl font-semibold">
+                Career Essentials in Generative AI by Microsoft and LinkedIn
+              </h3>
+            </div>
+            <p class="text-[#00ADB5] mb-2">Microsoft</p>
+            <p class="text-sm mb-4">Sep 2023</p>
+            <div class="img-container">
+              <img src="certifications/microsoft.jpg" alt="Microsoft Generative AI Certification"
+                class="rounded w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)" />
+            </div>
+            <p class="text-sm text-gray-400">
+              Azure Cloud Services · Generative AI Tools · AI Integration in Workflows
+            </p>
+          </div>
+          <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg hidden" data-aos="fade-up"
+            data-aos-delay="300">
+            <div class="text-[#00ADB5] text-4xl mb-4">
+              <i data-feather="award"></i>
+            </div>
+            <div class="cert-title-container">
+              <h3 class="text-xl font-semibold">
+                TCS iON Career Edge - Young Professional
+              </h3>
+            </div>
+            <p class="text-[#00ADB5] mb-2">TCS ION</p>
+            <p class="text-sm mb-4">Jun 2023</p>
+            <div class="img-container">
+              <img src="certifications/tcsion.png" alt="TCS iON Certification"
+                class="rounded w-full h-full object-cover cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)" />
+            </div>
+            <p class="text-sm text-gray-400">
+              Professional Skills · Communication · Teamwork & Leadership
+            </p>
+          </div>
+        </div>
+        <div class="text-center mt-12">
+          <button id="view-more-certifications" onclick="toggleCertifications()"
+            class="inline-flex items-center px-6 py-3 border border-[#00ADB5] text-[#00ADB5] rounded-lg font-medium hover:bg-[#00ADB5] hover:text-white transition-colors">
+            View More Certifications
+            <i data-feather="arrow-down" class="ml-2"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-6 bg-[#222831]">
+      <div class="container mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-16 section-title mx-auto" data-aos="fade-up">
+          Skills
+        </h2>
+        <div class="grid md:grid-cols-2 gap-12">
+          <div data-aos="fade-right">
+            <h3 class="text-xl font-semibold text-[#00ADB5] mb-6">
+              Frontend Development
+            </h3>
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>React</span>
+                <span class="text-[#00ADB5] font-semibold">Basic</span>
               </div>
-              <div class="w-1/2 pl-8 flex justify-start">
-                <div
-                  class="bg-[#393E46] rounded-xl p-5 shadow-lg w-fit text-left"
-                  data-aos="fade-left"
-                >
-                  <div class="flex items-center space-x-3 mb-2">
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg"
-                      alt="GeeksforGeeks"
-                      class="w-10 h-10"
-                    />
-                    <span class="font-bold text-xl text-[#00ADB5]"
-                      >GeeksforGeeks</span
-                    >
-                  </div>
-                  <p class="text-white text-sm">
-                    📚 Articles, tutorials & practice
-                  </p>
-                  <a
-                    href="https://www.geeksforgeeks.org/"
-                    target="_blank"
-                    class="text-[#00ADB5] text-xs underline mt-1 inline-block"
-                    >geeksforgeeks.org</a
-                  >
-                </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div class="skill-meter h-full bg-[#00ADB5] rounded-full" style="width: 0%" data-width="40%"></div>
               </div>
             </div>
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>Tailwind CSS</span>
+                <span class="text-[#00ADB5] font-semibold">Intermediate</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div class="skill-meter h-full bg-[#00ADB5] rounded-full" style="width: 0%" data-width="75%"></div>
+              </div>
+            </div>
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>JavaScript</span>
+                <span class="text-[#00ADB5] font-semibold">Intermediate</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div class="skill-meter h-full bg-[#00ADB5] rounded-full" style="width: 0%" data-width="75%"></div>
+              </div>
+            </div>
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>HTML5/CSS3</span>
+                <span class="text-[#00ADB5] font-semibold">Intermediate</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div class="skill-meter h-full bg-[#00ADB5] rounded-full" style="width: 0%" data-width="75%"></div>
+              </div>
+            </div>
+          </div>
+          <div data-aos="fade-left">
+            <h3 class="text-xl font-semibold text-[#00ADB5] mb-6">
+              Backend & Database
+            </h3>
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>Python</span>
+                <span class="text-[#00ADB5] font-semibold">Intermediate</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div class="skill-meter h-full bg-[#00ADB5] rounded-full" style="width: 0%" data-width="75%"></div>
+              </div>
+            </div>
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>PostgreSQL</span>
+                <span class="text-[#00ADB5] font-semibold">Intermediate</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div class="skill-meter h-full bg-[#00ADB5] rounded-full" style="width: 0%" data-width="75%"></div>
+              </div>
+            </div>
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span>FastAPI</span>
+                <span class="text-[#00ADB5] font-semibold">Basic</span>
+              </div>
+              <div class="h-2 bg-[#393E46] rounded-full">
+                <div class="skill-meter h-full bg-[#00ADB5] rounded-full" style="width: 0%" data-width="40%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-16 grid md:grid-cols-3 gap-6 text-center">
+          <div class="bg-[#393E46] p-6 rounded-lg shadow-lg skill-category-card" data-aos="zoom-in">
+            <div class="text-4xl text-[#00ADB5] mb-4">
+              <i data-feather="code"></i>
+            </div>
+            <h3 class="text-lg font-semibold">Frontend</h3>
+          </div>
+          <div class="bg-[#393E46] p-6 rounded-lg shadow-lg skill-category-card" data-aos="zoom-in" data-aos-delay="100">
+            <div class="text-4xl text-[#00ADB5] mb-4">
+              <i data-feather="server"></i>
+            </div>
+            <h3 class="text-lg font-semibold">Backend</h3>
+          </div>
+          <div class="bg-[#393E46] p-6 rounded-lg shadow-lg skill-category-card" data-aos="zoom-in" data-aos-delay="200">
+            <div class="text-4xl text-[#00ADB5] mb-4">
+              <i data-feather="database"></i>
+            </div>
+            <h3 class="text-lg font-semibold">Database</h3>
           </div>
         </div>
       </div>
     </section>
-    -->
-  <!-- END: Commented Coding Platforms Section -->
 
-
-  <!-- Footer FIX: Changed background to charcoal (222831) and added border for contrast with projects section (393E46) -->
-  <footer class="bg-[#222831] py-10 px-6 text-center border-t border-[#00ADB5]/20">
-    <div class="container mx-auto">
-      <p class="text-lg text-[#00ADB5] font-medium">Manjunath</p>
-      <p class="mt-2">Full-Stack Developer & DSA Enthusiast</p>
-      <div class="flex justify-center space-x-6 mt-6">
-        <a href="https://github.com/Manjunath0724" target="_blank" rel="noopener noreferrer"
-          class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-link">
-          <i data-feather="github"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/manjunath-gavandi" target="_blank" rel="noopener noreferrer"
-          class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-link">
-          <i data-feather="linkedin"></i>
-        </a>
-        <a href="https://x.com/ManjunathGavan3?t=MTL1krujRI3U1KKVqzHbOg&s=09" target="_blank" rel="noopener noreferrer"
-          class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-link">
-          <i data-feather="twitter"></i>
-        </a>
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-6 bg-[#393E46]">
+      <div class="container mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-16 section-title mx-auto" data-aos="fade-up">
+          Projects
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="project-card bg-[#222831] rounded-lg overflow-hidden shadow-lg" data-aos="fade-up">
+            <div class="img-wrapper h-48">
+              <img
+                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1015&q=80"
+                alt="Finance Dashboard" class="w-full h-full object-cover" />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Finance Dashboard</h3>
+              <p class="text-sm text-gray-400 mb-4">
+                React, Tailwind, PostgreSQL
+              </p>
+              <p class="mb-6">
+                A comprehensive financial management dashboard with real-time
+                analytics and visualization.
+              </p>
+              <div class="flex space-x-4">
+                <a href="#"
+                  class="px-4 py-2 bg-[#00ADB5] text-white rounded text-sm font-medium hover:bg-[#00969D] transition-colors hover:shadow-lg">Live
+                  Demo</a>
+              </div>
+            </div>
+          </div>
+          <div class="project-card bg-[#222831] rounded-lg overflow-hidden shadow-lg" data-aos="fade-up"
+            data-aos-delay="100">
+            <div class="img-wrapper h-48">
+              <img
+                src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80"
+                alt="E-commerce Platform" class="w-full h-full object-cover" />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">E-commerce Platform</h3>
+              <p class="text-sm text-gray-400 mb-4">Express, MongoDB, Stripe</p>
+              <p class="mb-6">
+                Full-featured e-commerce solution with product management, cart,
+                and payment processing.
+              </p>
+              <div class="flex space-x-4">
+                <a href="#"
+                  class="px-4 py-2 bg-[#00ADB5] text-white rounded text-sm font-medium hover:bg-[#00969D] transition-colors hover:shadow-lg">Live
+                  Demo</a>
+              </div>
+            </div>
+          </div>
+          <div class="project-card bg-[#222831] rounded-lg overflow-hidden shadow-lg" data-aos="fade-up"
+            data-aos-delay="200">
+            <div class="img-wrapper h-48">
+              <img
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+                alt="Task Management App" class="w-full h-full object-cover" />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Task Management App</h3>
+              <p class="text-sm text-gray-400 mb-4">
+                React Native, Firebase, Redux
+              </p>
+              <p class="mb-6">
+                A cross-platform task management application with real-time
+                synchronization and collaboration.
+              </p>
+              <div class="flex space-x-4">
+                <a href="#"
+                  class="px-4 py-2 bg-[#00ADB5] text-white rounded text-sm font-medium hover:bg-[#00969D] transition-colors hover:shadow-lg">Live
+                  Demo</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-12">
+          <a href="#"
+            class="inline-flex items-center px-6 py-3 border border-[#00ADB5] text-[#00ADB5] rounded-lg font-medium hover:bg-[#00ADB5] hover:text-white transition-colors">
+            View All Projects
+            <i data-feather="arrow-right" class="ml-2"></i>
+          </a>
+        </div>
       </div>
-      <p class="mt-8 text-sm text-gray-400">
-        © 2023 Manjunath. All rights reserved.
-      </p>
+    </section>
+
+    <!-- Modal for Image Zoom -->
+    <div id="imageModal" class="">
+      <button class="closeBtn" aria-label="Close Image">&times;</button>
+      <img src="" alt="" />
     </div>
-  </footer>
 
-  <script>
-    // --- Constants for View More Logic ---
-    const initialGalleryItems = 3;
-    const initialCertItems = 3;
+    <!-- Footer -->
+    <footer class="bg-[#222831] py-10 px-6 text-center border-t border-[#00ADB5]/20">
+      <div class="container mx-auto">
+        <p class="text-lg text-[#00ADB5] font-medium">Manjunath</p>
+        <p class="mt-2">Full-Stack Developer & DSA Enthusiast</p>
+        <div class="flex justify-center space-x-6 mt-6">
+          <a href="https://github.com/Manjunath0724" target="_blank" rel="noopener noreferrer"
+            class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-link">
+            <i data-feather="github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/manjunath-gavandi" target="_blank" rel="noopener noreferrer"
+            class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-link">
+            <i data-feather="linkedin"></i>
+          </a>
+          <a href="https://x.com/ManjunathGavan3?t=MTL1krujRI3U1KKVqzHbOg&s=09" target="_blank"
+            rel="noopener noreferrer"
+            class="bg-[#393E46] p-3 rounded-full text-[#00ADB5] social-link">
+            <i data-feather="twitter"></i>
+          </a>
+        </div>
+        <p class="mt-8 text-sm text-gray-400">
+          © 2023 Manjunath. All rights reserved.
+        </p>
+      </div>
+    </footer>
 
-    // --- Initialization ---
-    AOS.init({
-      duration: 1000,
-      once: true,
-      offset: 100,
-    });
-
-    feather.replace();
-
-    // --- Modal Logic (Unified for Experience, Gallery, Certs) ---
-
-    const imageModal = document.getElementById("imageModal");
-    const modalImg = imageModal.querySelector("img");
-    const closeBtn = imageModal.querySelector(".closeBtn");
-
-    function openImageModal(src, alt) {
-      // Find the correct image source to use for the full-size view
-      const finalSrc = src.includes('placehold.co') ? src.replace('200x150', '800x600').replace('+Preview', '+Large') : src;
-
-      imageModal.classList.add("show");
-      modalImg.src = finalSrc;
-      modalImg.alt = alt;
-      document.body.style.overflow = "hidden";
-    }
-
-    closeBtn.onclick = () => {
-      imageModal.classList.remove("show");
-      modalImg.src = "";
-      modalImg.alt = "";
-      document.body.style.overflow = "auto";
-    };
-
-    imageModal.onclick = (e) => {
-      // Only close if the click target is the modal backdrop, not the image itself
-      if (e.target === imageModal) {
-        closeBtn.onclick();
-      }
-    };
-
-
-    // --- View More Functionality for Gallery and Certifications ---
-    function setupViewMore(containerId, buttonId, initialCount) {
-      const container = document.getElementById(containerId);
-      if (!container) return;
-      const items = container.querySelectorAll(`.${containerId.replace('-container', '-item')}`);
-      const button = document.getElementById(buttonId);
-      let itemsVisible = initialCount;
-
-      // Hide all items beyond the initial count
-      items.forEach((item, index) => {
-        if (index >= initialCount) {
-          item.classList.add("hidden");
-        }
+    <script>
+      // Particle.js Configuration
+      particlesJS('particles-js', {
+        particles: {
+          number: {
+            value: 50,
+            density: { enable: true, value_area: 800 }
+          },
+          color: { value: '#00adb5' },
+          shape: {
+            type: 'circle',
+            stroke: { width: 0, color: '#000000' }
+          },
+          opacity: {
+            value: 0.5,
+            random: true,
+            anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
+          },
+          size: {
+            value: 3,
+            random: true,
+            anim: { enable: false }
+          },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: '#00adb5',
+            opacity: 0.4,
+            width: 1
+          },
+          move: {
+            enable: true,
+            speed: 2,
+            direction: 'none',
+            random: true,
+            straight: false,
+            out_mode: 'out',
+            bounce: false
+          }
+        },
+        interactivity: {
+          detect_on: 'canvas',
+          events: {
+            onhover: { enable: true, mode: 'grab' },
+            onclick: { enable: true, mode: 'push' },
+            resize: true
+          },
+          modes: {
+            grab: { distance: 140, line_linked: { opacity: 0.7 } },
+            push: { particles_nb: 4 }
+          }
+        },
+        retina_detect: true
       });
 
-      // Hide button if total items <= initial count
-      if (items.length <= initialCount) {
-        button.classList.add('hidden');
+      // Constants for View More Logic
+      const initialGalleryItems = 3;
+      const initialCertItems = 3;
+
+      // Initialization
+      AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100,
+      });
+
+      feather.replace();
+
+      // Modal Logic
+      const imageModal = document.getElementById("imageModal");
+      const modalImg = imageModal.querySelector("img");
+      const closeBtn = imageModal.querySelector(".closeBtn");
+
+      function openImageModal(src, alt) {
+        const finalSrc = src.includes('placehold.co') ? src.replace('200x150', '800x600').replace('+Preview', '+Large') : src;
+        imageModal.classList.add("show");
+        modalImg.src = finalSrc;
+        modalImg.alt = alt;
+        document.body.style.overflow = "hidden";
       }
 
-
-      // The toggle function
-      return function () {
-        const isShowingAll = itemsVisible === items.length;
-
-        if (isShowingAll) {
-          items.forEach((item, index) => {
-            if (index >= initialCount) {
-              item.classList.add("hidden");
-            }
-          });
-          itemsVisible = initialCount;
-          button.innerHTML = `View More ${containerId.includes('gallery') ? 'Gallery Photos' : 'Certifications'} <i data-feather="arrow-down" class="ml-2"></i>`;
-          document.getElementById(containerId.replace('-container', '')).scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-          items.forEach((item) => {
-            item.classList.remove("hidden");
-          });
-          itemsVisible = items.length;
-          button.innerHTML = `View Less <i data-feather="arrow-up" class="ml-2"></i>`;
-        }
-        feather.replace();
+      closeBtn.onclick = () => {
+        imageModal.classList.remove("show");
+        modalImg.src = "";
+        modalImg.alt = "";
+        document.body.style.overflow = "auto";
       };
-    }
 
-    // Assign the toggle functions to the global scope
-    const toggleGallery = setupViewMore('gallery-container', 'view-more-gallery', initialGalleryItems);
-    const toggleCertifications = setupViewMore('certifications-container', 'view-more-certifications', initialCertItems);
+      imageModal.onclick = (e) => {
+        if (e.target === imageModal) {
+          closeBtn.onclick();
+        }
+      };
 
-    // --- Skills Section Animation ---
-    function animateSkillMeters() {
-      const skillMeters = document.querySelectorAll(".skill-meter");
-      skillMeters.forEach((meter) => {
-        const width = meter.getAttribute("data-width");
-        setTimeout(() => {
-          meter.style.width = width;
-        }, 100);
-      });
-    }
+      // View More Functionality
+      function setupViewMore(containerId, buttonId, initialCount) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        const items = container.querySelectorAll(`.${containerId.replace('-container', '-item')}`);
+        const button = document.getElementById(buttonId);
+        let itemsVisible = initialCount;
 
-    // Check if skill section is in view to start the animation
-    function checkSkillsInView() {
-      const skillsSection = document.getElementById("skills");
-      if (!skillsSection) return;
+        items.forEach((item, index) => {
+          if (index >= initialCount) {
+            item.classList.add("hidden");
+          }
+        });
 
-      const skillsSectionTop = skillsSection.offsetTop;
-      const viewportHeight = window.innerHeight;
+        if (items.length <= initialCount) {
+          button.classList.add('hidden');
+        }
 
-      if (window.pageYOffset > skillsSectionTop - viewportHeight + 500) {
-        animateSkillMeters();
-        window.removeEventListener("scroll", checkSkillsInView);
+        return function () {
+          const isShowingAll = itemsVisible === items.length;
+          if (isShowingAll) {
+            items.forEach((item, index) => {
+              if (index >= initialCount) {
+                item.classList.add("hidden");
+              }
+            });
+            itemsVisible = initialCount;
+            button.innerHTML = `View More ${containerId.includes('gallery') ? 'Gallery Photos' : 'Certifications'} <i data-feather="arrow-down" class="ml-2"></i>`;
+            document.getElementById(containerId.replace('-container', '')).scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            items.forEach((item) => {
+              item.classList.remove("hidden");
+            });
+            itemsVisible = items.length;
+            button.innerHTML = `View Less <i data-feather="arrow-up" class="ml-2"></i>`;
+          }
+          feather.replace();
+        };
       }
-    }
 
-    window.addEventListener("scroll", checkSkillsInView);
-    window.addEventListener("load", checkSkillsInView);
+      const toggleGallery = setupViewMore('gallery-container', 'view-more-gallery', initialGalleryItems);
+      const toggleCertifications = setupViewMore('certifications-container', 'view-more-certifications', initialCertItems);
 
-    // --- Scroll Indicator & Active Nav Link Logic ---
-    window.onscroll = function () {
-      // Scroll indicator update
-      const winScroll =
-        document.body.scrollTop || document.documentElement.scrollTop;
-      const height =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
-      const scrolled = (winScroll / height) * 100;
-      document.getElementById("scrollIndicator").style.width = scrolled + "%";
+      // Skills Animation
+      function animateSkillMeters() {
+        const skillMeters = document.querySelectorAll(".skill-meter");
+        skillMeters.forEach((meter) => {
+          const width = meter.getAttribute("data-width");
+          setTimeout(() => {
+            meter.style.width = width;
+          }, 100);
+        });
+      }
 
-      // Update active nav link
-      const sections = document.querySelectorAll("section");
-      const navLinks = document.querySelectorAll(".nav-link");
-      let current = "";
-      sections.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        if (pageYOffset >= sectionTop - 200) {
-          current = section.getAttribute("id");
+      function checkSkillsInView() {
+        const skillsSection = document.getElementById("skills");
+        if (!skillsSection) return;
+        const skillsSectionTop = skillsSection.offsetTop;
+        const viewportHeight = window.innerHeight;
+        if (window.pageYOffset > skillsSectionTop - viewportHeight + 500) {
+          animateSkillMeters();
+          window.removeEventListener("scroll", checkSkillsInView);
         }
-      });
-      navLinks.forEach((link) => {
-        link.classList.remove("active-nav");
-        if (link.getAttribute("href").substring(1) === current) {
-          link.classList.add("active-nav");
-        }
-      });
-    };
+      }
 
-    // Mobile Menu Toggle
-    document
-      .getElementById("mobileMenuButton")
-      .addEventListener("click", function () {
+      window.addEventListener("scroll", checkSkillsInView);
+      window.addEventListener("load", checkSkillsInView);
+
+      // Scroll Indicator & Active Nav Link
+      window.onscroll = function () {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("scrollIndicator").style.width = scrolled + "%";
+
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
+        let current = "";
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          if (pageYOffset >= sectionTop - 200) {
+            current = section.getAttribute("id");
+          }
+        });
+        navLinks.forEach((link) => {
+          link.classList.remove("active-nav");
+          if (link.getAttribute("href").substring(1) === current) {
+            link.classList.add("active-nav");
+          }
+        });
+      };
+
+      // Mobile Menu Toggle
+      document.getElementById("mobileMenuButton").addEventListener("click", function () {
         const menu = document.getElementById("mobileMenu");
         menu.classList.toggle("hidden");
       });
 
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-      anchor.addEventListener("click", function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute("href");
-        if (targetId === "#") return;
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-          window.scrollTo({
-            top: targetElement.offsetTop - 80,
-            behavior: "smooth",
-          });
-          const mobileMenu = document.getElementById("mobileMenu");
-          if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
-            mobileMenu.classList.add("hidden");
+      // Smooth Scrolling
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute("href");
+          if (targetId === "#") return;
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: "smooth",
+            });
+            const mobileMenu = document.getElementById("mobileMenu");
+            if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
+              mobileMenu.classList.add("hidden");
+            }
           }
-        }
+        });
       });
-    });
-// ... (Place this function with your existing JS code) ...
 
-// --- New: Read More/Show Less Toggle for Gallery Descriptions ---
-function toggleReadMore(contentId, buttonElement) {
-    const content = document.getElementById(contentId);
-    if (!content) return;
-
-    // Toggle the 'expanded' class to control max-height (CSS handles the animation)
-    const isExpanded = content.classList.toggle('expanded');
-
-    if (isExpanded) {
-        buttonElement.textContent = 'Show Less';
-        // Scroll to keep the content visible, especially on mobile
-        content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    } else {
-        buttonElement.textContent = 'Read More';
-    }
-}
-
-// ... (Rest of your existing JavaScript) ...
-    // --- 3. Typing Animation Logic (Smoother Delay) ---
-    function typeWriter(elementId, text, delay = 100, callback) {
-      const element = document.getElementById(elementId);
-      if (!element) return;
-      let i = 0;
-      element.innerHTML = '';
-      const timer = setInterval(() => {
-        if (i < text.length) {
-          element.innerHTML += text.charAt(i);
-          i++;
+      // Read More/Show Less Toggle
+      function toggleReadMore(contentId, buttonElement) {
+        const content = document.getElementById(contentId);
+        if (!content) return;
+        const isExpanded = content.classList.toggle('expanded');
+        if (isExpanded) {
+          buttonElement.textContent = 'Show Less';
+          content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         } else {
-          clearInterval(timer);
-          // Add typing cursor effect after finishing
-          element.classList.remove('typing-cursor');
-          if (callback) callback();
+          buttonElement.textContent = 'Read More';
         }
-      }, delay);
-    }
+      }
 
-    // Start the typing animation sequence on page load
-    window.addEventListener('load', () => {
-      const nameElement = document.getElementById('typing-name');
-      const titleElement = document.getElementById('typing-title');
+      // Typing Animation
+      function typeWriter(elementId, text, delay = 50, callback) {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+        let i = 0;
+        element.innerHTML = '';
+        const timer = setInterval(() => {
+          if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+          } else {
+            clearInterval(timer);
+            element.classList.remove('typing-cursor');
+            if (callback) callback();
+          }
+        }, delay);
+      }
 
-      // Add cursor effect manually before typing starts
-      nameElement.classList.add('typing-cursor');
-
-      // Sequence 1: Type the Name (100ms: fast but smooth)
-      typeWriter('typing-name', 'Manjunath Gavandi', 100, () => {
-        // Sequence 2: Type the Title after the name finishes
-        nameElement.classList.remove('typing-cursor');
-        titleElement.classList.add('typing-cursor');
-        setTimeout(() => {
-          // 70ms: slightly faster for the descriptor title
-          typeWriter('typing-title', 'Full-Stack Developer & DSA Enthusiast', 70, () => {
-            titleElement.classList.remove('typing-cursor');
-          });
-        }, 700); // 700ms pause for visible break between lines
+      document.addEventListener('DOMContentLoaded', () => {
+        const nameElement = document.getElementById('typing-name');
+        const titleElement = document.getElementById('typing-title');
+        nameElement.classList.add('typing-cursor');
+        typeWriter('typing-name', 'Manjunath Gavandi', 50, () => {
+          nameElement.classList.remove('typing-cursor');
+          titleElement.classList.add('typing-cursor');
+          setTimeout(() => {
+            typeWriter('typing-title', 'Full-Stack Developer & DSA Enthusiast', 40, () => {
+              titleElement.classList.remove('typing-cursor');
+            });
+          }, 300);
+        });
       });
-    });
-  </script>
-</body>
 
+      // Section and Timeline Animations
+      function animateSections() {
+        const sections = document.querySelectorAll('section');
+        const viewportHeight = window.innerHeight;
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          if (window.pageYOffset > sectionTop - viewportHeight + 200) {
+            section.classList.add('visible');
+          }
+        });
+      }
+
+      function animateTimeline() {
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        const viewportHeight = window.innerHeight;
+        timelineItems.forEach((item, index) => {
+          const itemTop = item.offsetTop;
+          if (window.pageYOffset > itemTop - viewportHeight + 200) {
+            setTimeout(() => {
+              item.classList.add('visible');
+            }, index * 200);
+          }
+        });
+      }
+
+      window.addEventListener('scroll', animateSections);
+      window.addEventListener('load', animateSections);
+      window.addEventListener('scroll', animateTimeline);
+      window.addEventListener('load', animateTimeline);
+    </script>
+</body>
 </html>

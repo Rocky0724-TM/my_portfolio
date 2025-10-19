@@ -100,7 +100,7 @@
     }
 
     .project-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-5px) scale(1.02); /* Added slight scale for more animation */
       box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.6);
       /* Darker shadow for depth */
     }
@@ -115,7 +115,7 @@
     }
 
     .project-card:hover .img-wrapper img {
-      transform: scale(1.05);
+      transform: scale(1.1); /* Increased scale for more noticeable zoom */
     }
 
     /* Certification Card (Simpler Hover) */
@@ -125,7 +125,7 @@
 
     .cert-card:hover {
       box-shadow: 0 10px 15px -3px rgba(0, 173, 181, 0.2), 0 4px 6px -2px rgba(0, 173, 181, 0.1);
-      transform: translateY(-2px);
+      transform: translateY(-2px) rotate(1deg); /* Added slight rotation for fun animation */
     }
 
     /* Hero Animation Styles */
@@ -182,7 +182,7 @@
     }
 
     .social-link:hover {
-      transform: translateY(-3px) scale(1.05);
+      transform: translateY(-3px) scale(1.1) rotate(5deg); /* Added rotation for more dynamic hover */
       box-shadow: 0 5px 15px rgba(0, 173, 181, 0.3);
     }
 
@@ -192,7 +192,7 @@
     }
 
     .skill-category-card:hover {
-      transform: translateY(-8px);
+      transform: translateY(-8px) scale(1.05); /* Added scale for bounce effect */
       box-shadow: 0 10px 20px rgba(0, 173, 181, 0.2);
     }
 
@@ -201,6 +201,14 @@
       position: relative;
       padding-left: 2rem;
       margin-bottom: 3rem;
+      transition: transform 0.5s ease, opacity 0.5s ease; /* Added for entrance animation */
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateX(0);
     }
 
     .timeline-item::before {
@@ -213,6 +221,11 @@
       border: 2px solid var(--teal);
       border-radius: 50%;
       background-color: var(--charcoal);
+      transition: transform 0.3s ease; /* Animate dot */
+    }
+
+    .timeline-item:hover::before {
+      transform: scale(1.5);
     }
 
     .timeline-item::after {
@@ -245,6 +258,12 @@
       justify-content: center;
       backdrop-filter: blur(5px);
       /* Added blur effect */
+      animation: fadeInModal 0.5s ease; /* Added modal entrance animation */
+    }
+
+    @keyframes fadeInModal {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     #imageModal.show {
@@ -319,32 +338,28 @@
     }
 
     /* Text Cursors for Typing Effect */
-    .typing-cursor {
+    .typing-cursor::after {
+      content: '|';
       animation: blink-cursor 0.75s step-end infinite;
+      margin-left: 2px;
     }
 
     @keyframes blink-cursor {
-
-      from,
-      to {
-        opacity: 0;
-      }
-
-      50% {
-        opacity: 1;
-      }
+      from, to { opacity: 0; }
+      50% { opacity: 1; }
     }
-    /* ... Your existing styles ... */
-
-    /* --- NEW: Gallery Description Control --- */
+    
+    /* ---------------------------------------------------------------------- */
+    /* --- CHANGES FOR GALLERY SECTION (READ MORE/LESS) --- */
+    /* ---------------------------------------------------------------------- */
     .description-content {
-      max-height: 5.5rem; /* ~4 lines of text (adjust as needed) */
+      max-height: 5.5rem; /* Limits initial description height to ~4 lines */
       overflow: hidden;
       transition: max-height 0.5s ease-in-out;
     }
 
     .description-content.expanded {
-      max-height: 1000px; /* Large enough to show all content */
+      max-height: 1000px; /* Allows full content visibility */
     }
 
     .read-more-btn {
@@ -352,7 +367,6 @@
       cursor: pointer;
       font-weight: 500;
       transition: color 0.3s;
-      /* Add some margin/padding to look like a link */
       display: inline-block;
       margin-top: 0.5rem;
     }
@@ -361,21 +375,73 @@
       color: var(--white);
     }
     
-    /* FIX: Consistency fix for Certs Image Containers */
-    .cert-card .img-container {
-        width: 100%;
-        height: 100px; /* Set a fixed height for all certification images for alignment */
-        overflow: hidden;
-        margin-bottom: 1rem;
-    }
-    
-    .cert-card .img-container img {
-        height: 100%;
-        object-fit: contain; /* Use contain to ensure the whole certificate is visible */
-    }
+    /* ---------------------------------------------------------------------- */
+    /* --- CHANGES FOR CERTIFICATIONS SECTION (ALIGNMENT FIX) --- */
+    /* ---------------------------------------------------------------------- */
 
-    /* ... Your existing styles ... */
-  </style>
+    /* --- CHANGES FOR CERTIFICATIONS SECTION (ALIGNMENT FIX) --- */
+
+/* NEW FIX 1: Enforce Fixed Height for Certification Titles */
+/* --- CHANGES FOR CERTIFICATIONS SECTION (ALIGNMENT FIX) --- */
+
+/* NEW FIX 1: Enforce Fixed Height for Certification Titles */
+.cert-card .cert-title-container {
+  height: 80px; 
+  overflow: hidden; 
+  margin-bottom: 0.5rem; 
+}
+
+.cert-card .cert-title-container h3 {
+    margin-bottom: 0; 
+}
+
+/* FIX 2: Fixed Height for Certs Image Containers */
+.cert-card .img-container {
+    width: 100%;
+    height: 100px; /* Standard height for the image preview box */
+    overflow: hidden;
+    margin-bottom: 1rem;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    background-color: #393e46; 
+    border-radius: 0.25rem;
+}
+
+.cert-card .img-container img {
+    height: 100%; 
+    width: 100%; /* <-- CHANGED THIS LINE: Force width to 100% */
+    /* Removed max-width: 100% and width: auto to avoid conflicts */
+    object-fit: cover; /* This will ensure it covers the space, potentially cropping */
+    transition: transform 0.3s ease-in-out;
+}
+
+.cert-card:hover .img-container img {
+    transform: scale(1.05); 
+}
+
+/* Additional Animations: Entrance for sections */
+section {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animate buttons on hover */
+.btn-resume, .read-more-btn {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-resume:hover, .read-more-btn:hover {
+  transform: scale(1.05);
+}
+    
+</style>
 </head>
 
 <body class="bg-[#222831] text-[#EEEEEE]">
@@ -437,8 +503,8 @@
       </div>
       <div data-aos="fade-left" class="text-center md:text-left">
         <!-- Typing elements are empty and filled by JS -->
-        <h1 class="text-4xl md:text-5xl font-bold mb-4" id="typing-name"></h1>
-        <h2 class="text-2xl md:text-3xl text-[#00ADB5] mb-6" id="typing-title">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 typing-cursor" id="typing-name"></h1>
+        <h2 class="text-2xl md:text-3xl text-[#00ADB5] mb-6 typing-cursor" id="typing-title">
         </h2>
         <p class="text-lg mb-8 max-w-md mx-auto md:mx-0">
           I create beautiful, functional digital experiences that blend
@@ -663,14 +729,13 @@
       </div>
   </section>
 
-  <!-- Gallery Section (View More Implemented) -->
   <section id="gallery" class="py-20 px-6 bg-[#222831]">
     <div class="container mx-auto">
       <h2 class="text-3xl font-bold text-center mb-16 section-title mx-auto" data-aos="fade-up">
         Gallery
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-container">
-        <!-- Gallery Item 1 (Visible) -->
+        
         <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in">
           <div class="img-wrapper h-48">
             <img src="gallery/Uxccelerate_hackathon.jpg" alt="Hackathon Participation"
@@ -678,24 +743,26 @@
           </div>
           <div class="p-4">
             <h3 class="text-lg font-semibold mb-2">UXccelerate Hackathon 2025</h3>
-            <p class="text-sm">
-              Uxccelerate.ai VibeHack 2025
-              Issued by Uxccelerate.ai · Sep 2025Issued by Uxccelerate.ai · Sep 2025
-              I developed the project “Sustainable Lifestyle Tracker & Community Hub”, a full-stack web application
-              built with React, FastAPI, and PostgreSQL.
-              🌱 The goal of this project was to empower individuals and communities to adopt more sustainable lifestyle
-              practices by providing tools for tracking, sharing, and engaging with eco-friendly activities.
-              This experience allowed me to:<br>
-              🔹 Strengthen my full-stack development skills<br>
-              🔹 Work with modern technologies like React, FastAPI & PostgreSQL<br>
-              🔹 Build a solution that combines technology with sustainability impact<br>
-              🔹 Collaborate and innovate in a hackathon environment<br>
-              Grateful for the opportunity to learn, innovate, and contribute toward impactful solutions. Looking
-              forward to applying these skills to future projects! 💡
-            </p>
+            <div class="description-content" id="gallery-desc-1">
+              <p class="text-sm">
+                Uxccelerate.ai VibeHack 2025. Issued by Uxccelerate.ai · Sep 2025. 
+                I developed the project **“Sustainable Lifestyle Tracker & Community Hub”**, a full-stack web application
+                built with React, FastAPI, and PostgreSQL.
+                🌱 The goal of this project was to empower individuals and communities to adopt more sustainable lifestyle
+                practices by providing tools for tracking, sharing, and engaging with eco-friendly activities.
+                This experience allowed me to:<br>
+                🔹 Strengthen my full-stack development skills<br>
+                🔹 Work with modern technologies like React, FastAPI & PostgreSQL<br>
+                🔹 Build a solution that combines technology with sustainability impact<br>
+                🔹 Collaborate and innovate in a hackathon environment<br>
+                Grateful for the opportunity to learn, innovate, and contribute toward impactful solutions. Looking
+                forward to applying these skills to future projects! 💡
+              </p>
+            </div>
+            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-1', this)">Read More</button>
           </div>
         </div>
-        <!-- Gallery Item 2 (Visible) -->
+
         <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in"
           data-aos-delay="100">
           <div class="img-wrapper h-48">
@@ -706,14 +773,17 @@
             <h3 class="text-lg font-semibold mb-2">
               ISRO MAHAQUIZ
             </h3>
-            <p class="text-sm">
-              🌌 Honored to receive a participation certificate from ISRO for my involvement in Chandrayaan 3! 🚀 This
-              mission symbolizes India's space exploration prowess.
-              Grateful for the opportunity and inspired to keep reaching for the stars! 🌠
-            </p>
+            <div class="description-content" id="gallery-desc-2">
+              <p class="text-sm">
+                🌌 Honored to receive a participation certificate from ISRO for my involvement in Chandrayaan 3! 🚀 This
+                mission symbolizes India's space exploration prowess.
+                Grateful for the opportunity and inspired to keep reaching for the stars! 🌠
+              </p>
+            </div>
+            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-2', this)">Read More</button>
           </div>
         </div>
-        <!-- Gallery Item 3 (Visible) -->
+
         <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in"
           data-aos-delay="200">
           <div class="img-wrapper h-48">
@@ -722,12 +792,15 @@
           </div>
           <div class="p-4">
             <h3 class="text-lg font-semibold mb-2">CYBER HYGIENE PRACTICE</h3>
-            <p class="text-sm">- 🔐 Certified in Cyber Hygiene by G20 India and the Ministry of Electronics 🌐🇮🇳 |
-              Committed to bolstering online safety and security through the completion of this course. Equipped with
-              essential cybersecurity practices, I'm dedicated to promoting a safer digital environment</p>
+            <div class="description-content" id="gallery-desc-3">
+              <p class="text-sm">- 🔐 Certified in Cyber Hygiene by G20 India and the Ministry of Electronics 🌐🇮🇳 |
+                Committed to bolstering online safety and security through the completion of this course. Equipped with
+                essential cybersecurity practices, I'm dedicated to promoting a safer digital environment</p>
+            </div>
+            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-3', this)">Read More</button>
           </div>
         </div>
-        <!-- Gallery Item 4 (Hidden by default, shown by 'View More') -->
+        
         <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg hidden"
           data-aos="zoom-in" data-aos-delay="300">
           <div class="img-wrapper h-48">
@@ -736,31 +809,35 @@
           </div>
           <div class="p-4">
             <h3 class="text-lg font-semibold mb-2">Azure Fundamentals : A cloud Challenge</h3>
-            <p class="text-sm">Completion Certificate of Microsoft Azure Fundamentals : A cloud Challenge</p>
+            <div class="description-content" id="gallery-desc-4">
+              <p class="text-sm">Completion Certificate of Microsoft Azure Fundamentals : A cloud Challenge</p>
+            </div>
+            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-4', this)">Read More</button>
           </div>
         </div>
 
-        <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in"
-          data-aos-delay="200">
+        <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in">
           <div class="img-wrapper h-48">
             <img src="gallery/TechTide.png" alt="TechTide Challenge" class="w-full h-full object-cover cursor-pointer"
               onclick="openImageModal(this.src, this.alt)" />
           </div>
           <div class="p-4">
             <h3 class="text-lg font-semibold mb-2">TechTide – National AI & CS Challenge</h3>
-            <p class="text-sm">Participated in TechTide – A 15-minute National Technology Challenge, organized by
-              InternsElite to test participants’ knowledge and decision-making in Artificial Intelligence, Machine
-              Learning, and Core Computer Science concepts.
-              🧠 The challenge featured 15 MCQs designed around real-world tech scenarios to assess logic, computational
-              thinking, and technical depth.
-              🏁 Open to innovators and coders from across India, this high-stakes competition aimed to reward the
-              fastest and brightest minds.
-              📜 Earned a Certificate of Participation for successfully completing the challenge</p>
+            <div class="description-content" id="gallery-desc-5">
+              <p class="text-sm">Participated in TechTide – A 15-minute National Technology Challenge, organized by
+                InternsElite to test participants’ knowledge and decision-making in Artificial Intelligence, Machine
+                Learning, and Core Computer Science concepts.
+                🧠 The challenge featured 15 MCQs designed around real-world tech scenarios to assess logic, computational
+                thinking, and technical depth.
+                🏁 Open to innovators and coders from across India, this high-stakes competition aimed to reward the
+                fastest and brightest minds.
+                📜 Earned a Certificate of Participation for successfully completing the challenge</p>
+            </div>
+            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-5', this)">Read More</button>
           </div>
         </div>
 
-        <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in"
-          data-aos-delay="200">
+        <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in">
           <div class="img-wrapper h-48">
             <img src="gallery/tata.png" alt="tata imagination challenge"
               class="w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)" />
@@ -768,13 +845,16 @@
           <div class="p-4">
             <h3 class="text-lg font-semibold mb-2">
               Tata Imagination Challenge 2023</h3>
-            <p class="text-sm">Participated certificate in Tata Imagination Challenge 2023, a prestigious national-level competition
-              organized by the Tata Group to foster innovation and creative problem-solving among students across India.
-            </p>
+            <div class="description-content" id="gallery-desc-6">
+              <p class="text-sm">Participated certificate in Tata Imagination Challenge 2023, a prestigious national-level competition
+                organized by the Tata Group to foster innovation and creative problem-solving among students across India.
+              </p>
+            </div>
+            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-6', this)">Read More</button>
           </div>
         </div>
-        <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in"
-          data-aos-delay="200">
+        
+        <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in">
           <div class="img-wrapper h-48">
             <img src="gallery/cyber_warrrior.png" alt="Cyber Warrior"
               class="w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)" />
@@ -782,13 +862,15 @@
           <div class="p-4">
             <h3 class="text-lg font-semibold mb-2">
               Cyber Warrior</h3>
-            <p class="text-sm">Participated in Cyber Warrior.Cyber Warrior is an electrifying competition designed for cybersecurity enthusiasts, ethical hackers, and problem-solvers ready to test their skills in a high-stakes Capture the Flag (CTF) challenge. Participants will engage in a series of real-world cybersecurity scenarios, tackling challenges in cryptography, web security, reverse engineering, forensics, binary exploitation, and more.
-            </p>
+            <div class="description-content" id="gallery-desc-7">
+              <p class="text-sm">Participated in Cyber Warrior.Cyber Warrior is an electrifying competition designed for cybersecurity enthusiasts, ethical hackers, and problem-solvers ready to test their skills in a high-stakes Capture the Flag (CTF) challenge. Participants will engage in a series of real-world cybersecurity scenarios, tackling challenges in cryptography, web security, reverse engineering, forensics, binary exploitation, and more.
+              </p>
+            </div>
+            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-7', this)">Read More</button>
           </div>
         </div>
 
-        <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in"
-          data-aos-delay="200">
+        <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg" data-aos="zoom-in">
           <div class="img-wrapper h-48">
             <img src="gallery/BizBlitz.png" alt="BizBlitz – National Business Quiz"
               class="w-full h-full object-cover cursor-pointer" onclick="openImageModal(this.src, this.alt)" />
@@ -796,18 +878,20 @@
           <div class="p-4">
             <h3 class="text-lg font-semibold mb-2">
               BizBlitz – National Business Quiz</h3>
-            <p class="text-sm">Participated in BizBlitz – The Ultimate Business Quiz, a national-level competition
-              hosted by InternsElite, a leading EdTech platform.
+            <div class="description-content" id="gallery-desc-8">
+              <p class="text-sm">Participated in BizBlitz – The Ultimate Business Quiz, a national-level competition
+                hosted by InternsElite, a leading EdTech platform.
 
-              The quiz tested core business concepts and real-world scenarios in Marketing, HR, and Strategic Business
-              Thinking through a 15-question, 15-minute challenge.
-              🧠 Designed for college students across India to foster analytical and business decision-making skills.
-              🎓 Received a Certificate of Participation, and competed among top minds from diverse academic backgrounds
-            </p>
+                The quiz tested core business concepts and real-world scenarios in Marketing, HR, and Strategic Business
+                Thinking through a 15-question, 15-minute challenge.
+                🧠 Designed for college students across India to foster analytical and business decision-making skills.
+                🎓 Received a Certificate of Participation, and competed among top minds from diverse academic backgrounds
+              </p>
+            </div>
+            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-8', this)">Read More</button>
           </div>
         </div>
 
-        <!-- Gallery Item 5 (Hidden by default, shown by 'View More') -->
         <div class="gallery-item project-card bg-[#393E46] rounded-lg overflow-hidden shadow-lg hidden"
           data-aos="zoom-in" data-aos-delay="400">
           <div class="img-wrapper h-48">
@@ -816,14 +900,18 @@
           </div>
           <div class="p-4">
             <h3 class="text-lg font-semibold mb-2">Global Strategy Challenge : Case Battle for Strategic Supremacy</h3>
-            <p class="text-sm">I am absolutely thrilled to be a part of the upcoming Ignite 180 competition hosted by
-              Kirori Mal College. This event, known for its focus on innovation and entrepreneurship, offers a unique
-              opportunity to showcase creative ideas and turn them into reality. I am sincerely thankful to the
-              organizing committee for their tireless efforts in creating this empowering platform for students. Your
-              commitment to nurturing talent, fostering a culture of innovation, and providing a space for budding
-              entrepreneurs like me is highly commendable. I am eagerly looking forward to the event, excited to engage
-              with like-minded individuals, and ready to make a meaningful contribution to the vibrant and dynamic
-              atmosphere that Kirori Mal College's Ignite 180 competition is renowned for.</p>
+            <div class="description-content" id="gallery-desc-9">
+              <p class="text-sm">I am absolutely thrilled to be a part of the upcoming Ignite 180 competition hosted by
+                Kirori Mal College. This event, known for its focus on innovation and entrepreneurship, offers a unique
+                opportunity to showcase creative ideas and turn them into reality. I am sincerely thankful to the
+                organizing committee for their tireless efforts in creating this empowering platform for students. Your
+                commitment to nurturing talent, fostering a culture of innovation, and providing a space for budding
+                entrepreneurs like me is highly commendable. I am eagerly looking forward to the event, excited to engage
+                with like-minded individuals, and ready to make a meaningful contribution to the vibrant and dynamic
+                atmosphere that Kirori Mal College's Ignite 180 competition is renowned for.
+              </p>
+            </div>
+            <button class="read-more-btn text-sm" onclick="toggleReadMore('gallery-desc-9', this)">Read More</button>
           </div>
         </div>
       </div>
@@ -835,172 +923,178 @@
         </button>
       </div>
     </div>
-
-
-
   </section>
 
   <!-- Certifications Section (View More Implemented) -->
   <section id="certifications" class="py-20 px-6 bg-[#393E46]">
     <div class="container mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-16 section-title mx-auto" data-aos="fade-up">
-        Certifications
-      </h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="certifications-container">
-        <!-- Cert 1 (Visible) -->
-        <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up">
-          <div class="text-[#00ADB5] text-4xl mb-4">
-            <i data-feather="award"></i>
-          </div>
-          <h3 class="text-xl font-semibold mb-2">
-            Oracle Cloud Infrastructure 2025 Certified Data Science Professional
-          </h3>
-          <p class="text-[#00ADB5] mb-2">Oracle</p>
-          <p class="text-sm mb-4">Sep 2025</p>
-          <div class="w-full h-32 overflow-hidden mb-4">
-            <img
-              src="certifications/Oracle_Data_Science.jpg"
-              alt="AWS Certification" class="rounded w-full h-full object-cover cursor-pointer"
-              onclick="openImageModal(this.src, this.alt)" />
-          </div>
-          <p class="text-sm text-gray-400">
-            Oracle Cloud Infrastructure · Problem Solving · Analytical thinking · Model Deployment & Monitoring · Predictive Analytics
-          </p>
-        </div>
+        <h2 class="text-3xl font-bold text-center mb-16 section-title mx-auto" data-aos="fade-up">
+            Certifications
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="certifications-container">
+            
+            <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up">
+                <div class="text-[#00ADB5] text-4xl mb-4">
+                    <i data-feather="award"></i>
+                </div>
+                <div class="cert-title-container">
+                    <h3 class="text-xl font-semibold">
+                        Oracle Cloud Infrastructure 2025 Certified Data Science Professional
+                    </h3>
+                </div>
+                <p class="text-[#00ADB5] mb-2">Oracle</p>
+                <p class="text-sm mb-4">Sep 2025</p>
+                <div class="img-container">
+                    <img src="certifications/Oracle_Data_Science.jpg" alt="Oracle Data Science Certification"
+                        class="rounded w-full h-full object-cover cursor-pointer"
+                        onclick="openImageModal(this.src, this.alt)" />
+                </div>
+                <p class="text-sm text-gray-400">
+                    Oracle Cloud Infrastructure · Problem Solving · Analytical thinking · Model Deployment & Monitoring · Predictive Analytics
+                </p>
+            </div>
 
-        <!-- Cert 2 (Visible) -->
-        <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="100">
-          <div class="text-[#00ADB5] text-4xl mb-4">
-            <i data-feather="award"></i>
-          </div>
-          <h3 class="text-xl font-semibold mb-2">
-            Oracle Cloud Infrastructure 2025 Certified Generative AI Professional
-          </h3>
-          <p class="text-[#00ADB5] mb-2">Oracle</p>
-          <p class="text-sm mb-4">Sep 2025</p>
-          <div class="w-full h-32 overflow-hidden mb-4">
-            <img
-              src="certifications/Oracle_Generative_AI.jpg"
-              alt="Google UX Design Certification" class="rounded w-full h-full object-cover cursor-pointer"
-              onclick="openImageModal(this.src, this.alt)" />
-          </div>
-          <p class="text-sm text-gray-400">
-            Large Language Models (LLM) · Retrieval-Augmented Generation (RAG) · Software Development · LLVM
-          </p>
-        </div>
+            <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up"
+                data-aos-delay="100">
+                <div class="text-[#00ADB5] text-4xl mb-4">
+                    <i data-feather="award"></i>
+                </div>
+                <div class="cert-title-container">
+                    <h3 class="text-xl font-semibold">
+                        Oracle Cloud Infrastructure 2025 Certified Generative AI Professional
+                    </h3>
+                </div>
+                <p class="text-[#00ADB5] mb-2">Oracle</p>
+                <p class="text-sm mb-4">Sep 2025</p>
+                <div class="img-container">
+                    <img src="certifications/Oracle_Generative_AI.jpg" alt="Oracle Generative AI Certification"
+                        class="rounded w-full h-full object-cover cursor-pointer"
+                        onclick="openImageModal(this.src, this.alt)" />
+                </div>
+                <p class="text-sm text-gray-400">
+                    Large Language Models (LLM) · Retrieval-Augmented Generation (RAG) · Software Development · LLVM
+                </p>
+            </div>
 
-        <!-- Cert 3 (Visible) -->
-        <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="200">
-          <div class="text-[#00ADB5] text-4xl mb-4">
-            <i data-feather="award"></i>
-          </div>
-          <h3 class="text-xl font-semibold mb-2">
-            Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate
-          </h3>
-          <p class="text-[#00ADB5] mb-2">Oracle</p>
-          <p class="text-sm mb-4">Sep 2025</p>
-          <div class="w-full h-32 overflow-hidden mb-4">
-            <img
-              src="certifications/Oracle_AI_Foundation.jpg"
-              alt="React Advanced Development Certification" class="rounded w-full h-full object-cover cursor-pointer"
-              onclick="openImageModal(this.src, this.alt)" />
-          </div>
-          <p class="text-sm text-gray-400">
-            Deep Learning · Machine Learning · Prompt Engineering
-          </p>
-        </div>
+            <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up"
+                data-aos-delay="200">
+                <div class="text-[#00ADB5] text-4xl mb-4">
+                    <i data-feather="award"></i>
+                </div>
+                <div class="cert-title-container">
+                    <h3 class="text-xl font-semibold">
+                        Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate
+                    </h3>
+                </div>
+                <p class="text-[#00ADB5] mb-2">Oracle</p>
+                <p class="text-sm mb-4">Sep 2025</p>
+                <div class="img-container">
+                    <img src="certifications/Oracle_AI_Foundation.jpg" alt="Oracle AI Foundations Certification"
+                        class="rounded w-full h-full object-cover cursor-pointer"
+                        onclick="openImageModal(this.src, this.alt)" />
+                </div>
+                <p class="text-sm text-gray-400">
+                    Deep Learning · Machine Learning · Prompt Engineering
+                </p>
+            </div>
 
-        <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="200">
-          <div class="text-[#00ADB5] text-4xl mb-4">
-            <i data-feather="award"></i>
-          </div>
-          <h3 class="text-xl font-semibold mb-2">
-            Prompt Engineering
-          </h3>
-          <p class="text-[#00ADB5] mb-2">Udemy</p>
-          <p class="text-sm mb-4">Oct 2023</p>
-          <div class="w-full h-32 overflow-hidden mb-4">
-            <img
-              src="certifications/prompt.png"
-              alt="React Advanced Development Certification" class="rounded w-full h-full object-cover cursor-pointer"
-              onclick="openImageModal(this.src, this.alt)" />
-          </div>
-          <p class="text-sm text-gray-400">
-          · Prompt Engineering
-          </p>
-        </div>
+            <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up"
+                data-aos-delay="200">
+                <div class="text-[#00ADB5] text-4xl mb-4">
+                    <i data-feather="award"></i>
+                </div>
+                <div class="cert-title-container">
+                    <h3 class="text-xl font-semibold">
+                        Prompt Engineering
+                    </h3>
+                </div>
+                <p class="text-[#00ADB5] mb-2">Udemy</p>
+                <p class="text-sm mb-4">Oct 2023</p>
+                <div class="img-container">
+                    <img src="certifications/prompt.png" alt="Prompt Engineering Certification"
+                        class="rounded w-full h-full object-cover cursor-pointer"
+                        onclick="openImageModal(this.src, this.alt)" />
+                </div>
+                <p class="text-sm text-gray-400">
+                    · Prompt Engineering
+                </p>
+            </div>
 
-        <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="200">
-          <div class="text-[#00ADB5] text-4xl mb-4">
-            <i data-feather="award"></i>
-          </div>
-          <h3 class="text-xl font-semibold mb-2">
-            C++ Programming
-          </h3>
-          <p class="text-[#00ADB5] mb-2">Oracle</p>
-          <p class="text-sm mb-4">Sep 2025</p>
-          <div class="w-full h-32 overflow-hidden mb-4">
-            <img
-              src="certifications/cpp.png"
-              alt="React Advanced Development Certification" class="rounded w-full h-full object-cover cursor-pointer"
-              onclick="openImageModal(this.src, this.alt)" />
-          </div>
-          <p class="text-sm text-gray-400">
-            C++ Basics · Object-Oriented Programming · Data Structures & Algorithms
-          </p>
-        </div>
+            <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up"
+                data-aos-delay="200">
+                <div class="text-[#00ADB5] text-4xl mb-4">
+                    <i data-feather="award"></i>
+                </div>
+                <div class="cert-title-container">
+                    <h3 class="text-xl font-semibold">
+                        C++ Programming
+                    </h3>
+                </div>
+                <p class="text-[#00ADB5] mb-2">Oracle</p>
+                <p class="text-sm mb-4">Sep 2025</p>
+                <div class="img-container">
+                    <img src="certifications/cpp.png" alt="C++ Programming Certification"
+                        class="rounded w-full h-full object-cover cursor-pointer"
+                        onclick="openImageModal(this.src, this.alt)" />
+                </div>
+                <p class="text-sm text-gray-400">
+                    C++ Basics · Object-Oriented Programming · Data Structures & Algorithms
+                </p>
+            </div>
 
-        <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="200">
-          <div class="text-[#00ADB5] text-4xl mb-4">
-            <i data-feather="award"></i>
-          </div>
-          <h3 class="text-xl font-semibold mb-2">
-            Career Essentials in Generative AI by Microsoft and LinkedIn
-          </h3>
-          <p class="text-[#00ADB5] mb-2">Microsoft</p>
-          <p class="text-sm mb-4">Sep 2023</p>
-          <div class="w-full h-32 overflow-hidden mb-4">
-            <img
-              src="certifications/microsoft.jpg"
-              alt="React Advanced Development Certification" class="rounded w-full h-full object-cover cursor-pointer"
-              onclick="openImageModal(this.src, this.alt)" />
-          </div>
-          <p class="text-sm text-gray-400">
-            Azure Cloud Services · Generative AI Tools · AI Integration in Workflows
-          </p>
-        </div>
+            <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg" data-aos="fade-up"
+                data-aos-delay="200">
+                <div class="text-[#00ADB5] text-4xl mb-4">
+                    <i data-feather="award"></i>
+                </div>
+                <div class="cert-title-container">
+                    <h3 class="text-xl font-semibold">
+                        Career Essentials in Generative AI by Microsoft and LinkedIn
+                    </h3>
+                </div>
+                <p class="text-[#00ADB5] mb-2">Microsoft</p>
+                <p class="text-sm mb-4">Sep 2023</p>
+                <div class="img-container">
+                    <img src="certifications/microsoft.jpg" alt="Microsoft Generative AI Certification"
+                        class="rounded w-full h-full object-cover cursor-pointer"
+                        onclick="openImageModal(this.src, this.alt)" />
+                </div>
+                <p class="text-sm text-gray-400">
+                    Azure Cloud Services · Generative AI Tools · AI Integration in Workflows
+                </p>
+            </div>
 
-        <!-- Cert 4 (Hidden by default, shown by 'View More') -->
-        <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg hidden" data-aos="fade-up"
-          data-aos-delay="300">
-          <div class="text-[#00ADB5] text-4xl mb-4">
-            <i data-feather="award"></i>
-          </div>
-          <h3 class="text-xl font-semibold mb-2">
-            TCS iON Career Edge - Young Professional
-          </h3>
-          <p class="text-[#00ADB5] mb-2">TCS ION</p>
-          <p class="text-sm mb-4">Jun 2023</p>
-          <div class="w-full h-32 overflow-hidden mb-4">
-            <img
-              src="certifications/tcsion.png"
-              alt="Introduction to Python Certification" class="rounded w-full h-full object-cover cursor-pointer"
-              onclick="openImageModal(this.src, this.alt)" />
-          </div>
-          <p class="text-sm text-gray-400">
-            Professional Skills · Communication · Teamwork & Leadership 
-          </p>
+            <div class="cert-item cert-card bg-[#222831] p-6 rounded-lg shadow-lg hidden" data-aos="fade-up"
+                data-aos-delay="300">
+                <div class="text-[#00ADB5] text-4xl mb-4">
+                    <i data-feather="award"></i>
+                </div>
+                <div class="cert-title-container">
+                    <h3 class="text-xl font-semibold">
+                        TCS iON Career Edge - Young Professional
+                    </h3>
+                </div>
+                <p class="text-[#00ADB5] mb-2">TCS ION</p>
+                <p class="text-sm mb-4">Jun 2023</p>
+                <div class="img-container">
+                    <img src="certifications/tcsion.png" alt="TCS iON Certification"
+                        class="rounded w-full h-full object-cover cursor-pointer"
+                        onclick="openImageModal(this.src, this.alt)" />
+                </div>
+                <p class="text-sm text-gray-400">
+                    Professional Skills · Communication · Teamwork & Leadership
+                </p>
+            </div>
         </div>
-      </div>
-      <div class="text-center mt-12">
-        <button id="view-more-certifications" onclick="toggleCertifications()"
-          class="inline-flex items-center px-6 py-3 border border-[#00ADB5] text-[#00ADB5] rounded-lg font-medium hover:bg-[#00ADB5] hover:text-white transition-colors">
-          View More Certifications
-          <i data-feather="arrow-down" class="ml-2"></i>
-        </button>
-      </div>
+        <div class="text-center mt-12">
+            <button id="view-more-certifications" onclick="toggleCertifications()"
+                class="inline-flex items-center px-6 py-3 border border-[#00ADB5] text-[#00ADB5] rounded-lg font-medium hover:bg-[#00ADB5] hover:text-white transition-colors">
+                View More Certifications
+                <i data-feather="arrow-down" class="ml-2"></i>
+            </button>
+        </div>
     </div>
-  </section>
+</section>
 
   <!-- Skills Section (Updated with Basic/Intermediate Labels and bar widths) -->
   <section id="skills" class="py-20 px-6 bg-[#222831]">
@@ -1631,9 +1725,28 @@
         }
       });
     });
+// ... (Place this function with your existing JS code) ...
 
-    // --- 3. Typing Animation Logic (Smoother Delay) ---
-    function typeWriter(elementId, text, delay = 100, callback) {
+// --- New: Read More/Show Less Toggle for Gallery Descriptions ---
+function toggleReadMore(contentId, buttonElement) {
+    const content = document.getElementById(contentId);
+    if (!content) return;
+
+    // Toggle the 'expanded' class to control max-height (CSS handles the animation)
+    const isExpanded = content.classList.toggle('expanded');
+
+    if (isExpanded) {
+        buttonElement.textContent = 'Show Less';
+        // Scroll to keep the content visible, especially on mobile
+        content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } else {
+        buttonElement.textContent = 'Read More';
+    }
+}
+
+// ... (Rest of your existing JavaScript) ...
+    // --- 3. Typing Animation Logic (Faster and Smoother) ---
+    function typeWriter(elementId, text, delay = 50, callback) { // Reduced default delay to 50ms for faster typing
       const element = document.getElementById(elementId);
       if (!element) return;
       let i = 0;
@@ -1644,34 +1757,68 @@
           i++;
         } else {
           clearInterval(timer);
-          // Add typing cursor effect after finishing
+          // Remove typing cursor after finishing
           element.classList.remove('typing-cursor');
           if (callback) callback();
         }
       }, delay);
     }
 
-    // Start the typing animation sequence on page load
-    window.addEventListener('load', () => {
+    // Start the typing animation sequence immediately on DOMContentLoaded (faster than 'load')
+    document.addEventListener('DOMContentLoaded', () => {
       const nameElement = document.getElementById('typing-name');
       const titleElement = document.getElementById('typing-title');
 
       // Add cursor effect manually before typing starts
       nameElement.classList.add('typing-cursor');
 
-      // Sequence 1: Type the Name (100ms: fast but smooth)
-      typeWriter('typing-name', 'Manjunath Gavandi', 100, () => {
+      // Sequence 1: Type the Name (50ms: faster and smoother)
+      typeWriter('typing-name', 'Manjunath Gavandi', 50, () => {
         // Sequence 2: Type the Title after the name finishes
         nameElement.classList.remove('typing-cursor');
         titleElement.classList.add('typing-cursor');
         setTimeout(() => {
-          // 70ms: slightly faster for the descriptor title
-          typeWriter('typing-title', 'Full-Stack Developer & DSA Enthusiast', 70, () => {
+          // 40ms: even faster for the descriptor title
+          typeWriter('typing-title', 'Full-Stack Developer & DSA Enthusiast', 40, () => {
             titleElement.classList.remove('typing-cursor');
           });
-        }, 700); // 700ms pause for visible break between lines
+        }, 300); // Reduced pause to 300ms for quicker transition
       });
     });
+
+    // Additional: Animate sections on scroll
+    function animateSections() {
+      const sections = document.querySelectorAll('section');
+      const viewportHeight = window.innerHeight;
+
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        if (window.pageYOffset > sectionTop - viewportHeight + 200) {
+          section.classList.add('visible');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', animateSections);
+    window.addEventListener('load', animateSections);
+
+    // Animate timeline items on scroll
+    function animateTimeline() {
+      const timelineItems = document.querySelectorAll('.timeline-item');
+      const viewportHeight = window.innerHeight;
+
+      timelineItems.forEach((item, index) => {
+        const itemTop = item.offsetTop;
+        if (window.pageYOffset > itemTop - viewportHeight + 200) {
+          setTimeout(() => {
+            item.classList.add('visible');
+          }, index * 200); // Staggered animation for timeline items
+        }
+      });
+    }
+
+    window.addEventListener('scroll', animateTimeline);
+    window.addEventListener('load', animateTimeline);
   </script>
 </body>
 

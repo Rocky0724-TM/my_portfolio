@@ -6,12 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Manjunath | Full-Stack Developer | DSA Enthusiast</title>
   <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- AOS for Animations -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- Feather Icons -->
   <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
   <script src="https://unpkg.com/feather-icons"></script>
+  <!-- Particles.js -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <!-- Poppins Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet" />
   <style>
@@ -27,8 +32,6 @@
       background-color: var(--charcoal);
       color: var(--white);
       scroll-behavior: smooth;
-      /* FIX 1: Prevent horizontal scrollbar globally */
-      overflow-x: hidden;
     }
 
     /* Particle Background Styling */
@@ -318,7 +321,6 @@
       z-index: 1001;
       font-weight: 300;
       line-height: 1;
-      text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     }
 
     #imageModal .closeBtn:hover {
@@ -326,18 +328,13 @@
       transform: rotate(90deg);
     }
 
-    /* FIX 2: Ensure modal image scales down to fit viewport perfectly */
     #imageModal img {
       max-width: 90%;
-      max-height: 90vh;
-      width: auto;
-      height: auto;
+      max-height: 80vh;
       border-radius: 0.5rem;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
       animation: zoomIn 0.3s ease forwards;
       z-index: 1000;
-      /* Crucial for not overflowing on small screens */
-      box-sizing: border-box;
     }
 
     @keyframes zoomIn {
@@ -454,28 +451,33 @@
 
     /* Mobile-Specific Adjustments */
     @media (max-width: 768px) {
-      /* Base Mobile Styles */
       #home {
         padding-top: 4rem;
+        /* Equivalent to Tailwind's pt-16 */
         padding-bottom: 3rem;
+        /* Equivalent to Tailwind's pb-12 */
       }
 
       #home .container {
         grid-template-columns: 1fr;
+        /* Single column for mobile */
       }
 
       #home .w-64.h-64 {
         width: 12rem;
+        /* 192px */
         height: 12rem;
       }
 
       #home .w-48.h-48 {
         width: 10rem;
+        /* 160px */
         height: 10rem;
       }
 
       h1.text-4xl {
         font-size: 2rem;
+        /* Smaller heading for mobile */
       }
 
       h2.text-2xl {
@@ -487,12 +489,23 @@
         align-items: center;
       }
 
+      #home .flex.sm\:flex-row>a {
+        width: 100%;
+        max-width: 16rem;
+        text-align: center;
+      }
+
+      #home .space-x-4 {
+        gap: 0.75rem;
+      }
+
       .social-link {
         padding: 8px;
       }
 
       #particles-js {
         display: none;
+        /* Disable particles on mobile for performance */
       }
 
       .cert-card .cert-title-container {
@@ -519,9 +532,11 @@
         left: 3px;
       }
 
-      /* Fix for all multi-column grids on mobile */
-      .grid.md\:grid-cols-2,
-      .grid.lg\:grid-cols-3 {
+      .grid.md\:grid-cols-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .grid.md\:grid-cols-3 {
         grid-template-columns: 1fr;
       }
 
@@ -529,40 +544,29 @@
         height: 8rem;
       }
 
-      /* About Section Mobile Fix */
-      #about .container>div {
-        min-width: 0;
-      }
-
-      /* Force About cards to stack on mobile (default Tailwind behavior, but ensuring) */
-      #about .grid.grid-cols-2 {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-
       /* Modal adjustments for mobile */
       #imageModal {
-        padding-top: 0;
+        padding-top: 4rem; /* Offset for nav bar height */
       }
 
-      /* FIX 3: Increased max-width constraint for smaller mobile to prevent scrollbar */
       #imageModal img {
-        max-height: 80vh;
-        max-width: 90%; 
+        max-height: 70vh; /* Adjust for smaller screens */
+        width: auto;
+        max-width: 95%;
       }
 
       #imageModal .closeBtn {
-        top: 0.5rem;
+        top: 4.5rem; /* Position below nav bar */
         right: 0.5rem;
         font-size: 2rem;
-        color: #eeeeee;
+        z-index: 1001;
       }
     }
 
     @media (max-width: 480px) {
       /* Extra small screens (e.g., 4-5 inch phones) */
       body {
-        font-size: 0.875rem;
+        font-size: 0.875rem; /* Smaller base font */
       }
 
       h1.text-4xl {
@@ -591,7 +595,7 @@
       }
 
       .img-wrapper.h-48 {
-        height: 10rem;
+        height: 10rem; /* Smaller images */
       }
 
       .cert-card .img-container {
@@ -602,32 +606,15 @@
         height: 6rem;
       }
 
-      /* About Cards (Floating) Adjustment for Squeezing */
-      #about .grid.grid-cols-2 {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-
-      #about .grid.grid-cols-2>div {
-        padding: 1rem;
-      }
-
-      #about .grid.grid-cols-2>div h3 {
-        font-size: 1rem;
-      }
-
-      #about .grid.grid-cols-2>div p {
-        font-size: 0.875rem;
-      }
-
-      .timeline-item {
-        margin-bottom: 2rem;
-      }
-
-      /* FIX 4: Aggressively reducing modal image size for narrowest viewports */
       #imageModal img {
-        max-height: 70vh;
-        max-width: 95%;
+        max-height: 60vh;
+        max-width: 100%;
+      }
+
+      #imageModal .closeBtn {
+        font-size: 1.75rem;
+        top: 4rem;
+        right: 0.25rem;
       }
     }
 
@@ -669,27 +656,29 @@
         height: 5rem;
       }
 
-      /* Further adjustment for About cards on tiny screens */
-      #about .grid.grid-cols-2>div p {
-        font-size: 0.75rem;
+      #imageModal img {
+        max-height: 50vh;
+        max-width: 100%;
       }
 
-      /* FIX 5: Maximum constraint for modal image on tiny screens */
-      #imageModal img {
-        max-height: 60vh;
-        max-width: 95%;
+      #imageModal .closeBtn {
+        font-size: 1.5rem;
+        top: 3.5rem;
+        right: 0.25rem;
       }
     }
 
     @media (min-width: 640px) {
       #home {
         padding-top: 5rem;
+        /* Equivalent to Tailwind's pt-20 */
         padding-bottom: 4rem;
+        /* Equivalent to Tailwind's pb-16 */
       }
     }
 
     @media (min-width: 1024px) {
-      /* Larger screens adjustments */
+      /* Larger screens adjustments if needed */
       #imageModal .closeBtn {
         top: 3rem;
         right: 3rem;
@@ -700,8 +689,10 @@
 </head>
 
 <body class="bg-[#222831] text-[#EEEEEE]">
+  <!-- Scroll Indicator Bar -->
   <div id="scrollIndicator"></div>
 
+  <!-- Navigation -->
   <nav class="fixed w-full z-50 bg-[#222831]/90 backdrop-blur-sm py-4 px-6 shadow-lg">
     <div class="container mx-auto flex justify-between items-center">
       <a href="#" class="text-2xl font-bold text-[#00ADB5]">My Portfolio</a>
@@ -721,6 +712,7 @@
         </div>
       </div>
     </div>
+    <!-- Mobile Menu -->
     <div class="hidden md:hidden bg-[#393E46] mt-4 p-4 rounded-lg" id="mobileMenu">
       <div class="flex flex-col space-y-4">
         <a href="#home" class="nav-link active-nav">Home</a>
@@ -734,9 +726,10 @@
     </div>
   </nav>
 
+  <!-- Hero Section with Particle Background -->
   <section id="home" class="min-h-screen flex items-center pt-20 pb-16 px-6">
     <div id="particles-js"></div>
-    <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <div class="container mx-auto grid md:grid-cols-2 gap-12 items-center">
       <div class="relative" data-aos="fade-right">
         <div class="relative w-64 h-64 md:w-80 md:h-80 mx-auto">
           <div class="absolute inset-0 flex items-center justify-center">
@@ -787,12 +780,13 @@
     </div>
   </section>
 
+  <!-- About Section -->
   <section id="about" class="py-20 px-6 bg-[#393E46]">
     <div class="container mx-auto">
       <h2 class="text-3xl font-bold text-center mb-16 section-title mx-auto" data-aos="fade-up">
         About Me
       </h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
         <div data-aos="fade-right">
           <p class="text-lg mb-6">
             I'm a passionate full-stack developer and DSA Enthusiast with
@@ -859,6 +853,7 @@
     </div>
   </section>
 
+  <!-- Education Section -->
   <section id="education" class="py-20 px-6 bg-[#222831]">
     <div class="container mx-auto">
       <h2 class="text-3xl font-bold text-center mb-16 section-title mx-auto" data-aos="fade-up">
@@ -897,6 +892,7 @@
     </div>
   </section>
 
+  <!-- Experience Section -->
   <section id="experience" class="bg-[#222831] py-20 px-6">
     <div class="container mx-auto max-w-5xl">
       <h2 class="text-3xl font-bold text-center mb-8 section-title mx-auto text-white" data-aos="fade-up">
@@ -970,6 +966,7 @@
       </div>
   </section>
 
+  <!-- Gallery Section -->
   <section id="gallery" class="py-20 px-6 bg-[#222831]">
     <div class="container mx-auto">
       <h2 class="text-3xl font-bold text-center mb-16 section-title mx-auto" data-aos="fade-up">
@@ -1066,7 +1063,7 @@
                 🧠 The challenge featured 15 MCQs designed around real-world tech scenarios to assess logic,
                 computational
                 thinking, and technical depth.
-                🏁 Open to innovators and coders from across India to reward the
+                🏁 Open to innovators and coders from across India, this high-stakes competition aimed to reward the
                 fastest and brightest minds.
                 📜 Earned a Certificate of Participation for successfully completing the challenge</p>
             </div>
@@ -1162,6 +1159,7 @@
     </div>
   </section>
 
+  <!-- Certifications Section -->
   <section id="certifications" class="py-20 px-6 bg-[#393E46]">
     <div class="container mx-auto">
       <h2 class="text-3xl font-bold text-center mb-16 section-title mx-auto" data-aos="fade-up">
@@ -1314,12 +1312,13 @@
     </div>
   </section>
 
+  <!-- Skills Section -->
   <section id="skills" class="py-20 px-6 bg-[#222831]">
     <div class="container mx-auto">
       <h2 class="text-3xl font-bold text-center mb-16 section-title mx-auto" data-aos="fade-up">
         Skills
       </h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div class="grid md:grid-cols-2 gap-12">
         <div data-aos="fade-right">
           <h3 class="text-xl font-semibold text-[#00ADB5] mb-6">
             Frontend Development
@@ -1394,7 +1393,7 @@
           </div>
         </div>
       </div>
-      <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-center">
+      <div class="mt-16 grid md:grid-cols-3 gap-6 text-center">
         <div class="bg-[#393E46] p-6 rounded-lg shadow-lg skill-category-card" data-aos="zoom-in">
           <div class="text-4xl text-[#00ADB5] mb-4">
             <i data-feather="code"></i>
@@ -1417,6 +1416,7 @@
     </div>
   </section>
 
+  <!-- Projects Section -->
   <section id="projects" class="py-20 px-6 bg-[#393E46]">
     <div class="container mx-auto">
       <h2 class="text-3xl font-bold text-center mb-16 section-title mx-auto" data-aos="fade-up">
@@ -1461,14 +1461,47 @@
             </div>
           </div>
         </div>
+        <!-- <div class="project-card bg-[#222831] rounded-lg overflow-hidden shadow-lg" data-aos="fade-up"
+            data-aos-delay="200">
+            <div class="img-wrapper h-48">
+              <img
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
+                alt="Task Management App" class="w-full h-full object-cover" />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Task Management App</h3>
+              <p class="text-sm text-gray-400 mb-4">
+                React Native, Firebase, Redux
+              </p>
+              <p class="mb-6">
+                A cross-platform task management application with real-time
+                synchronization and collaboration.
+              </p>
+              <div class="flex space-x-4">
+                <a href="#"
+                  class="px-4 py-2 bg-[#00ADB5] text-white rounded text-sm font-medium hover:bg-[#00969D] transition-colors hover:shadow-lg">Live
+                  Demo</a>
+              </div>
+            </div>
+          </div>
         </div>
+        <div class="text-center mt-12">
+          <a href="#"
+            class="inline-flex items-center px-6 py-3 border border-[#00ADB5] text-[#00ADB5] rounded-lg font-medium hover:bg-[#00ADB5] hover:text-white transition-colors">
+            View All Projects
+            <i data-feather="arrow-right" class="ml-2"></i>
+          </a>
+        </div>
+      </div> -->
   </section>
 
+  <!-- Modal for Image Zoom -->
   <div id="imageModal" class="">
     <button class="closeBtn" aria-label="Close Image">&times;</button>
     <img src="" alt="" />
   </div>
 
+  <!-- Footer -->
   <footer class="bg-[#222831] py-10 px-6 text-center border-t border-[#00ADB5]/20">
     <div class="container mx-auto">
       <p class="text-lg text-[#00ADB5] font-medium">Manjunath</p>
@@ -1575,14 +1608,14 @@
       imageModal.classList.add("show");
       modalImg.src = finalSrc;
       modalImg.alt = alt;
-      document.body.style.overflow = "hidden"; // Prevent background scrolling
+      document.body.style.overflow = "hidden";
     }
 
     closeBtn.onclick = () => {
       imageModal.classList.remove("show");
       modalImg.src = "";
       modalImg.alt = "";
-      document.body.style.overflow = "auto"; // Restore background scrolling
+      document.body.style.overflow = "auto";
     };
 
     imageModal.onclick = (e) => {
@@ -1650,7 +1683,7 @@
       if (!skillsSection) return;
       const skillsSectionTop = skillsSection.offsetTop;
       const viewportHeight = window.innerHeight;
-      if (window.pageYOffset > skillsSectionTop - viewportHeight + 400) {
+      if (window.pageYOffset > skillsSectionTop - viewportHeight + 500) {
         animateSkillMeters();
         window.removeEventListener("scroll", checkSkillsInView);
       }
@@ -1671,7 +1704,7 @@
       let current = "";
       sections.forEach((section) => {
         const sectionTop = section.offsetTop;
-        if (pageYOffset >= sectionTop - 150) {
+        if (pageYOffset >= sectionTop - 200) {
           current = section.getAttribute("id");
         }
       });
@@ -1716,6 +1749,7 @@
       const isExpanded = content.classList.toggle('expanded');
       if (isExpanded) {
         buttonElement.textContent = 'Show Less';
+        content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       } else {
         buttonElement.textContent = 'Read More';
       }

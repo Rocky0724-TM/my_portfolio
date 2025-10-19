@@ -309,8 +309,8 @@
 
     #imageModal .closeBtn {
       position: fixed;
-      top: 3rem;
-      right: 3rem;
+      top: 1rem;
+      right: 1rem;
       font-size: 2.5rem;
       color: #00adb5;
       cursor: pointer;
@@ -508,12 +508,6 @@
         /* Disable particles on mobile for performance */
       }
 
-      #imageModal .closeBtn {
-        top: 1rem;
-        right: 1rem;
-        font-size: 3rem;
-      }
-
       .cert-card .cert-title-container {
         height: auto;
       }
@@ -549,6 +543,129 @@
       .exp-cert-preview img {
         height: 8rem;
       }
+
+      /* Modal adjustments for mobile */
+      #imageModal {
+        padding-top: 4rem; /* Offset for nav bar height */
+      }
+
+      #imageModal img {
+        max-height: 70vh; /* Adjust for smaller screens */
+        width: auto;
+        max-width: 95%;
+      }
+
+      #imageModal .closeBtn {
+        top: 4.5rem; /* Position below nav bar */
+        right: 0.5rem;
+        font-size: 2rem;
+        z-index: 1001;
+      }
+    }
+
+    @media (max-width: 480px) {
+      /* Extra small screens (e.g., 4-5 inch phones) */
+      body {
+        font-size: 0.875rem; /* Smaller base font */
+      }
+
+      h1.text-4xl {
+        font-size: 1.75rem;
+      }
+
+      h2.text-2xl {
+        font-size: 1.125rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .nav-link {
+        font-size: 0.875rem;
+      }
+
+      .social-link {
+        padding: 6px;
+      }
+
+      .project-card .p-6,
+      .cert-card .p-6 {
+        padding: 1rem;
+      }
+
+      .img-wrapper.h-48 {
+        height: 10rem; /* Smaller images */
+      }
+
+      .cert-card .img-container {
+        height: 120px;
+      }
+
+      .exp-cert-preview img {
+        height: 6rem;
+      }
+
+      #imageModal img {
+        max-height: 60vh;
+        max-width: 100%;
+      }
+
+      #imageModal .closeBtn {
+        font-size: 1.75rem;
+        top: 4rem;
+        right: 0.25rem;
+      }
+    }
+
+    @media (max-width: 320px) {
+      /* Very small screens (e.g., older small phones) */
+      body {
+        font-size: 0.75rem;
+      }
+
+      h1.text-4xl {
+        font-size: 1.5rem;
+      }
+
+      h2.text-2xl {
+        font-size: 1rem;
+      }
+
+      .section-title {
+        font-size: 1.25rem;
+      }
+
+      .nav-link {
+        font-size: 0.75rem;
+      }
+
+      .social-link {
+        padding: 4px;
+      }
+
+      .img-wrapper.h-48 {
+        height: 8rem;
+      }
+
+      .cert-card .img-container {
+        height: 100px;
+      }
+
+      .exp-cert-preview img {
+        height: 5rem;
+      }
+
+      #imageModal img {
+        max-height: 50vh;
+        max-width: 100%;
+      }
+
+      #imageModal .closeBtn {
+        font-size: 1.5rem;
+        top: 3.5rem;
+        right: 0.25rem;
+      }
     }
 
     @media (min-width: 640px) {
@@ -557,6 +674,15 @@
         /* Equivalent to Tailwind's pt-20 */
         padding-bottom: 4rem;
         /* Equivalent to Tailwind's pb-16 */
+      }
+    }
+
+    @media (min-width: 1024px) {
+      /* Larger screens adjustments if needed */
+      #imageModal .closeBtn {
+        top: 3rem;
+        right: 3rem;
+        font-size: 2.5rem;
       }
     }
   </style>

@@ -316,7 +316,6 @@
       z-index: 1001;
       font-weight: 300;
       line-height: 1;
-      /* Ensure button is visible over nav on mobile */
       text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     }
 
@@ -450,33 +449,28 @@
 
     /* Mobile-Specific Adjustments */
     @media (max-width: 768px) {
+      /* Base Mobile Styles */
       #home {
         padding-top: 4rem;
-        /* Equivalent to Tailwind's pt-16 */
         padding-bottom: 3rem;
-        /* Equivalent to Tailwind's pb-12 */
       }
 
       #home .container {
         grid-template-columns: 1fr;
-        /* Single column for mobile */
       }
 
       #home .w-64.h-64 {
         width: 12rem;
-        /* 192px */
         height: 12rem;
       }
 
       #home .w-48.h-48 {
         width: 10rem;
-        /* 160px */
         height: 10rem;
       }
 
       h1.text-4xl {
         font-size: 2rem;
-        /* Smaller heading for mobile */
       }
 
       h2.text-2xl {
@@ -488,23 +482,12 @@
         align-items: center;
       }
 
-      #home .flex.sm\:flex-row>a {
-        width: 100%;
-        max-width: 16rem;
-        text-align: center;
-      }
-
-      #home .space-x-4 {
-        gap: 0.75rem;
-      }
-
       .social-link {
         padding: 8px;
       }
 
       #particles-js {
         display: none;
-        /* Disable particles on mobile for performance */
       }
 
       .cert-card .cert-title-container {
@@ -531,11 +514,9 @@
         left: 3px;
       }
 
-      .grid.md\:grid-cols-2 {
-        grid-template-columns: 1fr;
-      }
-
-      .grid.md\:grid-cols-3 {
+      /* Fix for all multi-column grids on mobile */
+      .grid.md\:grid-cols-2,
+      .grid.lg\:grid-cols-3 {
         grid-template-columns: 1fr;
       }
 
@@ -543,37 +524,33 @@
         height: 8rem;
       }
 
-      /* Modal adjustments for mobile */
+      /* About Section Mobile Fix (Image 2 issue) */
+      #about .container>div {
+        min-width: 0;
+      }
+
+      /* Force About cards to stack on mobile (default Tailwind behavior, but ensuring) */
+      #about .grid.grid-cols-2 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      /* Modal adjustments for mobile (Image 1 issue) */
       #imageModal {
         padding-top: 0;
-        /* Removed unnecessary padding */
       }
 
       #imageModal img {
-        max-height: 80vh;
-        /* More conservative height */
-        width: auto;
+        /* Allow for some margin/padding and account for nav/status bar */
+        max-height: 85vh; 
         max-width: 95%;
       }
 
       #imageModal .closeBtn {
         top: 0.5rem;
-        /* Closer to the top edge for better reach */
         right: 0.5rem;
         font-size: 2rem;
-        z-index: 1001;
-        color: #eeeeee;
-        /* White close button on black backdrop */
-      }
-
-      /* About Section Mobile Fix */
-      #about .container>div {
-        min-width: 0;
-        /* Ensure content doesn't force width */
-      }
-
-      #about .grid-cols-2 {
-        grid-template-columns: 1fr;
+        color: #eeeeee; /* White close button on black backdrop */
       }
     }
 
@@ -581,7 +558,6 @@
       /* Extra small screens (e.g., 4-5 inch phones) */
       body {
         font-size: 0.875rem;
-        /* Smaller base font */
       }
 
       h1.text-4xl {
@@ -611,7 +587,6 @@
 
       .img-wrapper.h-48 {
         height: 10rem;
-        /* Smaller images */
       }
 
       .cert-card .img-container {
@@ -622,30 +597,32 @@
         height: 6rem;
       }
 
-      #imageModal img {
-        max-height: 70vh;
-        max-width: 95%;
-      }
-
-      #imageModal .closeBtn {
-        font-size: 1.75rem;
-        top: 0.25rem;
-        right: 0.25rem;
-      }
-
-      /* About Cards (Floating) Adjustment */
+      /* About Cards (Floating) Adjustment for Squeezing (Image 2 Fix) */
       #about .grid.grid-cols-2 {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Explicitly ensure stacking */
         gap: 1rem;
       }
 
       #about .grid.grid-cols-2>div {
-        padding: 1.25rem;
-        /* Reduced padding */
+        padding: 1rem; /* Reduced padding for more content space */
+      }
+
+      #about .grid.grid-cols-2>div h3 {
+        font-size: 1rem; /* Smaller card titles */
+      }
+
+      #about .grid.grid-cols-2>div p {
+        font-size: 0.875rem; /* Smaller card text */
       }
 
       .timeline-item {
         margin-bottom: 2rem;
+      }
+
+      #imageModal img {
+        /* Adjust modal size for smaller screens */
+        max-height: 70vh; 
+        max-width: 95%;
       }
     }
 
@@ -687,24 +664,22 @@
         height: 5rem;
       }
 
-      #imageModal img {
-        max-height: 60vh;
-        max-width: 95%;
+      /* Further adjustment for About cards on tiny screens */
+      #about .grid.grid-cols-2>div p {
+        font-size: 0.75rem;
       }
 
-      #imageModal .closeBtn {
-        font-size: 1.5rem;
-        top: 0.25rem;
-        right: 0.25rem;
+      #imageModal img {
+        /* Minimal size for tiny screens */
+        max-height: 60vh;
+        max-width: 95%;
       }
     }
 
     @media (min-width: 640px) {
       #home {
         padding-top: 5rem;
-        /* Equivalent to Tailwind's pt-20 */
         padding-bottom: 4rem;
-        /* Equivalent to Tailwind's pb-16 */
       }
     }
 
@@ -1414,7 +1389,7 @@
           </div>
         </div>
       </div>
-      <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+      <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-center">
         <div class="bg-[#393E46] p-6 rounded-lg shadow-lg skill-category-card" data-aos="zoom-in">
           <div class="text-4xl text-[#00ADB5] mb-4">
             <i data-feather="code"></i>

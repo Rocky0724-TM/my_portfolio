@@ -27,6 +27,8 @@
       background-color: var(--charcoal);
       color: var(--white);
       scroll-behavior: smooth;
+      /* FIX 1: Prevent horizontal scrollbar globally */
+      overflow-x: hidden;
     }
 
     /* Particle Background Styling */
@@ -324,6 +326,7 @@
       transform: rotate(90deg);
     }
 
+    /* FIX 2: Ensure modal image scales down to fit viewport perfectly */
     #imageModal img {
       max-width: 90%;
       max-height: 90vh;
@@ -333,6 +336,8 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
       animation: zoomIn 0.3s ease forwards;
       z-index: 1000;
+      /* Crucial for not overflowing on small screens */
+      box-sizing: border-box;
     }
 
     @keyframes zoomIn {
@@ -524,7 +529,7 @@
         height: 8rem;
       }
 
-      /* About Section Mobile Fix (Image 2 issue) */
+      /* About Section Mobile Fix */
       #about .container>div {
         min-width: 0;
       }
@@ -535,22 +540,22 @@
         gap: 1rem;
       }
 
-      /* Modal adjustments for mobile (Image 1 issue) */
+      /* Modal adjustments for mobile */
       #imageModal {
         padding-top: 0;
       }
 
+      /* FIX 3: Increased max-width constraint for smaller mobile to prevent scrollbar */
       #imageModal img {
-        /* Allow for some margin/padding and account for nav/status bar */
-        max-height: 85vh; 
-        max-width: 95%;
+        max-height: 80vh;
+        max-width: 90%; 
       }
 
       #imageModal .closeBtn {
         top: 0.5rem;
         right: 0.5rem;
         font-size: 2rem;
-        color: #eeeeee; /* White close button on black backdrop */
+        color: #eeeeee;
       }
     }
 
@@ -597,31 +602,31 @@
         height: 6rem;
       }
 
-      /* About Cards (Floating) Adjustment for Squeezing (Image 2 Fix) */
+      /* About Cards (Floating) Adjustment for Squeezing */
       #about .grid.grid-cols-2 {
-        grid-template-columns: 1fr; /* Explicitly ensure stacking */
+        grid-template-columns: 1fr;
         gap: 1rem;
       }
 
       #about .grid.grid-cols-2>div {
-        padding: 1rem; /* Reduced padding for more content space */
+        padding: 1rem;
       }
 
       #about .grid.grid-cols-2>div h3 {
-        font-size: 1rem; /* Smaller card titles */
+        font-size: 1rem;
       }
 
       #about .grid.grid-cols-2>div p {
-        font-size: 0.875rem; /* Smaller card text */
+        font-size: 0.875rem;
       }
 
       .timeline-item {
         margin-bottom: 2rem;
       }
 
+      /* FIX 4: Aggressively reducing modal image size for narrowest viewports */
       #imageModal img {
-        /* Adjust modal size for smaller screens */
-        max-height: 70vh; 
+        max-height: 70vh;
         max-width: 95%;
       }
     }
@@ -669,8 +674,8 @@
         font-size: 0.75rem;
       }
 
+      /* FIX 5: Maximum constraint for modal image on tiny screens */
       #imageModal img {
-        /* Minimal size for tiny screens */
         max-height: 60vh;
         max-width: 95%;
       }
@@ -1061,7 +1066,7 @@
                 🧠 The challenge featured 15 MCQs designed around real-world tech scenarios to assess logic,
                 computational
                 thinking, and technical depth.
-                🏁 Open to innovators and coders from across India, this high-stakes competition aimed to reward the
+                🏁 Open to innovators and coders from across India to reward the
                 fastest and brightest minds.
                 📜 Earned a Certificate of Participation for successfully completing the challenge</p>
             </div>
@@ -1456,7 +1461,8 @@
             </div>
           </div>
         </div>
-        </section>
+        </div>
+  </section>
 
   <div id="imageModal" class="">
     <button class="closeBtn" aria-label="Close Image">&times;</button>
@@ -1565,7 +1571,6 @@
     const closeBtn = imageModal.querySelector(".closeBtn");
 
     function openImageModal(src, alt) {
-      // Use the logic to potentially replace a placeholder image source with a larger one
       const finalSrc = src.includes('placehold.co') ? src.replace('200x150', '800x600').replace('+Preview', '+Large') : src;
       imageModal.classList.add("show");
       modalImg.src = finalSrc;
@@ -1590,7 +1595,6 @@
     function setupViewMore(containerId, buttonId, initialCount) {
       const container = document.getElementById(containerId);
       if (!container) return;
-      // Use querySelectorAll to correctly target the items regardless of their grid parent
       const items = container.querySelectorAll(`.${containerId.replace('-container', '-item')}`);
       const button = document.getElementById(buttonId);
       let itemsVisible = initialCount;
@@ -1615,7 +1619,6 @@
           });
           itemsVisible = initialCount;
           button.innerHTML = `View More ${containerId.includes('gallery') ? 'Gallery Photos' : 'Certifications'} <i data-feather="arrow-down" class="ml-2"></i>`;
-          // Scroll back to the section start after hiding
           document.getElementById(containerId.replace('-container', '')).scrollIntoView({ behavior: 'smooth', block: 'start' });
         } else {
           items.forEach((item) => {
@@ -1647,7 +1650,6 @@
       if (!skillsSection) return;
       const skillsSectionTop = skillsSection.offsetTop;
       const viewportHeight = window.innerHeight;
-      // Trigger animation slightly before the section fully enters view
       if (window.pageYOffset > skillsSectionTop - viewportHeight + 400) {
         animateSkillMeters();
         window.removeEventListener("scroll", checkSkillsInView);
@@ -1669,7 +1671,6 @@
       let current = "";
       sections.forEach((section) => {
         const sectionTop = section.offsetTop;
-        // Adjust offset for fixed navigation bar and general section entry point
         if (pageYOffset >= sectionTop - 150) {
           current = section.getAttribute("id");
         }
@@ -1697,7 +1698,7 @@
         const targetElement = document.querySelector(targetId);
         if (targetElement) {
           window.scrollTo({
-            top: targetElement.offsetTop - 80, // Offset for fixed nav bar
+            top: targetElement.offsetTop - 80,
             behavior: "smooth",
           });
           const mobileMenu = document.getElementById("mobileMenu");

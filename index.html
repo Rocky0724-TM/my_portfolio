@@ -449,124 +449,13 @@
       transform: scale(1.05);
     }
 
-    /* Mobile-Specific Adjustments */
-    @media (max-width: 768px) {
-      #home {
-        padding-top: 4rem;
-        /* Equivalent to Tailwind's pt-16 */
-        padding-bottom: 3rem;
-        /* Equivalent to Tailwind's pb-12 */
-      }
+    /* --- Media Queries (Ascending Order - Mobile Scaling) --- */
 
-      #home .container {
-        grid-template-columns: 1fr;
-        /* Single column for mobile */
-      }
-
-      #home .w-64.h-64 {
-        width: 12rem;
-        /* 192px */
-        height: 12rem;
-      }
-
-      #home .w-48.h-48 {
-        width: 10rem;
-        /* 160px */
-        height: 10rem;
-      }
-
-      h1.text-4xl {
-        font-size: 2rem;
-        /* Smaller heading for mobile */
-      }
-
-      h2.text-2xl {
-        font-size: 1.25rem;
-      }
-
-      #home .flex.sm\:flex-row {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      #home .flex.sm\:flex-row>a {
-        width: 100%;
-        max-width: 16rem;
-        text-align: center;
-      }
-
-      #home .space-x-4 {
-        gap: 0.75rem;
-      }
-
-      .social-link {
-        padding: 8px;
-      }
-
-      #particles-js {
-        display: none;
-        /* Disable particles on mobile for performance */
-      }
-
-      .cert-card .cert-title-container {
-        height: auto;
-      }
-
-      .cert-card .img-container {
-        height: 150px;
-      }
-
-      .description-content {
-        max-height: 4rem;
-      }
-
-      .timeline-item {
-        padding-left: 1.5rem;
-      }
-
-      .timeline-item::before {
-        left: -0.25rem;
-      }
-
-      .timeline-item::after {
-        left: 3px;
-      }
-
-      .grid.md\:grid-cols-2 {
-        grid-template-columns: 1fr;
-      }
-
-      .grid.md\:grid-cols-3 {
-        grid-template-columns: 1fr;
-      }
-
-      .exp-cert-preview img {
-        height: 8rem;
-      }
-
-      /* Modal adjustments for mobile */
-      #imageModal {
-        padding-top: 4rem; /* Offset for nav bar height */
-      }
-
-      #imageModal img {
-        max-height: 70vh; /* Adjust for smaller screens */
-        width: auto;
-        max-width: 95%;
-      }
-
-      #imageModal .closeBtn {
-        top: 4.5rem; /* Position below nav bar */
-        right: 0.5rem;
-        font-size: 2rem;
-        z-index: 1001;
-      }
-    }
-
-    @media (max-width: 480px) {
-      /* Extra small screens (e.g., 4-5 inch phones) */
+    /* 2. SMALL PHONES (min-width: 321px and max-width: 480px) */
+    @media (min-width: 321px) and (max-width: 480px) {
       body {
-        font-size: 0.875rem; /* Smaller base font */
+        font-size: 0.875rem; 
+        overflow-x: hidden; /* FIX: Prevents horizontal scrollbar */
       }
 
       h1.text-4xl {
@@ -595,7 +484,7 @@
       }
 
       .img-wrapper.h-48 {
-        height: 10rem; /* Smaller images */
+        height: 10rem;
       }
 
       .cert-card .img-container {
@@ -608,7 +497,8 @@
 
       #imageModal img {
         max-height: 60vh;
-        max-width: 100%;
+        max-width: 95%; /* FIX: Ensures image fits within screen width */
+        width: auto;
       }
 
       #imageModal .closeBtn {
@@ -618,73 +508,130 @@
       }
     }
 
-    @media (max-width: 320px) {
-      /* Very small screens (e.g., older small phones) */
+    /* 3. STANDARD MOBILE PHONES (min-width: 481px and max-width: 639px) */
+    @media (min-width: 481px) and (max-width: 639px) {
       body {
-        font-size: 0.75rem;
+        font-size: 0.9375rem; 
+        overflow-x: hidden; /* FIX: Prevents horizontal scrollbar */
+      }
+      #home {
+        padding-top: 4rem;
+        padding-bottom: 3rem;
       }
 
       h1.text-4xl {
-        font-size: 1.5rem;
+        font-size: 2rem;
       }
 
       h2.text-2xl {
-        font-size: 1rem;
-      }
-
-      .section-title {
         font-size: 1.25rem;
       }
-
-      .nav-link {
-        font-size: 0.75rem;
+      
+      .section-title {
+        font-size: 1.75rem;
       }
-
-      .social-link {
-        padding: 4px;
-      }
-
+      
       .img-wrapper.h-48 {
-        height: 8rem;
+        height: 12rem;
       }
 
       .cert-card .img-container {
-        height: 100px;
+        height: 150px;
       }
 
       .exp-cert-preview img {
-        height: 5rem;
+        height: 8rem;
+      }
+      
+      #imageModal img {
+        max-width: 95%; /* FIX: Ensures image fits within screen width */
+        width: auto;
+      }
+    }
+
+    /* 4. SMALL TABLETS & LARGE MOBILE PHONES (640px to 768px) */
+    @media (min-width: 640px) and (max-width: 768px) {
+      body {
+        font-size: 1rem; 
+        overflow-x: hidden; /* FIX: Prevents horizontal scrollbar */
+      }
+      #home {
+        padding-top: 5rem;
+        padding-bottom: 4rem;
+      }
+      
+      /* Switch to 2 columns for home section */
+      #home .container {
+        grid-template-columns: 1fr 1fr; 
+      }
+      
+      /* Revert layout for content areas to 2 columns */
+      .grid.md\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .grid.md\:grid-cols-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)); 
+      }
+
+      /* Enable particles for better performance on these medium-sized devices */
+      #particles-js {
+        display: block;
+      }
+      
+      /* Adjust timeline alignment to be slightly inward */
+      .timeline-item {
+        padding-left: 2rem;
+      }
+      .timeline-item::before {
+        left: 0;
+      }
+      .timeline-item::after {
+        left: 5px;
       }
 
       #imageModal img {
-        max-height: 50vh;
-        max-width: 100%;
+        max-height: 70vh;
+        max-width: 95%; /* FIX: Ensures image fits within screen width */
+        width: auto;
       }
 
       #imageModal .closeBtn {
-        font-size: 1.5rem;
-        top: 3.5rem;
-        right: 0.25rem;
+        top: 2rem;
+        right: 2rem;
+        font-size: 2.25rem;
+        padding: 10px;
       }
     }
 
-    @media (min-width: 640px) {
+    /* 5. MEDIUM TABLETS (PORTRAIT) & LARGE PHONES (LANDSCAPE) (769px to 991px) */
+    @media (min-width: 769px) and (max-width: 991px) {
+      body {
+        overflow-x: hidden; /* FIX: Prevents horizontal scrollbar */
+      }
       #home {
-        padding-top: 5rem;
-        /* Equivalent to Tailwind's pt-20 */
-        padding-bottom: 4rem;
-        /* Equivalent to Tailwind's pb-16 */
+        padding-top: 6rem;
+        padding-bottom: 5rem;
       }
-    }
-
-    @media (min-width: 1024px) {
-      /* Larger screens adjustments if needed */
-      #imageModal .closeBtn {
-        top: 3rem;
-        right: 3rem;
+      
+      h1.text-4xl {
         font-size: 2.5rem;
       }
+
+      h2.text-2xl {
+        font-size: 1.5rem;
+      }
+      
+      /* Allow 3 columns for project/cert grids in this size range */
+      .grid.md\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr)); 
+      }
+      
+      #imageModal img {
+        max-width: 90%;
+        width: auto;
+      }
     }
+
   </style>
 </head>
 

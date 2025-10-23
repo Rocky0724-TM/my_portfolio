@@ -16,25 +16,27 @@
   <script src="https://unpkg.com/feather-icons"></script>
   <!-- Particles.js -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-  <!-- Poppins Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+  <!-- Google Fonts - Inter + Playfair Display -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
     rel="stylesheet" />
-  <style>
+<style>
     :root {
       --charcoal: #222831;
       --slate: #393e46;
       --teal: #00adb5;
       --white: #eeeeee;
     }
-
     body {
-      font-family: "Poppins", sans-serif;
+      font-family: "Inter", sans-serif;
       background-color: var(--charcoal);
       color: var(--white);
       scroll-behavior: smooth;
     }
 
-    /* Particle Background Styling */
+    h1, h2, h3, .section-title {
+      font-family: "Playfair Display", serif;
+    }
+/* Particle Background Styling */
     #particles-js {
       position: absolute;
       width: 100%;
@@ -425,7 +427,6 @@
     .cert-card:hover .img-container img {
       transform: scale(1.05);
     }
-
     /* Section Entrance Animations */
     section {
       opacity: 0;
@@ -438,7 +439,89 @@
       transform: translateY(0);
     }
 
-    /* Button Hover Animations */
+    /* --- THREE.js canvas & circle modal + responsive fixes for about-cards --- */
+    #three-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;               /* behind content (home .container has z-index:1) */
+      pointer-events: none;     /* allow clicks through to page */
+    }
+
+    /* Circle-only profile modal */
+    #circleModal {
+      display: none;
+      position: fixed;
+      z-index: 1100;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    #circleModal.show { display: flex; }
+    #circleModal .circle-wrap {
+      width: min(78vw, 420px);
+      height: min(78vw, 420px);
+      border-radius: 50%;
+      overflow: hidden;
+      border: 6px solid var(--teal);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.15));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #circleModal .circle-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* cancel button */
+    #circleModal .cancel-btn {
+      position: absolute;
+      right: 1.25rem;
+      top: 1.25rem;
+      background: transparent;
+      color: var(--teal);
+      border: 2px solid var(--teal);
+      padding: .45rem .6rem;
+      border-radius: 8px;
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: all .18s ease;
+      z-index: 1101;
+    }
+    #circleModal .cancel-btn:hover {
+      background: var(--teal);
+      color: var(--white);
+      transform: rotate(8deg);
+    }
+
+    /* Make the "about" feature cards more responsive */
+    .floating {
+      padding: clamp(.9rem, 2.5vw, 1.2rem);
+    }
+    .floating h3 {
+      font-size: clamp(1rem, 2.6vw, 1.125rem);
+      margin-bottom: .5rem;
+    }
+    .floating p {
+      font-size: clamp(.85rem, 2vw, 0.95rem);
+      line-height: 1.4;
+    }
+
+    /* Ensure the grid collapses gracefully */
+    @media (max-width: 640px) {
+      #home .container { grid-template-columns: 1fr !important; }
+      .grid.grid-cols-2 { grid-template-columns: 1fr !important; }
+      .floating { text-align: left; }
+    }
+/* Button Hover Animations */
     .btn-resume,
     .read-more-btn {
       transition: transform 0.3s ease, background-color 0.3s ease;
@@ -631,10 +714,8 @@
         width: auto;
       }
     }
-
   </style>
 </head>
-
 <body class="bg-[#222831] text-[#EEEEEE]">
   <!-- Scroll Indicator Bar -->
   <div id="scrollIndicator"></div>
@@ -1757,7 +1838,7 @@
             item.classList.add('visible');
           }, index * 200);
         }
-      });
+      }); 
     }
 
     window.addEventListener('scroll', animateSections);
@@ -1765,6 +1846,7 @@
     window.addEventListener('scroll', animateTimeline);
     window.addEventListener('load', animateTimeline);
   </script>
+
 </body>
 
 </html>
